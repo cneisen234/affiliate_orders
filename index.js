@@ -13,8 +13,8 @@ app.use(express.static("server/public"));
 
 let config = {
   headers: {
-    "X-Auth-Client": process.env.X_AUTH_CLIENT,
-    "X-Auth-Token": process.env.X_AUTH_TOKEN,
+    "X-Auth-Client": "tw2come9pccgmcr0ybk555jkqcceiih",
+    "X-Auth-Token": "13n6uxj2je2wbnc0vggmz8sqjl93d1d",
   },
 };
 
