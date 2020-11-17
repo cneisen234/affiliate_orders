@@ -1,0 +1,19 @@
+{
+  "name": "affiliate_bot",
+  "version": "1.0.0",
+  "description": "Emails order details to affiliates",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Chris Neisen",
+  "license": "ISC",
+  "dependencies": {
+    "@sendgrid/mail": "^7.4.0",
+    "axios": "^0.21.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "sendgrid": "^5.2.3",
+    "slackbots": "^1.2.0"
+  }
+}
