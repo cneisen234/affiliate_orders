@@ -1,7 +1,7 @@
 const SlackBot = require('slackbots')
 const axios = require('axios')
 const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey("");
+sgMail.setApiKey("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");
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
@@ -19,7 +19,7 @@ let config = {
 };
 
 const bot = new SlackBot({
-  token: "",
+  token: "xoxb-18234618080-1485620851799-hzRxtdbDZJSuh7w7wiTOQ4cF",
   name: "AffiliateOrders",
 });
 
