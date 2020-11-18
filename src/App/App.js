@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import MUITable from "./MUITable.js";
+import MUITable from "../MUITable.js";
 import { connect } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
