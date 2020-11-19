@@ -3,6 +3,7 @@ CREATE TABLE "item"
     "id" serial primary key,
     "email" varchar(255) not null,
     "order_number" VARCHAR(100),
+    "order_total" VARCHAR(100),
     "qty" INT,
     "created_at" VARCHAR(255)
 ); 

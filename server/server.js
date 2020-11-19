@@ -124,6 +124,8 @@ bot.on('message', (data) => {
             console.log(response.data);
             console.log(response.data.date_created);
             let created_at = response.data.date_created
+            console.log(response.data.total_inc_tax);
+            let order_total = response.data.total_inc_tax;
             axios
               .get(
                 `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${newOrderNumber}/products`,
@@ -169,9 +171,9 @@ sku = element.sku
                   console.log(finalArray);
                     //now lets add admin information to the user table
                     const queryText =
-                      'INSERT INTO "item" (email, order_number, qty, created_at) VALUES ($1, $2, $3, $4) RETURNING id';
+                      'INSERT INTO "item" (email, order_number, order_total, qty, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING id';
                     pool
-                      .query(queryText, [newerEmail, newOrderNumber, qty, created_at])
+                      .query(queryText, [newerEmail, newOrderNumber, order_total, qty, created_at])
                         // .then((result) => res.status(201).send(result.rows))
                         // .catch(function (error) {
                         //   console.log(

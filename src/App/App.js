@@ -124,6 +124,7 @@ class App extends Component {
     const data = this.props.itemlist.map((item) => [
       item.email,
       item.order_number,
+      item.order_total,
       item.qty,
       item.created_at
     ]);
@@ -151,13 +152,14 @@ class App extends Component {
         <br />
         <center></center>
         <div style={{ padding: "1.5%" }}>
-          <h1 style={{textAlign: "center"}}>Affiliate Order History</h1>
+          <h1 style={{ textAlign: "center" }}>Affiliate Order History</h1>
           <MUITable
             data={data} //brings in data as an array, in this case, list of items
             columns={[
               //names the columns found on MUI table
               { name: "Affiliate Email" },
               { name: "Order Number" },
+              { name: "Order Total" },
               { name: "Number of items sold" },
               { name: "Date of Sale" },
             ]}
