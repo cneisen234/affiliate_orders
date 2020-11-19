@@ -125,22 +125,9 @@ class App extends Component {
       item.email,
       item.order_number,
       item.qty,
-      moment.utc(item.created_at).add(6, "hours").format("MMMM Do YYYY"),
+      item.created_at
     ]);
 
-      const skudata = this.props.skulist.map((sku) => [
-        sku.email,
-        sku.order_number,
-        sku.sku,
-        moment.utc(sku.created_at).add(6, "hours").format("MMMM Do YYYY"),
-      ]);
-       const optiondata = this.props.optionlist.map((option) => [
-         option.email,
-         option.order_number,
-         option.sku,
-         option.product_options,
-         moment.utc(option.created_at).add(6, "hours").format("MMMM Do YYYY"),
-       ]);
          const totaldata = this.props.totallist.map((total) => [
            total.email,
            total.count,
@@ -175,39 +162,6 @@ class App extends Component {
               { name: "Date of Sale" },
             ]}
             title={"Record of Sales"} //give the table a name
-          />
-        </div>
-        <br />
-        <br />
-        <br />
-        <div style={{ padding: "1.5%" }}>
-          <MUITable
-            data={skudata} //brings in data as an array, in this case, list of items
-            columns={[
-              //names the columns found on MUI table
-              { name: "Affiliate Email" },
-              { name: "Order Number" },
-              { name: "SKU" },
-              { name: "Date of Sale" },
-            ]}
-            title={"List of SKUs sold by Affilate"} //give the table a name
-          />
-        </div>
-        <br />
-        <br />
-        <br />
-        <div style={{ padding: "1.5%" }}>
-          <MUITable
-            data={optiondata} //brings in data as an array, in this case, list of items
-            columns={[
-              //names the columns found on MUI table
-              { name: "Affiliate Email" },
-              { name: "Order Number" },
-              { name: "SKU" },
-              { name: "Product Options" },
-              { name: "Date of Sale" },
-            ]}
-            title={"Product Options by SKU"} //give the table a name
           />
         </div>
         <br />

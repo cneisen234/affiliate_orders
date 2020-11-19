@@ -122,6 +122,8 @@ bot.on('message', (data) => {
           // handle success
           if (response.data !== []) {
             console.log(response.data);
+            console.log(response.data.date_created);
+            let created_at = response.data.date_created
             axios
               .get(
                 `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${newOrderNumber}/products`,
@@ -143,21 +145,18 @@ bot.on('message', (data) => {
 sku = element.sku
                     let options = element.product_options;
                        const query2Text =
-                         'INSERT INTO "sku" (email, order_number, sku) VALUES ($1, $2, $3) RETURNING id';
+                         'INSERT INTO "sku" (email, order_number, sku, created_at) VALUES ($1, $2, $3, $4) RETURNING id';
                        pool.query(query2Text, [
                          newerEmail,
                          newOrderNumber,
                          sku,
+                         created_at,
                        ]);
                     for (let j = 0; j < options.length; j++) {
                       const opt = options[j];
                       optionsArray.push(
                         `<div>${opt.display_name}: ${opt.display_value}</div>`
                       );
-                      product_options = `${opt.display_name}: ${opt.display_value}`
-                        const query3Text =
-                          'INSERT INTO "options" (email, sku, order_number, product_options) VALUES ($1, $2, $3, $4) RETURNING id';
-                        pool.query(query3Text, [newerEmail, sku, newOrderNumber, product_options]);
                     }
                     let optionsJoined = optionsArray.join();
                     newArray.push(optionsJoined);
@@ -170,9 +169,9 @@ sku = element.sku
                   console.log(finalArray);
                     //now lets add admin information to the user table
                     const queryText =
-                      'INSERT INTO "item" (email, order_number, qty ) VALUES ($1, $2, $3) RETURNING id';
+                      'INSERT INTO "item" (email, order_number, qty, created_at) VALUES ($1, $2, $3, $4) RETURNING id';
                     pool
-                      .query(queryText, [newerEmail, newOrderNumber, qty])
+                      .query(queryText, [newerEmail, newOrderNumber, qty, created_at])
                         // .then((result) => res.status(201).send(result.rows))
                         // .catch(function (error) {
                         //   console.log(
