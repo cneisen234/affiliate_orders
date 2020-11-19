@@ -125,21 +125,21 @@ class App extends Component {
       item.email,
       item.order_number,
       item.qty,
-      moment.utc(item.created_at).format("MMMM Do YYYY"),
+      moment(item.created_at).format("MMMM Do YYYY"),
     ]);
 
       const skudata = this.props.skulist.map((sku) => [
         sku.email,
         sku.order_number,
         sku.sku,
-        moment.utc(sku.created_at).format("MMMM Do YYYY"),
+        moment(sku.created_at).format("MMMM Do YYYY"),
       ]);
        const optiondata = this.props.optionlist.map((option) => [
          option.email,
          option.order_number,
          option.sku,
          option.product_options,
-         moment.utc(option.created_at).format("MMMM Do YYYY"),
+         moment(option.created_at).format("MMMM Do YYYY"),
        ]);
          const totaldata = this.props.totallist.map((total) => [
            total.email,
