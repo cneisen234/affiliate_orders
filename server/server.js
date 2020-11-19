@@ -18,15 +18,16 @@ let config = {
     "X-Auth-Token": "13n6uxj2je2wbnc0vggmz8sqjl93d1d",
   },
 };
+   if (process.env.NODE_ENV === "production") {
+     // Exprees will serve up production assets
+     app.use(express.static("client/build"));
 
-if (process.env.NODE_ENV === "production") {
-  //set static folder
-  app.use(express.static("client/build"));
-}
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-});
-
+     // Express serve up index.html file if it doesn't recognize route
+     const path = require("path");
+     app.get("*", (req, res) => {
+       res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+     });
+   }
 const bot = new SlackBot({
   token: "xoxb-18234618080-1485620851799-hzRxtdbDZJSuh7w7wiTOQ4cF",
   name: "AffiliateOrders",
