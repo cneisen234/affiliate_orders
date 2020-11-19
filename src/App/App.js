@@ -56,64 +56,7 @@ class App extends Component {
           });
   };
 
-  startAllItem = (event) => {
-    //prevents default action
-    event.preventDefault();
-    const { qty, item } = this.state;
-    this.props.dispatch({
-      type: "START_ALL_ITEM",
-      payload: {
-        id: this.state.id,
-        brand: this.state.brand,
-        qty: this.state.qty,
-        sku: this.state.sku,
-        sku_description: this.state.sku_description,
-      },
-    });
-    this.props.dispatch({
-      type: "EDIT_ITEM",
-      payload: {
-        id: this.state.id,
-        qty: 0,
-      },
-    });
-    this.setState({
-      toggle2: false,
-    });
-  };
-
-  startItem = (event) => {
-    //prevents default action
-    event.preventDefault();
-    const { qty, item } = this.state;
-    this.props.dispatch({
-      type: "START_ALL_ITEM",
-      payload: {
-        id: this.state.id,
-        brand: this.state.brand,
-        qty: this.state.updated_qty,
-        sku: this.state.sku,
-        sku_description: this.state.sku_description,
-      },
-    });
-    this.props.dispatch({
-      type: "EDIT_ITEM",
-      payload: {
-        id: this.state.id,
-        qty: this.state.qty - this.state.updated_qty,
-      },
-    });
-    this.setState({
-      toggle2: false,
-    });
-  };
-
-  //This function handles storing input values into state on change
-  handleInputChangeFor = (propertyName) => (event) => {
-    this.setState({
-      [propertyName]: event.target.value,
-    });
-  };
+  
   render() {
     const data = this.props.itemlist.map((item) => [
       item.email,

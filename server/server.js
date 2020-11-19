@@ -271,35 +271,7 @@ app.get("/itemlist", (req, res) => {
     });
 });
 
-app.get("/sku", (req, res) => {
-  console.log("We are about to get the item list");
 
-  const queryText = `SELECT * FROM "sku";`;
-  pool
-    .query(queryText)
-    .then((result) => {
-      res.send(result.rows);
-    })
-    .catch((error) => {
-      console.log(`Error on item query ${error}`);
-      res.sendStatus(500);
-    });
-});
-
-app.get("/options", (req, res) => {
-  console.log("We are about to get the item list");
-
-  const queryText = `SELECT * FROM "options";`;
-  pool
-    .query(queryText)
-    .then((result) => {
-      res.send(result.rows);
-    })
-    .catch((error) => {
-      console.log(`Error on item query ${error}`);
-      res.sendStatus(500);
-    });
-});
 
 app.get("/total", (req, res) => {
   console.log("We are about to get the item list");
@@ -334,22 +306,7 @@ app.post("/checkemail", (req, res) => {
           console.log(`Error on item query ${error}`);
           res.sendStatus(500);
         });
-// app.get("/numsku", (req, res) => {
-//   console.log("We are about to get the sku list", email);
-//  const queryText =
-//                       'SELECT array_agg(DISTINCT sku) as sku, COUNT(*) FROM sku where email=$1 GROUP BY sku;';
-//   pool
-//     .query(queryText, [email])
-//     .then((result) => {
-//       res.send(result.rows);
-      
-//     })
-//     .catch((error) => {
-//       console.log(`Error on item query ${error}`);
-//       res.sendStatus(500);
-//     });
 });
-// });
 app.get("/email", (req, res) => {
   console.log("We are about to get the item list");
 

@@ -19,35 +19,7 @@ function* getitemlist(action) {
   }
 }
 
-function* getskulist(action) {
-  try {
-    //console.log('we are about to get Students', action.type);
 
-    const response = yield axios.get(`/sku`);
-
-    yield put({
-      type: "SET_SKU",
-      payload: response.data,
-    });
-  } catch (error) {
-    console.log("Error with getting the list of items:", error);
-  }
-}
-
-function* getoptionlist(action) {
-  try {
-    //console.log('we are about to get Students', action.type);
-
-    const response = yield axios.get(`/options`);
-
-    yield put({
-      type: "SET_OPTION",
-      payload: response.data,
-    });
-  } catch (error) {
-    console.log("Error with getting the list of items:", error);
-  }
-}
 
 function* getemaillist(action) {
   try {
@@ -100,8 +72,6 @@ function* checkEmail(action) {
 
 function* itemSaga() {
     yield takeLatest('GET_ITEM_LIST', getitemlist);
-     yield takeLatest('GET_SKU_LIST', getskulist);
-      yield takeLatest('GET_OPTION_LIST', getoptionlist);
         yield takeLatest('GET_EMAIL_LIST', getemaillist);
          yield takeLatest('CHECK_EMAIL', checkEmail);
           yield takeLatest('GET_TOTAL_LIST', gettotallist);
