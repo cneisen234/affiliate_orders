@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import moment from "moment";
+import Footer from "../Footer/Footer";
 import { Paper, TextField } from "@material-ui/core";
 
 class App extends Component {
@@ -150,11 +151,20 @@ class App extends Component {
           ]);
     return (
       <div>
+        <div style={{ backgroundColor: "white", width: "20%", float: "left" }}>
+          <img
+            src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
+            alt="HTW logo"
+          ></img>
+        </div>
+        <div style={{ backgroundColor: "black", width: "80%", float: "right" }}>
+          <div style={{ height: 50 }}></div>
+        </div>
         <br />
-        <center>
-          <h1>Affiliate Order History</h1>
-        </center>
+        <br />
+        <center></center>
         <div style={{ padding: "1.5%" }}>
+          <h1 style={{textAlign: "center"}}>Affiliate Order History</h1>
           <MUITable
             data={data} //brings in data as an array, in this case, list of items
             columns={[
@@ -260,7 +270,7 @@ class App extends Component {
         <br />
         <br />
         <br />
-        )}
+        <Footer />
       </div>
     );
   }
