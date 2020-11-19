@@ -254,7 +254,7 @@ class App extends Component {
               { name: "SKU" },
               { name: "Count" },
             ]}
-            title={"Skus for christopherjay71186@gmail.com"} //give the table a name
+            title={`Skus for ${this.state.email}`} //give the table a name
           />
         </div>
         <br />
