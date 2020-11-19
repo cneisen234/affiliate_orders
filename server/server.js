@@ -19,6 +19,14 @@ let config = {
   },
 };
 
+if (process.env.NODE_ENV === "production") {
+  //set static folder
+  app.use(express.static("client/build"));
+}
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+});
+
 const bot = new SlackBot({
   token: "xoxb-18234618080-1485620851799-hzRxtdbDZJSuh7w7wiTOQ4cF",
   name: "AffiliateOrders",
