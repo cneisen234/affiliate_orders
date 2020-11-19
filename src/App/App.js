@@ -124,7 +124,7 @@ class App extends Component {
     const data = this.props.itemlist.map((item) => [
       item.email,
       item.order_number,
-      item.order_total,
+      Number(item.order_total).toFixed(2),
       item.qty,
       item.created_at
     ]);
