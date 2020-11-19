@@ -124,8 +124,8 @@ bot.on('message', (data) => {
             console.log(response.data);
             console.log(response.data.date_created);
             let created_at = response.data.date_created
-            console.log(response.data.total_inc_tax);
-            let order_total = response.data.total_inc_tax;
+            console.log(response.data.subtotal_ex_tax);
+            let order_total = response.data.subtotal_ex_tax;
             axios
               .get(
                 `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${newOrderNumber}/products`,
