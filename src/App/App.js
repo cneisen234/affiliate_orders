@@ -19,12 +19,6 @@ class App extends Component {
     this.props.dispatch({
       type: "GET_ITEM_LIST",
     });
-      this.props.dispatch({
-        type: "GET_SKU_LIST",
-      });
-        this.props.dispatch({
-          type: "GET_OPTION_LIST",
-        });
            this.props.dispatch({
              type: "GET_EMAIL_LIST",
            });
@@ -234,8 +228,6 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
   itemlist: state.item.itemlist,
-  skulist: state.item.skulist,
-  optionlist: state.item.optionlist,
   skunumlist: state.item.skunumlist,
   emaillist: state.item.emaillist,
   totallist: state.item.totallist,
