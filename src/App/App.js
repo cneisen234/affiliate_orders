@@ -228,17 +228,41 @@ class App extends Component {
                   backgroundColor: "white",
                 }}
               >
-                <table style={{  
-                  marginLeft: "auto", 
-                  marginRight: "auto",
-                  marginTop: "20px",
-                  width: "100%",}}>
+                <table
+                  style={{
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    marginTop: "20px",
+                    width: "100%",
+                  }}
+                >
                   <tr>
-                    <td style={{
+                    <td
+                      style={{
                         marginLeft: "3%",
                         padding: "10px",
                         width: "25%",
-                    }}>
+                      }}
+                    >
+                      {" "}
+                      <Button
+                        onClick={this.toggle}
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                      >
+                        Close
+                      </Button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      style={{
+                        marginLeft: "3%",
+                        padding: "10px",
+                        width: "25%",
+                      }}
+                    >
                       order details for{" "}
                       {this.props.detailslist[0] &&
                         this.props.detailslist[0].order_id}
