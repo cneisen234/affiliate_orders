@@ -225,7 +225,44 @@ class App extends Component {
                   backgroundColor: "white",
                 }}
               >
-                {JSON.stringify(this.props.detailslist)}{" "}
+                {JSON.stringify(this.props.detailslist)}
+                  <table>
+                    <tr>
+                      <td>order details for {this.props.detailslist && this.props.detailslist[0].order_id}</td>
+                    </tr>
+                {this.props.detailslist.map((item, index) => {
+                  let itemname = item.name
+                  let itemsku = item.sku
+                  let itemcost = Number(item.base_price).toFixed(2);
+                    return (
+                      <>
+                        <tr>
+                          <td>Name: {itemname}</td>
+                        </tr>
+                        <tr>
+                          <td>Sku: {itemsku}</td>
+                        </tr>
+                        <tr>
+                          <td>Price: {itemcost}</td>
+                        </tr>
+                        {item.productdetails.map((product, index) => {
+                          if (product === undefined) {
+                            return;
+                          } else {
+                            let display_name = item.display_name
+                            let display_value = item.display_value;
+                            return ( <>
+                                  <tr>
+                          <td>{display_name}: {display_value}</td>
+                        </tr>
+                        </>
+                            )
+                          }
+                        })}{" "}
+                      </>
+                    );
+                })}{" "}
+                </table>
                 {/* toggles edit window back to not displaying */}
                 <Button onClick={this.toggle} variant="success" type="submit">
                   Close
