@@ -321,10 +321,6 @@ app.post("/orderdetails", (req, res) => {
    
         res.send(response.data);
       })
-      .catch((error) => {
-        console.log(`Error on item query ${error}`);
-        res.sendStatus(500);
-      });})
     .catch(function (error) {
       // handle error
       console.log(error);
