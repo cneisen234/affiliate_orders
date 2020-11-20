@@ -39,7 +39,6 @@ function* getemaillist(action) {
 
 function* gettotallist(action) {
   try {
-    //console.log('we are about to get Students', action.type);
 
     const response = yield axios.get(`/total`);
 
