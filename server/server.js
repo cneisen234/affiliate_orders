@@ -318,11 +318,8 @@ app.post("/orderdetails", (req, res) => {
     )
     .then(function (response) {
       console.log("this is the response", response.data)  
-      const queryText = response.data;
-       pool
-      .query(queryText)
-      .then((result) => {
-        res.send(result.rows);
+   
+        res.send(response.data);
       })
       .catch((error) => {
         console.log(`Error on item query ${error}`);
@@ -332,7 +329,6 @@ app.post("/orderdetails", (req, res) => {
       // handle error
       console.log(error);
     });
-});
 app.get("/email", (req, res) => {
   console.log("We are about to get the item list");
 
