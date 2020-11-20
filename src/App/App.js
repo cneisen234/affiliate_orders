@@ -219,7 +219,6 @@ class App extends Component {
                 overflow: "scroll",
                 fontSize: "15px",
                 backgroundColor: "white",
-                zIndex: Infinity,
               }}
               elevation="24"
               className="loginBox"
