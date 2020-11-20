@@ -77,7 +77,6 @@ class App extends Component {
           ]);
     return (
       <div>
-        {JSON.stringify(this.props.skunumlist)}
         <div style={{ backgroundColor: "white", width: "20%", float: "left" }}>
           <img
             src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
@@ -115,24 +114,24 @@ class App extends Component {
                           event.preventDefault();
                           const itemArray = this.props.itemlist;
                           const item = itemArray[dataIndex];
-                          const order_number = item.order_number
-                          console.log("this is item", item)
-                          console.log("this is order_number", order_number)
+                          const order_number = item.order_number;
+                          console.log("this is item", item);
+                          console.log("this is order_number", order_number);
                           this.setState({
                             toggle: !this.state.toggle,
                             order_number: order_number,
                           });
-                              console.log("this is state", this.state.order_number);
-                              this.props.dispatch({
-                                type: "ORDER_DETAILS",
-                                payload: {
-                                  order_number: order_number,
-                                },
-                              });
-                              console.log(
-                                "this is details",
-                                this.props.detailslist
-                              );
+                          console.log("this is state", this.state.order_number);
+                          this.props.dispatch({
+                            type: "ORDER_DETAILS",
+                            payload: {
+                              order_number: order_number,
+                            },
+                          });
+                          console.log(
+                            "this is details",
+                            this.props.detailslist
+                          );
                         }}
                       >
                         View Details
@@ -226,7 +225,7 @@ class App extends Component {
                   backgroundColor: "white",
                 }}
               >
-                {" "}
+                {JSON.stringify(this.props.detailslist)}{" "}
                 {/* toggles edit window back to not displaying */}
                 <Button onClick={this.toggle} variant="success" type="submit">
                   Close
