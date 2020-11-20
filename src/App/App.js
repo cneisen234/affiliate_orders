@@ -245,10 +245,7 @@ class App extends Component {
                         <tr>
                           <td>Price: {itemcost}</td>
                         </tr>
-                        {item.productdetails.map((product, index) => {
-                          if (product === undefined) {
-                            return;
-                          } else {
+                        {item.product_options.map((product, index) => {
                             let display_name = item.display_name
                             let display_value = item.display_value;
                             return ( <>
@@ -257,7 +254,6 @@ class App extends Component {
                         </tr>
                         </>
                             )
-                          }
                         })}{" "}
                       </>
                     );
