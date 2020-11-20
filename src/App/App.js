@@ -2,11 +2,10 @@ import React, { Component } from "react";
 import "./App.css";
 import MUITable from "../MUITable.js";
 import { connect } from "react-redux";
-import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import moment from "moment";
 import Footer from "../Footer/Footer";
-import { Paper, TextField } from "@material-ui/core";
+import { Paper, TextField, Button, FormControl } from "@material-ui/core";
 
 class App extends Component {
   state = {
@@ -109,7 +108,8 @@ class App extends Component {
                   customBodyRenderLite: (dataIndex, rowIndex) => {
                     return (
                       <Button
-                        variant="success"
+                        variant="contained"
+                        color="primary"
                         onClick={(event) => {
                           event.preventDefault();
                           const itemArray = this.props.itemlist;
@@ -163,7 +163,7 @@ class App extends Component {
         <br />
         <div style={{ padding: "1.5%" }}>
           <center>
-            <h1>Select an Affilate</h1>
+            <h1>Select an Affiliate</h1>
             <Form.Control
               as="select"
               onChange={(event) => this.setState({ email: event.target.value })}
@@ -182,11 +182,12 @@ class App extends Component {
               <center>
                 <Button
                   onClick={(event) => this.checkEmail(event)}
-                  variant="success"
+                  variant="contained"
+                  color="primary"
                   type="submit"
                   style={{ width: "20%", margin: "2%" }}
                 >
-                  Confirm Affilate
+                  Confirm Affiliate
                 </Button>
               </center>
             </Form>
@@ -211,8 +212,9 @@ class App extends Component {
                 bottom: 0,
                 position: "fixed",
                 borderRadius: "10%",
-                height: "400px",
+                height: "600px",
                 width: "400px",
+                overflow: "scroll",
                 fontSize: "15px",
                 backgroundColor: "white",
                 zIndex: Infinity,
@@ -225,15 +227,18 @@ class App extends Component {
                   backgroundColor: "white",
                 }}
               >
-                {JSON.stringify(this.props.detailslist)}
-                  <table>
-                    <tr>
-                      <td>order details for {this.props.detailslist[0] && this.props.detailslist[0].order_id}</td>
-                    </tr>
-                {this.props.detailslist.map((item, index) => {
-                  let itemname = item.name
-                  let itemsku = item.sku
-                  let itemcost = Number(item.base_price).toFixed(2);
+                <table>
+                  <tr>
+                    <td>
+                      order details for{" "}
+                      {this.props.detailslist[0] &&
+                        this.props.detailslist[0].order_id}
+                    </td>
+                  </tr>
+                  {this.props.detailslist.map((item, index) => {
+                    let itemname = item.name;
+                    let itemsku = item.sku;
+                    let itemcost = Number(item.base_price).toFixed(2);
                     return (
                       <>
                         <tr>
@@ -261,16 +266,24 @@ class App extends Component {
                             </>
                           );
                         })}{" "}
-                        <br/>
-                        <br/>
+                        <br />
+                        <br />
                       </>
                     );
-                })}{" "}
+                  })}{" "}
                 </table>
                 {/* toggles edit window back to not displaying */}
-                <Button onClick={this.toggle} variant="success" type="submit">
+                <Button
+                  onClick={this.toggle}
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                >
                   Close
                 </Button>
+                <br />
+                <br />
+                <br />
               </div>
             </Paper>
           )}
