@@ -7,12 +7,6 @@
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -28,11 +22,16 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+table{
+  /*styles for all tables, used mainly for the recommendations layout*/
+  margin-left:auto; 
+    margin-right:auto;
+    margin-top: 20px;
+    width: 100%;
+}
+td {
+  /*table styles and colors*/
+  margin-left: 3%;
+  padding: 10px;
+  width: 25%;
 }

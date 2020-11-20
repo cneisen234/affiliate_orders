@@ -285,10 +285,16 @@ class App extends Component {
                 <br />
                 <br />
                 <br />
+                <br />
+                <br />
+                <br />
               </div>
             </Paper>
           )}
         </div>
+        <br />
+        <br />
+        <br />
         <br />
         <br />
         <br />
