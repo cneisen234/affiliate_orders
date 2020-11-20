@@ -324,7 +324,8 @@ app.post("/orderdetails", (req, res) => {
     .catch(function (error) {
       // handle error
       console.log(error);
-    });
+    })
+});
 app.get("/email", (req, res) => {
   console.log("We are about to get the item list");
 
