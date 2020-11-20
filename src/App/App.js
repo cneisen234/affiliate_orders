@@ -228,9 +228,17 @@ class App extends Component {
                   backgroundColor: "white",
                 }}
               >
-                <table>
+                <table style={{  
+                  marginLeft: "auto", 
+                  marginRight: "auto",
+                  marginTop: "20px",
+                  width: "100%",}}>
                   <tr>
-                    <td>
+                    <td style={{
+                        marginLeft: "3%",
+                        padding: "10px",
+                        width: "25%",
+                    }}>
                       order details for{" "}
                       {this.props.detailslist[0] &&
                         this.props.detailslist[0].order_id}
@@ -243,16 +251,48 @@ class App extends Component {
                     return (
                       <>
                         <tr>
-                          <td>Item: {index + 1}</td>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
+                            Item: {index + 1}
+                          </td>
                         </tr>
                         <tr>
-                          <td>Name: {itemname}</td>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
+                            Name: {itemname}
+                          </td>
                         </tr>
                         <tr>
-                          <td>Sku: {itemsku}</td>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
+                            Sku: {itemsku}
+                          </td>
                         </tr>
                         <tr>
-                          <td>Price: {itemcost}</td>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
+                            Price: {itemcost}
+                          </td>
                         </tr>
                         {item.product_options.map((product, index) => {
                           let display_name = product.display_name;
@@ -260,7 +300,13 @@ class App extends Component {
                           return (
                             <>
                               <tr>
-                                <td>
+                                <td
+                                  style={{
+                                    marginLeft: "3%",
+                                    padding: "10px",
+                                    width: "25%",
+                                  }}
+                                >
                                   {display_name}: {display_value}
                                 </td>
                               </tr>
