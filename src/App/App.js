@@ -121,7 +121,7 @@ class App extends Component {
                             toggle: !this.state.toggle,
                             order_number: order_number,
                           });
-                              console.log("this is state", order_number);
+                              console.log("this is state", this.state.order_number);
                               this.props.dispatch({
                                 type: "ORDER_DETAILS",
                                 payload: {

@@ -316,7 +316,8 @@ app.post("/orderdetails", (req, res) => {
       `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}/products`,
       config
     )
-    .then(function (response) {  
+    .then(function (response) {
+      console.log("this is the response", response.data)  
       const queryText = response.data;
        pool
       .query(queryText)
