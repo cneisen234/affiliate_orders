@@ -307,6 +307,24 @@ app.post("/checkemail", (req, res) => {
           res.sendStatus(500);
         });
 });
+
+app.post("/orderdetails", (req, res) => {
+  let order_number = req.body.order_number;
+  console.log("this is the payload before it reaches the get", order_number);
+  const queryText = axios.get(
+    `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}/products`,
+    config
+  );
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+});
 app.get("/email", (req, res) => {
   console.log("We are about to get the item list");
 

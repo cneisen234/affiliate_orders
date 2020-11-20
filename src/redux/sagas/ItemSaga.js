@@ -67,6 +67,20 @@ function* checkEmail(action) {
   }
 }
 
+function* orderDetails(action) {
+  try {
+    //passes the incoming new student user info from the payload to the server
+    console.log("this is the payload", action.payload);
+    const response = yield axios.post("/orderdetails", action.payload);
+    yield put({
+      type: "SET_DETAILS",
+      payload: response.data,
+    });
+  } catch (error) {
+    yield put({ type: "STUDENT_REGISTRATION_FAILED" });
+  }
+}
+
 
 
 
@@ -74,6 +88,7 @@ function* itemSaga() {
     yield takeLatest('GET_ITEM_LIST', getitemlist);
         yield takeLatest('GET_EMAIL_LIST', getemaillist);
          yield takeLatest('CHECK_EMAIL', checkEmail);
+         yield takeLatest('ORDER_DETAILS', orderDetails);
           yield takeLatest('GET_TOTAL_LIST', gettotallist);
 }
 

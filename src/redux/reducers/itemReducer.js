@@ -25,6 +25,15 @@ const skunumlist = (state = [], action) => {
       return state;
   }
 };
+
+const detailslist = (state = [], action) => {
+  switch (action.type) {
+    case "SET_DETAILS":
+      return action.payload;
+    default:
+      return state;
+  }
+};
 const emaillist = (state = [], action) => {
   switch (action.type) {
     case "SET_EMAIL":
@@ -38,6 +47,7 @@ const emaillist = (state = [], action) => {
 export default combineReducers({
   itemlist,
   skunumlist,
+  detailslist,
   emaillist,
   totallist,
 });

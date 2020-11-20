@@ -12,6 +12,7 @@ class App extends Component {
   state = {
     toggle: false,
     id: "",
+    order_number: "",
     sku: "",
     email: "",
   };
@@ -99,6 +100,44 @@ class App extends Component {
               { name: "Order Total" },
               { name: "Number of items sold" },
               { name: "Date of Sale" },
+              {
+                name: "View Details",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return (
+                      <Button
+                        variant="success"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          const itemArray = this.props.itemlist;
+                          const item = itemArray[dataIndex];
+                          this.setState({
+                            toggle: !this.state.toggle,
+                            order_number: item.order_number,
+                          });
+                              const { order_number } = this.state;
+                              console.log("this is state", order_number);
+                              this.props.dispatch({
+                                type: "ORDER_DETAILS",
+                                payload: {
+                                  order_number: order_number,
+                                },
+                              });
+                              console.log(
+                                "this is details",
+                                this.props.detailslist
+                              );
+                        }}
+                      >
+                        View Details
+                      </Button>
+                    );
+                  },
+                },
+              },
             ]}
             title={"Record of Sales"} //give the table a name
           />
@@ -159,6 +198,39 @@ class App extends Component {
             ]}
             title={`Skus for ${this.state.email}`} //give the table a name
           />
+          {this.state.toggle === false ? (
+            //if toggle is false, render nothing. This is the default
+            <span></span>
+          ) : (
+            //...else render the edit screen for the selected song
+            <Paper
+              style={{
+                right: 0,
+                bottom: 0,
+                position: "fixed",
+                borderRadius: "10%",
+                height: "400px",
+                width: "400px",
+                fontSize: "15px",
+                backgroundColor: "white",
+                zIndex: Infinity,
+              }}
+              elevation="24"
+              className="loginBox"
+            >
+              <div
+                style={{
+                  backgroundColor: "white",
+                }}
+              >
+                {" "}
+                {/* toggles edit window back to not displaying */}
+                <Button onClick={this.toggle} variant="success" type="submit">
+                  Close
+                </Button>
+              </div>
+            </Paper>
+          )}
         </div>
         <br />
         <br />
@@ -173,6 +245,7 @@ const mapStateToProps = (state) => ({
   itemlist: state.item.itemlist,
   skunumlist: state.item.skunumlist,
   emaillist: state.item.emaillist,
+  detailslist: state.item.detailslist,
   totallist: state.item.totallist,
 });
 export default connect(mapStateToProps)(App);
