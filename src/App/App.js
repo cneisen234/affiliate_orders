@@ -228,7 +228,7 @@ class App extends Component {
                 {JSON.stringify(this.props.detailslist)}
                   <table>
                     <tr>
-                      <td>order details for {this.props.detailslist && this.props.detailslist[0].order_id}</td>
+                      <td>order details for {this.props.detailslist[0] && this.props.detailslist[0].order_id}</td>
                     </tr>
                 {this.props.detailslist.map((item, index) => {
                   let itemname = item.name
