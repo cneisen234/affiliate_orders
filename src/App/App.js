@@ -114,6 +114,7 @@ class App extends Component {
                           event.preventDefault();
                           const itemArray = this.props.itemlist;
                           const item = itemArray[dataIndex];
+                          console.log("this is item", item)
                           this.setState({
                             toggle: !this.state.toggle,
                             order_number: item.order_number,
