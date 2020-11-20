@@ -237,6 +237,9 @@ class App extends Component {
                     return (
                       <>
                         <tr>
+                          <td>Item: {index + 1}</td>
+                        </tr>
+                        <tr>
                           <td>Name: {itemname}</td>
                         </tr>
                         <tr>
@@ -246,15 +249,20 @@ class App extends Component {
                           <td>Price: {itemcost}</td>
                         </tr>
                         {item.product_options.map((product, index) => {
-                            let display_name = item.display_name
-                            let display_value = item.display_value;
-                            return ( <>
-                                  <tr>
-                          <td>{display_name}: {display_value}</td>
-                        </tr>
-                        </>
-                            )
+                          let display_name = product.display_name;
+                          let display_value = product.display_value;
+                          return (
+                            <>
+                              <tr>
+                                <td>
+                                  {display_name}: {display_value}
+                                </td>
+                              </tr>
+                            </>
+                          );
                         })}{" "}
+                        <br/>
+                        <br/>
                       </>
                     );
                 })}{" "}
