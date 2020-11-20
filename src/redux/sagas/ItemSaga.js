@@ -72,11 +72,13 @@ function* orderDetails(action) {
     //passes the incoming new student user info from the payload to the server
     console.log("this is the payload", action.payload);
     const response = yield axios.post("/orderdetails", action.payload);
-    console.log("this is response.data in sagas", response.data)
+    console.log("this is response.data in sagas", response.data).then(() => {
     yield put({
       type: "SET_DETAILS",
       payload: response.data,
-    });
+    })
+  })
+    
   } catch (error) {
     yield put({ type: "STUDENT_REGISTRATION_FAILED" });
   }
