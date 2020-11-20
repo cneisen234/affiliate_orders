@@ -114,12 +114,13 @@ class App extends Component {
                           event.preventDefault();
                           const itemArray = this.props.itemlist;
                           const item = itemArray[dataIndex];
+                          const order_number = item.order_number
                           console.log("this is item", item)
+                          console.log("this is order_number", order_number)
                           this.setState({
                             toggle: !this.state.toggle,
-                            order_number: item.order_number,
+                            order_number: order_number,
                           });
-                              const { order_number } = this.state;
                               console.log("this is state", order_number);
                               this.props.dispatch({
                                 type: "ORDER_DETAILS",
