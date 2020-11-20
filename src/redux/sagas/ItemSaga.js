@@ -56,6 +56,7 @@ function* checkEmail(action) {
     //passes the incoming new student user info from the payload to the server
     console.log("this is the payload", action.payload)
     const response = yield axios.post("/checkemail", action.payload);
+     console.log("this is response.data in sagas", response.data)
      yield put({
       type: "SET_SKUNUM",
       payload: response.data,
