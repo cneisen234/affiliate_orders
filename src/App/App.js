@@ -77,6 +77,7 @@ class App extends Component {
           ]);
     return (
       <div>
+        {JSON.stringify(this.props.skunumlist)}
         <div style={{ backgroundColor: "white", width: "20%", float: "left" }}>
           <img
             src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
