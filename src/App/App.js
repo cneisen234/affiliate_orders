@@ -214,6 +214,8 @@ class App extends Component {
                 borderRadius: "10%",
                 height: "600px",
                 width: "400px",
+                zIndex: 1000000,
+                border: "50px",
                 overflow: "scroll",
                 fontSize: "15px",
                 backgroundColor: "white",
