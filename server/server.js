@@ -1,12 +1,12 @@
 const SlackBot = require('slackbots')
+require("dotenv").config();
 const axios = require('axios')
 const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey("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");
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const express = require("express");
 const bodyParser = require("body-parser");
 const pool = require("./pool");
 const app = express();
-require("dotenv").config();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -14,8 +14,8 @@ app.use(express.static("build"));
 
 let config = {
   headers: {
-    "X-Auth-Client": "tw2come9pccgmcr0ybk555jkqcceiih",
-    "X-Auth-Token": "13n6uxj2je2wbnc0vggmz8sqjl93d1d",
+    "X-Auth-Client": process.env.X_AUTH_CLIENT,
+    "X-Auth-Token": process.env.X_AUTH_TOKEN,
   },
 };
   //  if (process.env.NODE_ENV === "production") {
@@ -29,7 +29,7 @@ let config = {
   //    });
   //  }
 const bot = new SlackBot({
-  token: "xoxb-18234618080-1485620851799-hzRxtdbDZJSuh7w7wiTOQ4cF",
+  token: process.env.SLACKBOT_TOKEN,
   name: "AffiliateOrders",
 });
 
@@ -206,18 +206,6 @@ sku = element.sku
                     subject: `Sale details for order ${newOrderNumber}`,
                     html: finalArray,
                   };
-                  //ES6
-                  // sgMail.send(msg).then(
-                  //   () => {},
-                  //   (error) => {
-                  //     console.error(error);
-
-                  //     if (error.response) {
-                  //       console.error(error.response.body);
-                  //     }
-                  //   }
-                  // );
-                  //ES8
                   (async () => {
                     try {
                       await sgMail.send(msg);
