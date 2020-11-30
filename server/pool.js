@@ -29,8 +29,6 @@ if (process.env.DATABASE_URL) {
     password: process.env.PG_PASSWORD,
 host     : "app-27425cfb-c67d-4082-aa02-effa3f0e556e-do-user-8379856-0.b.db.ondigitalocean.com",
 port     : 25060,
-username : "affiliateorders",
-password : "v07lsmgx9ffekd1h",
 database : "affiliateorders",
 sslmode  : "require",
     max: 10, // max number of clients in the pool
