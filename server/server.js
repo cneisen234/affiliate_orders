@@ -38,7 +38,8 @@ let config = {
     res.status(status).send(req.body.challenge);
     console.log("this is running on message to verify challenge")
     } else {
-    console.log(req)
+    console.log(req.body.text)
+    console.log(req.body.channel)
       //   console.log(
       //   `Received a message event: user ${event.user} in channel ${event.channel} says ${event.text}`
       // );
