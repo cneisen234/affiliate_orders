@@ -39,6 +39,13 @@ let config = {
     console.log("this is running on message to verify challenge")
     } else {
     console.log("this is running on message for our main purpose")
+          if (data.type !== "message") {
+          return;
+        }
+          if (data.channel === "C0139RJPUEM" && text.includes("Referral ")) {
+      console.log(
+        `This is running with the correct verification`
+      );
     }
   });
   
@@ -85,13 +92,7 @@ slackEvents.start().then(() => {
       console.log(
         `Received a message event: user ${event.user} in channel ${event.channel} says ${event.text}`
       );
-      //   if (data.type !== "message") {
-      //     return;
-      //   }
-      //     if (data.channel === "C0139RJPUEM" && text.includes("Referral ")) {
-      // console.log(
-      //   `Received a message event: user ${event.user} in channel ${event.channel} says ${event.text}`
-      // );
+  
       // (async () => {
       //   // See: https://api.slack.com/methods/chat.postMessage
       //   const res = await web.chat.postMessage({
