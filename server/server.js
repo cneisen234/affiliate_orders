@@ -31,6 +31,11 @@ let config = {
   //      res.sendFile(path.resolve(__dirname, "public", "index.html"));
   //    });
   //  }
+
+  app.post("/events", async (req, res) => {
+    let status = 200;
+    res.status(status).send(req.body.challenge);
+  });
   
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => {
@@ -65,6 +70,7 @@ slackEvents.start().then(() => {
       });
 
       // `res` contains information about the posted message
+      
       console.log("Message sent: ", res);
     })();
     console.log("bot listening on port", PORT);
@@ -90,7 +96,7 @@ slackEvents.start().then(() => {
         });
 
         // `res` contains information about the posted message
-        console.log("Message sent: ", res.ts);
+        console.log("Message sent: ", res);
       })();
       // }
     });
