@@ -76,7 +76,7 @@ slackEvents.start().then(() => {
     console.log("bot listening on port", PORT);
 });
 
-    slackEvents.on("message.channels", (event) => {
+    slackEvents.on("message.im", (event) => {
       console.log(
         `Received a message event: user ${event.user} in channel ${event.channel} says ${event.text}`
       );
