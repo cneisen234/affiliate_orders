@@ -33,9 +33,13 @@ let config = {
   //  }
 
   app.post("/events", async (req, res) => {
+    if (req.body.challenge) {
     let status = 200;
     res.status(status).send(req.body.challenge);
-    console.log("this is running on message")
+    console.log("this is running on message to verify challenge")
+    } else {
+    console.log("this is running on message for our main purpose")
+    }
   });
   
   const PORT = process.env.PORT || 5000;
