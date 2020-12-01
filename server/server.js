@@ -38,11 +38,11 @@ let config = {
     res.status(status).send(req.body.challenge);
     console.log("this is running on message to verify challenge")
     } else {
-    console.log("this is running on message for our main purpose")
-          if (data.type !== "message") {
+    console.log("this is running on message for our main purpose", req.body)
+          if (req.body.data.type !== "message") {
           return;
         }
-          if (data.channel === "C0139RJPUEM" && text.includes("Referral ")) {
+          if (req.body.data.channel === "C0139RJPUEM" && text.includes("Referral ")) {
       console.log(
         `This is running with the correct verification`
       );
