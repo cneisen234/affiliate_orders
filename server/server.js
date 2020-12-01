@@ -39,14 +39,19 @@ let config = {
     console.log("this is running on message to verify challenge")
     } else {
     console.log(req)
-          if (req.body.data.type !== "message") {
-          return;
-        }
-          if (req.body.data.channel === "C0139RJPUEM" && text.includes("Referral ")) {
-      console.log(
-        `This is running with the correct verification`
-      );
-    }
+      //   console.log(
+      //   `Received a message event: user ${event.user} in channel ${event.channel} says ${event.text}`
+      // );
+    //     if (data.type !== "message") {
+    //       return;
+    //     }
+    //       if (data.channel === "C0139RJPUEM" && text.includes("Referral ")) {
+    //   console.log(
+    //     `Received a message event: user ${event.user} in channel ${event.channel} says ${event.text}`
+    //   );
+      
+    // }
+  }
   });
   
   const PORT = process.env.PORT || 5000;
@@ -89,9 +94,6 @@ slackEvents.start().then(() => {
 });
 
     slackEvents.on("message", (event) => {
-      console.log(
-        `Received a message event: user ${event.user} in channel ${event.channel} says ${event.text}`
-      );
   
       // (async () => {
       //   // See: https://api.slack.com/methods/chat.postMessage
@@ -104,7 +106,7 @@ slackEvents.start().then(() => {
         // `res` contains information about the posted message
         console.log("Message sent: ", res);
       // })();
-      // }
+      
     });
 
 
