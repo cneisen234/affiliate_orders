@@ -88,17 +88,17 @@ slackEvents.start().then(() => {
       // console.log(
       //   `Received a message event: user ${event.user} in channel ${event.channel} says ${event.text}`
       // );
-      (async () => {
-        // See: https://api.slack.com/methods/chat.postMessage
-        const res = await web.chat.postMessage({
-          icon_emoji: ":email:",
-          channel: conversationId,
-          text: "Testing message",
-        });
+      // (async () => {
+      //   // See: https://api.slack.com/methods/chat.postMessage
+      //   const res = await web.chat.postMessage({
+      //     icon_emoji: ":email:",
+      //     channel: conversationId,
+      //     text: "Testing message",
+      //   });
 
         // `res` contains information about the posted message
         console.log("Message sent: ", res);
-      })();
+      // })();
       // }
     });
 
