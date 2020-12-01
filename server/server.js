@@ -28,6 +28,9 @@ let config = {
     res.status(status).send(req.body.challenge);
     console.log("this is running on message to verify challenge")
     } else {
+         let text = req.body.event.text;
+         let channel = req.body.event.channel;
+         let type = req.body.event.type;
         if (type !== "message") {
           return;
         }
