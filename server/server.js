@@ -38,21 +38,22 @@ let config = {
     res.status(status).send(req.body.challenge);
     console.log("this is running on message to verify challenge")
     } else {
-    console.log(req.body.event.text)
-    console.log(req.body.event.channel)
-     console.log(req.body.event.type);
-      //   console.log(
-      //   `Received a message event: user ${event.user} in channel ${event.channel} says ${event.text}`
-      // );
-    //     if (data.type !== "message") {
-    //       return;
-    //     }
-    //       if (data.channel === "C0139RJPUEM" && text.includes("Referral ")) {
-    //   console.log(
-    //     `Received a message event: user ${event.user} in channel ${event.channel} says ${event.text}`
-    //   );
+      let text = req.body.event.text
+      let channel = req.body.event.channel
+      let type = req.body.event.type
+    console.log(text)
+    console.log(channel)
+     console.log(type);
+  
+        if (type !== "message") {
+          return;
+        }
+          if (channel === "C0139RJPUEM" && text.includes("Referral ")) {
+      console.log(
+        `messaged reached here, text: ${text}, channel: ${channel}, type: ${type}`
+      );
       
-    // }
+    }
   }
   });
   
