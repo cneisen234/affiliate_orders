@@ -21,16 +21,6 @@ let config = {
     "X-Auth-Token": process.env.BG_AUTH_TOKEN,
   },
 };
-  //  if (process.env.NODE_ENV === "production") {
-  //    // Exprees will serve up production assets
-  //    app.use(express.static("client/build"));
-
-  //    // Express serve up index.html file if it doesn't recognize route
-  //    const path = require("path");
-  //    app.get("*", (req, res) => {
-  //      res.sendFile(path.resolve(__dirname, "public", "index.html"));
-  //    });
-  //  }
 
   app.post("/events", async (req, res) => {
     if (req.body.challenge) {
@@ -38,13 +28,6 @@ let config = {
     res.status(status).send(req.body.challenge);
     console.log("this is running on message to verify challenge")
     } else {
-      let text = req.body.event.text
-      let channel = req.body.event.channel
-      let type = req.body.event.type
-    console.log(text)
-    console.log(channel)
-     console.log(type);
-  
         if (type !== "message") {
           return;
         }
@@ -71,8 +54,6 @@ let config = {
            console.log("this is newEmail updated", newEmail);
          }
          console.log("this is newEmailIndex", newEmailIndex);
-         // let orderNumberIndex = splitText.indexOf("am\n*Transaction'");
-         // console.log("this is orderNumberIndex", orderNumberIndex);
          let checkIndex2 = splitText.indexOf("Amount:*");
          console.log("this is checkIndex2", checkIndex2);
          let checkIndex3 = splitText.indexOf("ID:*");
@@ -159,52 +140,51 @@ let config = {
                      let joinedArray = newArray.join();
                      let finalArray = titleString + joinedArray;
                      console.log(finalArray);
-                     //now lets add admin information to the user table
-                    //  const queryText =
-                    //    'INSERT INTO "item" (email, order_number, order_total, qty, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING id';
-                    //  pool
-                    //    .query(queryText, [
-                    //      newerEmail,
-                    //      newOrderNumber,
-                    //      order_total,
-                    //      qty,
-                    //      created_at,
-                    //    ])
+                     const queryText =
+                       'INSERT INTO "item" (email, order_number, order_total, qty, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING id';
+                     pool
+                       .query(queryText, [
+                         newerEmail,
+                         newOrderNumber,
+                         order_total,
+                         qty,
+                         created_at,
+                       ])
 
-                      //  .catch(function (error) {
-                      //    console.log("Sorry, there is an error", error);
-                      //    res.sendStatus(500);
-                      //  });
-                    //  const msg = {
-                    //    personalizations: [
-                    //      {
-                    //        to: [
-                    //          {
-                    //            email: newerEmail,
-                    //          },
-                    //        ],
-                    //        bcc: [
-                    //          {
-                    //            email: "chris.neisen@heattransferwarehouse.com",
-                    //          },
-                    //        ],
-                    //      },
-                    //    ],
-                    //    from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
-                    //    subject: `Sale details for order ${newOrderNumber}`,
-                    //    html: finalArray,
-                    //  };
-                    //  (async () => {
-                    //    try {
-                    //      await sgMail.send(msg);
-                    //    } catch (error) {
-                    //      console.error(error);
+                       .catch(function (error) {
+                         console.log("Sorry, there is an error", error);
+                         res.sendStatus(500);
+                       });
+                     const msg = {
+                       personalizations: [
+                         {
+                           to: [
+                             {
+                               email: newerEmail,
+                             },
+                           ],
+                           bcc: [
+                             {
+                               email: "chris.neisen@heattransferwarehouse.com",
+                             },
+                           ],
+                         },
+                       ],
+                       from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
+                       subject: `Sale details for order ${newOrderNumber}`,
+                       html: finalArray,
+                     };
+                     (async () => {
+                       try {
+                         await sgMail.send(msg);
+                       } catch (error) {
+                         console.error(error);
 
-                    //      if (error.response) {
-                    //        console.error(error.response.body);
-                    //      }
-                    //    }
-                    //  })();
+                         if (error.response) {
+                           console.error(error.response.body);
+                         }
+                       }
+                     })();
                    }
                     (async () => {
                       // See: https://api.slack.com/methods/chat.postMessage
@@ -244,6 +224,8 @@ let config = {
              console.log(error);
            });
       
+    } else {
+      return;
     }
   }
   });
@@ -267,7 +249,7 @@ slackEvents.start().then(() => {
       const res = await web.chat.postMessage({
         icon_emoji: ":email:",
         channel: conversationId,
-        text: "Testing connection",
+        text: "Connected",
       });
 
       // `res` contains information about the posted message
