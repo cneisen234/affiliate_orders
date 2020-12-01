@@ -38,7 +38,7 @@ let config = {
     res.status(status).send(req.body.challenge);
     console.log("this is running on message to verify challenge")
     } else {
-    console.log("this is running on message for our main purpose", req.body)
+    console.log(req)
           if (req.body.data.type !== "message") {
           return;
         }
