@@ -28,6 +28,8 @@ let config = {
     res.status(status).send(req.body.challenge);
     console.log("this is running on message to verify challenge")
     } else {
+        let status = 200;
+        res.sendStatus(status)
          let text = req.body.event.text;
          let channel = req.body.event.channel;
          let type = req.body.event.type;
@@ -118,14 +120,14 @@ let config = {
 <div>SKU Number: ${element.sku}</div>`);
                        sku = element.sku;
                        let options = element.product_options;
-                      //  const query2Text =
-                      //    'INSERT INTO "sku" (email, order_number, sku, created_at) VALUES ($1, $2, $3, $4) RETURNING id';
-                      //  pool.query(query2Text, [
-                      //    newerEmail,
-                      //    newOrderNumber,
-                      //    sku,
-                      //    created_at,
-                      //  ]);
+                       const query2Text =
+                         'INSERT INTO "sku" (email, order_number, sku, created_at) VALUES ($1, $2, $3, $4) RETURNING id';
+                       pool.query(query2Text, [
+                         newerEmail,
+                         newOrderNumber,
+                         sku,
+                         created_at,
+                       ]);
                        for (let j = 0; j < options.length; j++) {
                          const opt = options[j];
                          optionsArray.push(
@@ -143,65 +145,65 @@ let config = {
                      let joinedArray = newArray.join();
                      let finalArray = titleString + joinedArray;
                      console.log(finalArray);
-                    //  const queryText =
-                    //    'INSERT INTO "item" (email, order_number, order_total, qty, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING id';
-                    //  pool
-                    //    .query(queryText, [
-                    //      newerEmail,
-                    //      newOrderNumber,
-                    //      order_total,
-                    //      qty,
-                    //      created_at,
-                    //    ])
+                     const queryText =
+                       'INSERT INTO "item" (email, order_number, order_total, qty, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING id';
+                     pool
+                       .query(queryText, [
+                         newerEmail,
+                         newOrderNumber,
+                         order_total,
+                         qty,
+                         created_at,
+                       ])
 
-                      //  .catch(function (error) {
-                      //    console.log("Sorry, there is an error", error);
-                      //    res.sendStatus(500);
-                      //  });
-                    //  const msg = {
-                    //    personalizations: [
-                    //      {
-                    //        to: [
-                    //          {
-                    //            email: newerEmail,
-                    //          },
-                    //        ],
-                    //        bcc: [
-                    //          {
-                    //            email: "chris.neisen@heattransferwarehouse.com",
-                    //          },
-                    //        ],
-                    //      },
-                    //    ],
-                    //    from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
-                    //    subject: `Sale details for order ${newOrderNumber}`,
-                    //    html: finalArray,
-                    //  };
-                    //  (async () => {
-                    //    try {
-                    //      await sgMail.send(msg);
-                    //    } catch (error) {
-                    //      console.error(error);
+                       .catch(function (error) {
+                         console.log("Sorry, there is an error", error);
+                         res.sendStatus(500);
+                       });
+                     const msg = {
+                       personalizations: [
+                         {
+                           to: [
+                             {
+                               email: newerEmail,
+                             },
+                           ],
+                           bcc: [
+                             {
+                               email: "chris.neisen@heattransferwarehouse.com",
+                             },
+                           ],
+                         },
+                       ],
+                       from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
+                       subject: `Sale details for order ${newOrderNumber}`,
+                       html: finalArray,
+                     };
+                     (async () => {
+                       try {
+                         await sgMail.send(msg);
+                       } catch (error) {
+                         console.error(error);
 
-                    //      if (error.response) {
-                    //        console.error(error.response.body);
-                    //      }
-                    //    }
-                    //  })();
+                         if (error.response) {
+                           console.error(error.response.body);
+                         }
+                       }
+                     })();
                    }
-                    // (async () => {
-                    //   // See: https://api.slack.com/methods/chat.postMessage
-                    //   const res = await web.chat.postMessage({
-                    //     icon_emoji: ":email:",
-                    //     channel: conversationId,
-                    //     text:
-                    //       `Order details have been emailed to ${newerEmail}`,
-                    //   });
+                    (async () => {
+                      // See: https://api.slack.com/methods/chat.postMessage
+                      const res = await web.chat.postMessage({
+                        icon_emoji: ":email:",
+                        channel: conversationId,
+                        text:
+                          `Order details have been emailed to ${newerEmail}`,
+                      });
 
-                    //   // `res` contains information about the posted message
+                      // `res` contains information about the posted message
 
-                    //   console.log("Message sent");
-                    // })();
+                      console.log("Message sent");
+                    })();
                 
                  })
                  .catch(function (error) {
