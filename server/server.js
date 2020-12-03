@@ -118,6 +118,17 @@ let config = {
                      if (nowMonth === 1) {
                        prevYear = moment().year() - 1;
                      }
+                      let normalHour = Number(hour);
+                      let AmPm = "am";
+                      if (normalHour > 12) {
+                        AmPm = "pm";
+                        normalHour = normalHour - 12;
+                      } else if (normalHour === 12) {
+                        AmPm = "pm";
+                      } else if (normalHour === 00) {
+                        AmPm = "am";
+                        normalHour = 12;
+                      }
                console.log(response.data);
                console.log(response.data.date_created);
                let created_at = `Date: ${nowMonth}/${nowDay}/${nowYear} Time: ${normalHour}:${min}:${sec}${AmPm}`;
