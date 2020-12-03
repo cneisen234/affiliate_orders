@@ -303,7 +303,7 @@ slackEvents.start().then(() => {
 app.get("/itemlist", (req, res) => {
   console.log("We are about to get the item list");
 
-  const queryText = `SELECT * FROM "item";`;
+  const queryText = `select * from "item" ORDER BY id DESC`;
   pool
     .query(queryText)
     .then((result) => {
