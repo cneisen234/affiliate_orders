@@ -6,6 +6,7 @@ const { RTMClient } = require("@slack/rtm-api");
 const axios = require('axios')
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const moment = require("moment");
 const express = require("express");
 const bodyParser = require("body-parser");
 const pool = require("./pool");
@@ -95,9 +96,31 @@ let config = {
            .then(function (response) {
              // handle success
              if (response.data !== []) {
+                     let nowMonth =
+                       Number(moment().subtract(6, "hours").month()) + 1;
+                     let nowYear = Number(moment().subtract(6, "hours").year());
+                     let prevYear = Number(
+                       moment().subtract(6, "hours").year()
+                     );
+                     let nowDay = Number(moment().subtract(6, "hours").date());
+                     let hour = Number(moment().subtract(6, "hours").hour());
+                     let min = Number(moment().subtract(6, "hours").minute());
+                     let sec = Number(moment().subtract(6, "hours").second());
+                     if (hour < 10) {
+                       hour = "0" + String(hour);
+                     }
+                     if (min < 10) {
+                       min = "0" + String(min);
+                     }
+                     if (sec < 10) {
+                       sec = "0" + String(sec);
+                     }
+                     if (nowMonth === 1) {
+                       prevYear = moment().year() - 1;
+                     }
                console.log(response.data);
                console.log(response.data.date_created);
-               let created_at = response.data.date_created;
+               let created_at = `Date: ${nowMonth}/${nowDay}/${nowYear} Time: ${normalHour}:${min}:${sec}${AmPm}`;
                console.log(response.data.subtotal_ex_tax);
                let order_total = response.data.subtotal_ex_tax;
                axios
