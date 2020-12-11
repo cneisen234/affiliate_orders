@@ -25,6 +25,12 @@ class App extends Component {
              this.props.dispatch({
                type: "GET_TOTAL_LIST",
              });
+              this.props.dispatch({
+                type: "DELETE_ITEM_RANGE",
+              });
+              this.props.dispatch({
+                type: "DELETE_SKU_RANGE",
+              });
   }
   handleChange = (event, fieldName) => {
     this.setState({ [fieldName]: event.target.value }); //sets to value of targeted event

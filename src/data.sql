@@ -5,7 +5,8 @@ CREATE TABLE "item"
     "order_number" VARCHAR(100),
     "order_total" VARCHAR(100),
     "qty" INT,
-    "created_at" VARCHAR(255)
+    "created_at" VARCHAR(255),
+    "timestamp" DATE NOT NULL DEFAULT NOW()
 ); 
 
 CREATE TABLE "sku"
@@ -14,7 +15,8 @@ CREATE TABLE "sku"
     "email" VARCHAR(255),
     "order_number" VARCHAR(100),
     "sku" varchar(50),
-    "created_at" VARCHAR(255)
+    "created_at" VARCHAR(255),
+    "timestamp" DATENOT NULL DEFAULT NOW()
 ); 
 
 

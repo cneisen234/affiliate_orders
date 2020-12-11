@@ -23,6 +23,32 @@ let config = {
   },
 };
 
+let daterange = moment().subtract(6, "hours").subtract(1, "years");
+
+app.delete("/deleteitemrange", (req, res) => {
+  pool
+    .query('DELETE FROM "item" WHERE timestamp<=$1', [daterange])
+    .then((result) => {
+      res.sendStatus(204); //No Content
+    })
+    .catch((error) => {
+      console.log("Error DELETE ", error);
+      res.sendStatus(500);
+    });
+});
+
+app.delete("/deleteskurange", (req, res) => {
+  pool
+    .query('DELETE FROM "sku" WHERE timestamp<=$1', [daterange])
+    .then((result) => {
+      res.sendStatus(204); //No Content
+    })
+    .catch((error) => {
+      console.log("Error DELETE ", error);
+      res.sendStatus(500);
+    });
+});
+
   app.post("/events", async (req, res) => {
     if (req.body.challenge) {
     let status = 200;

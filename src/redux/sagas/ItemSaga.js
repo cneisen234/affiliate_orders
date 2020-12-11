@@ -84,6 +84,33 @@ function* orderDetails(action) {
   }
 }
 
+function* deleteItemRange(action) {
+  try {
+    console.log("we are about to delete everything from 1 year ago", action.payload);
+    yield axios.delete(`/deleteitemrange`);
+
+    yield put({ type: "GET_ITEM_LIST" });
+    yield put({ type: "GET_EMAIL_LIST" });
+  
+  } catch (error) {
+    console.log("Error with adding a new item:", error);
+  }
+}
+
+function* deleteSkuRange(action) {
+  try {
+    console.log(
+      "we are about to delete everything from 1 year ago",
+      action.payload
+    );
+    yield axios.delete(`/deleteskurange`);
+
+    yield put({ type: "GET_TOTAL_LIST" });
+  } catch (error) {
+    console.log("Error with adding a new item:", error);
+  }
+}
+
 
 
 
@@ -93,6 +120,8 @@ function* itemSaga() {
          yield takeLatest('CHECK_EMAIL', checkEmail);
          yield takeLatest('ORDER_DETAILS', orderDetails);
           yield takeLatest('GET_TOTAL_LIST', gettotallist);
+          yield takeLatest('DELETE_ITEM_RANGE', deleteItemRange);
+          yield takeLatest('DELETE_SKU_RANGE', deleteSkuRange);
 }
 
 export default itemSaga;
