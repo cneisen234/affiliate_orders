@@ -23,6 +23,142 @@ let config = {
   },
 };
 
+
+app.get("/orderdetails1", (req, res) => {
+  axios
+    .get(
+      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=1`,
+      config
+    )
+    .then(function (response) {
+      res.send(response.data);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    });
+});
+
+app.get("/orderdetails2", (req, res) => {
+  axios
+    .get(
+      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=2`,
+      config
+    )
+    .then(function (response) {
+      res.send(response.data);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    });
+});
+
+app.get("/orderdetails3", (req, res) => {
+  axios
+    .get(
+      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=3`,
+      config
+    )
+    .then(function (response) {
+      res.send(response.data);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    });
+});
+
+app.get("/orderdetails4", (req, res) => {
+  axios
+    .get(
+      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=4`,
+      config
+    )
+    .then(function (response) {
+      res.send(response.data);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    });
+});
+
+app.get("/orderdetails5", (req, res) => {
+  axios
+    .get(
+      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=5`,
+      config
+    )
+    .then(function (response) {
+      res.send(response.data);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    });
+});
+
+app.get("/orderdetails6", (req, res) => {
+  axios
+    .get(
+      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=6`,
+      config
+    )
+    .then(function (response) {
+      res.send(response.data);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    });
+});
+
+app.get("/orderdetails7", (req, res) => {
+  axios
+    .get(
+      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=7`,
+      config
+    )
+    .then(function (response) {
+      res.send(response.data);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    });
+});
+
+app.get("/orderdetails8", (req, res) => {
+  axios
+    .get(
+      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=8`,
+      config
+    )
+    .then(function (response) {
+      res.send(response.data);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    });
+});
+
+app.get("/orderdetails9", (req, res) => {
+  axios
+    .get(
+      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=9`,
+      config
+    )
+    .then(function (response) {
+      res.send(response.data);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    });
+});
+
 let daterange = moment().subtract(6, "hours").subtract(1, "years");
 
 app.delete("/deleteitemrange", (req, res) => {
