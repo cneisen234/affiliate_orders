@@ -770,7 +770,7 @@ class App extends Component {
                 { name: "Inventory Level" },
                 { name: "Number of customer views" },
                 {
-                  name: "Data last viewed",
+                  name: "Date last viewed",
                   options: {
                     filter: false,
                     sort: false,
@@ -783,7 +783,7 @@ class App extends Component {
                         const element = viewedArray[index];
                       if (element.sku === item.sku) {
                       return (
-                        <>{moment(element.timestamp).format("MMM Do YY")}</>
+                        <>{moment(element.timestamp).add(6, "hours").format("MMM Do YY")}</>
                       );
                       }
                     }
