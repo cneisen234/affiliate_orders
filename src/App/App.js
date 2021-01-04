@@ -783,7 +783,7 @@ class App extends Component {
                         const element = viewedArray[index];
                       if (element.sku === item.sku) {
                       return (
-                        <>{moment(element.timestamp).subtract(6, "hours").format("MMM Do YY")}</>
+                        <>{moment(element.timestamp).format("MMM Do YY")}</>
                       );
                       }
                     }
