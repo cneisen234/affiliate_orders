@@ -4,13 +4,15 @@ import MUITable from "../MUITable.js";
 import { connect } from "react-redux";
 import Form from "react-bootstrap/Form";
 import moment from "moment";
+import RadioButtonCheckedIcon from "@material-ui/icons/RadioButtonChecked";
+import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
 import Footer from "../Footer/Footer";
 import { Paper, TextField, Button, FormControl } from "@material-ui/core";
 
 class App extends Component {
   state = {
     toggle: false,
-    toggle2: false,
+    toggle2: true,
     id: "",
     order_number: "",
     sku: "",
@@ -18,6 +20,9 @@ class App extends Component {
     data: [],
   };
   componentDidMount() {
+      this.props.dispatch({
+        type: "GET_VIEWED",
+      });
     this.props.dispatch({
       type: "ORDER_DETAILS1",
     });
@@ -682,10 +687,109 @@ class App extends Component {
               data={stockdata} //brings in data as an array, in this case, list of items
               columns={[
                 //names the columns found on MUI table
+                {
+                  name: "Mark as Viewed",
+                  options: {
+                    filter: false,
+                    sort: false,
+                    empty: true,
+                    customBodyRenderLite: (dataIndex, rowIndex) => {
+                         const itemArray = this.state.data;
+                         const item = itemArray[dataIndex];
+                                const viewedArray = this.props.viewed;
+                                for (
+                                  let index = 0;
+                                  index < viewedArray.length;
+                                  index++
+                                ) { 
+                                
+                                  const element = viewedArray[index];
+                                  if (element.sku === item.sku) {
+                                    return (       
+                                    <>
+                                        <Button
+                                          variant="contained"
+                                          color="primary"
+                                          id={dataIndex}
+                                          style={{ cursor: "pointer" }}
+                                          name=""
+                                          value=""
+                                          onClick={(event) => {
+                                            const itemArray = this.state.data;
+                                            const item = itemArray[dataIndex];
+                                            this.props.dispatch({
+                                              type: "MARK_UNVIEWED",
+                                              payload: item.sku,
+                                            
+                                            });
+                                            this.props.dispatch({
+                                              type: "GET_VIEWED",
+                                            });
+                                          }}
+                                        >
+                                          <RadioButtonCheckedIcon></RadioButtonCheckedIcon>
+                                        </Button>
+                                      </>)
+                                  }
+                                }
+                                       return (
+                                         <>
+                                           <Button
+                                             variant="contained"
+                                             color="primary"
+                                             id={dataIndex}
+                                             style={{ cursor: "pointer" }}
+                                             name=""
+                                             value=""
+                                             onClick={(event) => {
+                                               const itemArray = this.state
+                                                 .data;
+                                               const item =
+                                                 itemArray[dataIndex];
+                                               this.props.dispatch({
+                                                 type: "MARK_VIEWED",
+                                                 payload: {
+                                                   sku: item.sku,
+                                                 },
+                                               });
+                                               this.props.dispatch({
+                                                 type: "GET_VIEWED",
+                                               });
+                                             }}
+                                           >
+                                             <RadioButtonUncheckedIcon></RadioButtonUncheckedIcon>
+                                           </Button>
+                                         </>
+                                       );    
+                                  
+                    },
+                  },
+                },
                 { name: "Item Name" },
                 { name: "SKU" },
                 { name: "Inventory Level" },
                 { name: "Number of customer views" },
+                {
+                  name: "Data last viewed",
+                  options: {
+                    filter: false,
+                    sort: false,
+                    empty: true,
+                    customBodyRenderLite: (dataIndex, rowIndex) => {
+                      const itemArray = this.state.data;
+                      const item = itemArray[dataIndex];
+                      const viewedArray = this.props.viewed
+                      for (let index = 0; index < viewedArray.length; index++) {
+                        const element = viewedArray[index];
+                      if (element.sku === item.sku) {
+                      return (
+                        <>{moment(element.timestamp).subtract(6, "hours").format("MMM Do YY")}</>
+                      );
+                      }
+                    }
+                    },
+                  },
+                },
               ]}
               title={`${stockdata.length} Currently at 0 stock`} //give the table a name
             />
@@ -704,6 +808,7 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  viewed: state.item.viewed,
   itemlist: state.item.itemlist,
   skunumlist: state.item.skunumlist,
   emaillist: state.item.emaillist,

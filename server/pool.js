@@ -27,10 +27,12 @@ if (process.env.DATABASE_URL) {
   config = {
     user: process.env.PG_USER,
     password: process.env.PG_PASSWORD,
-host     : "app-27425cfb-c67d-4082-aa02-effa3f0e556e-do-user-8379856-0.b.db.ondigitalocean.com",
-port     : 25060,
-database : "affiliateorders",
-sslmode  : "require",
+    host:
+      "localhost" ||
+      "app-27425cfb-c67d-4082-aa02-effa3f0e556e-do-user-8379856-0.b.db.ondigitalocean.com",
+    port: 5432 || 25060,
+    database: "affiliate_orders" || "affiliateorders",
+    sslmode: "require",
     max: 10, // max number of clients in the pool
     idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
   };

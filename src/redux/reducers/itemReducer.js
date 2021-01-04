@@ -17,6 +17,15 @@ const totallist = (state = [], action) => {
       return state;
   }
 };
+
+const viewed = (state = [], action) => {
+  switch (action.type) {
+    case "SET_VIEWED":
+      return action.payload;
+    default:
+      return state;
+  }
+};
 const skunumlist = (state = [], action) => {
   switch (action.type) {
     case "SET_SKUNUM":
@@ -127,6 +136,7 @@ const detailslist9 = (state = [], action) => {
 
 
 export default combineReducers({
+  viewed,
   itemlist,
   skunumlist,
   detailslist,

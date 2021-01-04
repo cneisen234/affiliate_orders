@@ -19,6 +19,13 @@ CREATE TABLE "sku"
     "timestamp" DATENOT NULL DEFAULT NOW()
 ); 
 
+CREATE TABLE "viewed"
+(
+    "id" serial primary key,
+    "sku" varchar(50),
+    "timestamp" DATE NOT NULL DEFAULT NOW()
+); 
+
 
 /*to select how many items each affilate has sold total*/
 SELECT array_agg(DISTINCT email) as email, COUNT(*)

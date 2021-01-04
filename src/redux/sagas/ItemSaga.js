@@ -177,6 +177,19 @@ function* gettotallist(action) {
   }
 }
 
+function* getviewed(action) {
+  try {
+    const response = yield axios.get(`/getviewed`);
+
+    yield put({
+      type: "SET_VIEWED",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
+
 function* checkEmail(action) {
   try {
     //passes the incoming new student user info from the payload to the server
@@ -237,6 +250,24 @@ function* deleteSkuRange(action) {
   }
 }
 
+  function* markViewed(action) {
+    try {
+      yield axios.post("/viewed", action.payload);
+      yield put({ type: "GET_VIEWED" });
+    } catch (error) {
+      console.log("Error with editing an item:", error);
+    }
+  }
+
+    function* markUnviewed(action) {
+      try {
+        yield axios.delete(`/unviewed/${action.payload}`)
+        yield put({ type: "GET_VIEWED" });
+      } catch (error) {
+        console.log("Error with editing an item:", error);
+      }
+    }
+
 
 
 
@@ -246,8 +277,11 @@ function* itemSaga() {
          yield takeLatest('CHECK_EMAIL', checkEmail);
          yield takeLatest('ORDER_DETAILS', orderDetails);
           yield takeLatest('GET_TOTAL_LIST', gettotallist);
+          yield takeLatest('GET_VIEWED', getviewed);
           yield takeLatest('DELETE_ITEM_RANGE', deleteItemRange);
           yield takeLatest('DELETE_SKU_RANGE', deleteSkuRange);
+              yield takeLatest('MARK_VIEWED', markViewed);
+              yield takeLatest('MARK_UNVIEWED', markUnviewed);
           yield takeLatest('ORDER_DETAILS1', orderDetails1);
          yield takeLatest('ORDER_DETAILS2', orderDetails2);
          yield takeLatest('ORDER_DETAILS3', orderDetails3);

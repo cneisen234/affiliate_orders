@@ -494,6 +494,50 @@ app.get("/total", (req, res) => {
     });
 });
 
+app.get("/getviewed", (req, res) => {
+  console.log("We are about to get the item list");
+
+  const queryText = `SELECT * FROM viewed`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+});
+
+app.post("/viewed", (req, res) => {
+  //api to set priority of new stock items
+  const { sku } = req.body;
+  const queryText = 'INSERT INTO "viewed" (sku) VALUES ($1)';
+
+  pool
+    .query(queryText, [sku])
+    .then((result) => {
+      res.sendStatus(204); //No Content
+    })
+    .catch((error) => {
+      console.log("Error UPDATE ", error);
+      res.sendStatus(500);
+    });
+});
+
+app.delete("/unviewed/:id", (req, res) => {
+  //api to set priority of new stock items
+ pool
+   .query('DELETE FROM "viewed" WHERE sku=$1', [req.params.id])
+   .then((result) => {
+     res.sendStatus(204); //No Content
+   })
+   .catch((error) => {
+     console.log("Error DELETE ", error);
+     res.sendStatus(500);
+   });
+});
+
 app.post("/checkemail", (req, res) => {
   let skuinfo = req.body; 
       let {
