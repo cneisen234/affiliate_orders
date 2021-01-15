@@ -344,7 +344,7 @@ app.delete("/deleteskurange", (req, res) => {
                        let optionsJoined = optionsArray.join("");
                        newArray.push(optionsJoined);
                        newArray.push(
-                         "</table>"
+                         "</table><br><br><br>"
                        );
                        optionsArray = [];
                        qty = array.length;
