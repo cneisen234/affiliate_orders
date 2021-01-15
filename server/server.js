@@ -304,16 +304,27 @@ app.delete("/deleteskurange", (req, res) => {
                  .then(function (response) {
                    // handle success
                    if (response.data !== []) {
-                     let titleString = `<div>The following are the order details for your recent sale</div>
-<div>Order number: ${newOrderNumber} </br></br>`;
+                     
+                     let titleString = `  <div><img
+        src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
+       width="150"
+      /></div>
+                     <div style="color:black; padding-left: 30px; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>The following are the order details for your recent sale</div>
+<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Order number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${newOrderNumber} </td></tr>`;
                      let array = response.data;
                      let newArray = [];
                      let optionsArray = [];
                      for (let index = 0; index < array.length; index++) {
                        const element = array[index];
-                       newArray.push(`<div>Item ${index + 1}</div>
-<div>Item Name: ${element.name}</div>
-<div>SKU Number: ${element.sku}</div>`);
+                       newArray.push(`<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${
+                         index + 1
+                       }</td></tr>
+<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${
+                         element.name
+                       }</td></tr>
+<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">SKU Number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${
+                         element.sku
+                       }</td></tr>`);
                        sku = element.sku;
                        let options = element.product_options;
                        const query2Text =
@@ -327,13 +338,13 @@ app.delete("/deleteskurange", (req, res) => {
                        for (let j = 0; j < options.length; j++) {
                          const opt = options[j];
                          optionsArray.push(
-                           `<div>${opt.display_name}: ${opt.display_value}</div>`
+                           `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${opt.display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
                          );
                        }
                        let optionsJoined = optionsArray.join();
                        newArray.push(optionsJoined);
                        newArray.push(
-                         "<br><br> --------------------------------------------"
+                         "</table>"
                        );
                        optionsArray = [];
                        qty = array.length;

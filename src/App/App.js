@@ -20,9 +20,9 @@ class App extends Component {
     data: [],
   };
   componentDidMount() {
-      this.props.dispatch({
-        type: "GET_VIEWED",
-      });
+    this.props.dispatch({
+      type: "GET_VIEWED",
+    });
     this.props.dispatch({
       type: "ORDER_DETAILS1",
     });
@@ -68,25 +68,25 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    
     if (this.props.detailslist1 !== prevProps.detailslist1) {
       let data = this.state.data;
       let { detailslist1 } = this.props;
-      detailslist1 && detailslist1.data.map((item) => {
-        let sku = String(item.sku)
-        let name = String(item.name)
-        let skuCheck = sku.slice(0, 2)
-        console.log("checkSku", skuCheck)
-        console.log("name", name, );
-        if (
-          item.is_visible === true
-        ) {
-          if (skuCheck === "CS" && name.includes("PSV") === true) {
-            console.log("skipping this one")
-          } else {
-            data.push(item);
+      detailslist1 &&
+        detailslist1.data.map((item) => {
+          let sku = String(item.sku);
+          let name = String(item.name);
+          let skuCheck = sku.slice(0, 2);
+          console.log("checkSku", skuCheck);
+          console.log("name", name);
+          if (item.is_visible === true) {
+              if (skuCheck === "CS" && name.includes("PSV") === true) {
+                console.log("skipping this one");
+              } else {
+                data.push(item);
+              }
           }
-        }
-      });
+        });
       this.setState({
         data: data,
       });
@@ -97,18 +97,16 @@ class App extends Component {
       let { detailslist2 } = this.props;
       detailslist2 &&
         detailslist2.data.map((item) => {
-         let sku = String(item.sku);
-         let name = String(item.name);
-             let skuCheck = sku.slice(0, 2);
-             if (
-               item.is_visible === true 
-             ) {
-                 if (skuCheck === "CS" && name.includes("PSV") === true) {
-                   console.log("skipping this one");
-                 } else {
-                   data.push(item);
-                 }
-             }
+          let sku = String(item.sku);
+          let name = String(item.name);
+          let skuCheck = sku.slice(0, 2);
+          if (item.is_visible === true) {
+              if (skuCheck === "CS" && name.includes("PSV") === true) {
+                console.log("skipping this one");
+              } else {
+                data.push(item);
+              }
+          }
         });
       this.setState({
         data: data,
@@ -122,16 +120,14 @@ class App extends Component {
         detailslist3.data.map((item) => {
           let sku = String(item.sku);
           let name = String(item.name);
-              let skuCheck = sku.slice(0, 2);
-              if (
-                item.is_visible === true 
-              ) {
-                  if (skuCheck === "CS" && name.includes("PSV") === true) {
-                    console.log("skipping this one");
-                  } else {
-                    data.push(item);
-                  }
+          let skuCheck = sku.slice(0, 2);
+          if (item.is_visible === true) {
+              if (skuCheck === "CS" && name.includes("PSV") === true) {
+                console.log("skipping this one");
+              } else {
+                data.push(item);
               }
+          }
         });
       this.setState({
         data: data,
@@ -143,18 +139,16 @@ class App extends Component {
       let { detailslist4 } = this.props;
       detailslist4 &&
         detailslist4.data.map((item) => {
-               let sku = String(item.sku);
-               let name = String(item.name);
-              let skuCheck = sku.slice(0, 2);
-              if (
-                item.is_visible === true
-              ) {
-                  if (skuCheck === "CS" && name.includes("PSV") === true) {
-                    console.log("skipping this one");
-                  } else {
-                    data.push(item);
-                  }
+          let sku = String(item.sku);
+          let name = String(item.name);
+          let skuCheck = sku.slice(0, 2);
+          if (item.is_visible === true) {
+              if (skuCheck === "CS" && name.includes("PSV") === true) {
+                console.log("skipping this one");
+              } else {
+                data.push(item);
               }
+          }
         });
       this.setState({
         data: data,
@@ -166,18 +160,16 @@ class App extends Component {
       let { detailslist5 } = this.props;
       detailslist5 &&
         detailslist5.data.map((item) => {
-           let sku = String(item.sku);
-           let name = String(item.name);
-             let skuCheck = sku.slice(0, 2);
-             if (
-               item.is_visible === true
-             ) {
-                if (skuCheck === "CS" && name.includes("PSV") === true) {
-                  console.log("skipping this one");
-                } else {
-                  data.push(item);
-                }
-             }
+          let sku = String(item.sku);
+          let name = String(item.name);
+          let skuCheck = sku.slice(0, 2);
+          if (item.is_visible === true) {
+              if (skuCheck === "CS" && name.includes("PSV") === true) {
+                console.log("skipping this one");
+              } else {
+                data.push(item);
+              }
+          }
         });
       this.setState({
         data: data,
@@ -189,18 +181,16 @@ class App extends Component {
       let { detailslist6 } = this.props;
       detailslist6 &&
         detailslist6.data.map((item) => {
-             let sku = String(item.sku);
-             let name = String(item.name);
-              let skuCheck = sku.slice(0, 2);
-              if (
-                item.is_visible === true
-              ) {
-                  if (skuCheck === "CS" && name.includes("PSV") === true) {
-                    console.log("skipping this one");
-                  } else {
-                    data.push(item);
-                  }
+          let sku = String(item.sku);
+          let name = String(item.name);
+          let skuCheck = sku.slice(0, 2);
+          if (item.is_visible === true) {
+              if (skuCheck === "CS" && name.includes("PSV") === true) {
+                console.log("skipping this one");
+              } else {
+                data.push(item);
               }
+          }
         });
       this.setState({
         data: data,
@@ -212,18 +202,16 @@ class App extends Component {
       let { detailslist7 } = this.props;
       detailslist7 &&
         detailslist7.data.map((item) => {
-             let sku = String(item.sku);
-             let name = String(item.name);
-              let skuCheck = sku.slice(0, 2);
-              if (
-                item.is_visible === true
-              ) {
-                  if (skuCheck === "CS" && name.includes("PSV") === true) {
-                    console.log("skipping this one");
-                  } else {
-                    data.push(item);
-                  }
+          let sku = String(item.sku);
+          let name = String(item.name);
+          let skuCheck = sku.slice(0, 2);
+          if (item.is_visible === true) {
+              if (skuCheck === "CS" && name.includes("PSV") === true) {
+                console.log("skipping this one");
+              } else {
+                data.push(item);
               }
+          }
         });
       this.setState({
         data: data,
@@ -235,18 +223,16 @@ class App extends Component {
       let { detailslist8 } = this.props;
       detailslist8 &&
         detailslist8.data.map((item) => {
-            let sku = String(item.sku);
-            let name = String(item.name);
-             let skuCheck = sku.slice(0, 2);
-             if (
-               item.is_visible === true
-             ) {
-                if (skuCheck === "CS" && name.includes("PSV") === true) {
-                  console.log("skipping this one");
-                } else {
-                  data.push(item);
-                }
-             }
+          let sku = String(item.sku);
+          let name = String(item.name);
+          let skuCheck = sku.slice(0, 2);
+          if (item.is_visible === true) {
+              if (skuCheck === "CS" && name.includes("PSV") === true) {
+                console.log("skipping this one");
+              } else {
+                data.push(item);
+              }
+          }
         });
       this.setState({
         data: data,
@@ -259,18 +245,16 @@ class App extends Component {
       let { detailslist9 } = this.props;
       detailslist9 &&
         detailslist9.data.map((item) => {
-           let sku = String(item.sku);
-           let name = String(item.name);
-             let skuCheck = sku.slice(0, 2);
-             if (
-               item.is_visible === true
-             ) {
-                 if (skuCheck === "CS" && name.includes("PSV") === true) {
-                   console.log("skipping this one");
-                 } else {
-                   data.push(item);
-                 }
-             }
+          let sku = String(item.sku);
+          let name = String(item.name);
+          let skuCheck = sku.slice(0, 2);
+          if (item.is_visible === true) {
+              if (skuCheck === "CS" && name.includes("PSV") === true) {
+                console.log("skipping this one");
+              } else {
+                data.push(item);
+              }
+          }
         });
       this.setState({
         data: data,
@@ -292,6 +276,14 @@ class App extends Component {
       toggle2: !this.state.toggle2,
     });
   };
+
+  toggle3 = () => {
+    let toggle3 = this.state.toggle3
+    this.setState({
+      toggle3: !this.state.toggle3,
+    });
+    console.log(toggle3)
+  };
   checkEmail = (event) => {
     //prevents default action
     event.preventDefault();
@@ -309,12 +301,12 @@ class App extends Component {
   };
 
   render() {
-     const stockdata = this.state.data.map((item) => [
-       item.name,
-       item.sku,
-       item.inventory_level,
-       item.view_count,
-     ]);
+    const stockdata = this.state.data.map((item) => [
+      item.name,
+      item.sku,
+      item.inventory_level,
+      item.view_count,
+    ]);
     const data = this.props.itemlist.map((item) => [
       item.email,
       item.order_number,
@@ -694,74 +686,66 @@ class App extends Component {
                     sort: false,
                     empty: true,
                     customBodyRenderLite: (dataIndex, rowIndex) => {
-                         const itemArray = this.state.data;
-                         const item = itemArray[dataIndex];
-                                const viewedArray = this.props.viewed;
-                                for (
-                                  let index = 0;
-                                  index < viewedArray.length;
-                                  index++
-                                ) { 
-                                
-                                  const element = viewedArray[index];
-                                  if (element.sku === item.sku) {
-                                    return (       
-                                    <>
-                                        <Button
-                                          variant="contained"
-                                          color="primary"
-                                          id={dataIndex}
-                                          style={{ cursor: "pointer" }}
-                                          name=""
-                                          value=""
-                                          onClick={(event) => {
-                                            const itemArray = this.state.data;
-                                            const item = itemArray[dataIndex];
-                                            this.props.dispatch({
-                                              type: "MARK_UNVIEWED",
-                                              payload: item.sku,
-                                            
-                                            });
-                                            this.props.dispatch({
-                                              type: "GET_VIEWED",
-                                            });
-                                          }}
-                                        >
-                                          <RadioButtonCheckedIcon></RadioButtonCheckedIcon>
-                                        </Button>
-                                      </>)
-                                  }
-                                }
-                                       return (
-                                         <>
-                                           <Button
-                                             variant="contained"
-                                             color="primary"
-                                             id={dataIndex}
-                                             style={{ cursor: "pointer" }}
-                                             name=""
-                                             value=""
-                                             onClick={(event) => {
-                                               const itemArray = this.state
-                                                 .data;
-                                               const item =
-                                                 itemArray[dataIndex];
-                                               this.props.dispatch({
-                                                 type: "MARK_VIEWED",
-                                                 payload: {
-                                                   sku: item.sku,
-                                                 },
-                                               });
-                                               this.props.dispatch({
-                                                 type: "GET_VIEWED",
-                                               });
-                                             }}
-                                           >
-                                             <RadioButtonUncheckedIcon></RadioButtonUncheckedIcon>
-                                           </Button>
-                                         </>
-                                       );    
-                                  
+                      const itemArray = this.state.data;
+                      const item = itemArray[dataIndex];
+                      const viewedArray = this.props.viewed;
+                      for (let index = 0; index < viewedArray.length; index++) {
+                        const element = viewedArray[index];
+                        if (element.sku === item.sku) {
+                          return (
+                            <>
+                              <Button
+                                variant="contained"
+                                color="primary"
+                                id={dataIndex}
+                                style={{ cursor: "pointer" }}
+                                name=""
+                                value=""
+                                onClick={(event) => {
+                                  const itemArray = this.state.data;
+                                  const item = itemArray[dataIndex];
+                                  this.props.dispatch({
+                                    type: "MARK_UNVIEWED",
+                                    payload: item.sku,
+                                  });
+                                  this.props.dispatch({
+                                    type: "GET_VIEWED",
+                                  });
+                                }}
+                              >
+                                <RadioButtonCheckedIcon></RadioButtonCheckedIcon>
+                              </Button>
+                            </>
+                          );
+                        }
+                      }
+                      return (
+                        <>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            id={dataIndex}
+                            style={{ cursor: "pointer" }}
+                            name=""
+                            value=""
+                            onClick={(event) => {
+                              const itemArray = this.state.data;
+                              const item = itemArray[dataIndex];
+                              this.props.dispatch({
+                                type: "MARK_VIEWED",
+                                payload: {
+                                  sku: item.sku,
+                                },
+                              });
+                              this.props.dispatch({
+                                type: "GET_VIEWED",
+                              });
+                            }}
+                          >
+                            <RadioButtonUncheckedIcon></RadioButtonUncheckedIcon>
+                          </Button>
+                        </>
+                      );
                     },
                   },
                 },
@@ -778,16 +762,20 @@ class App extends Component {
                     customBodyRenderLite: (dataIndex, rowIndex) => {
                       const itemArray = this.state.data;
                       const item = itemArray[dataIndex];
-                      const viewedArray = this.props.viewed
+                      const viewedArray = this.props.viewed;
                       for (let index = 0; index < viewedArray.length; index++) {
                         const element = viewedArray[index];
-                      if (element.sku === item.sku) {
-                      return (
-                        //grabs timestamp from database
-                        <>{moment(element.timestamp).add(6, "hours").format("MMM Do YY")}</>
-                      );
+                        if (element.sku === item.sku) {
+                          return (
+                            //grabs timestamp from database
+                            <>
+                              {moment(element.timestamp)
+                                .add(6, "hours")
+                                .format("MMM Do YY")}
+                            </>
+                          );
+                        }
                       }
-                    }
                     },
                   },
                 },
