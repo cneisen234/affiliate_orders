@@ -341,7 +341,7 @@ app.delete("/deleteskurange", (req, res) => {
                            `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${opt.display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
                          );
                        }
-                       let optionsJoined = optionsArray.join();
+                       let optionsJoined = optionsArray.join("");
                        newArray.push(optionsJoined);
                        newArray.push(
                          "</table>"
@@ -349,7 +349,7 @@ app.delete("/deleteskurange", (req, res) => {
                        optionsArray = [];
                        qty = array.length;
                      }
-                     let joinedArray = newArray.join();
+                     let joinedArray = newArray.join("");
                      let finalArray = titleString + joinedArray;
                      console.log(finalArray);
                      const queryText =
