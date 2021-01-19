@@ -163,7 +163,7 @@ let daterange = moment().subtract(6, "hours").subtract(1, "years");
 
 app.delete("/deleteitemrange", (req, res) => {
   pool
-    .query('DELETE FROM "item" WHERE timestamp<=$1', [daterange])
+    .query('DELETE FROM "item" WHERE created_at<=$1', [daterange])
     .then((result) => {
       res.sendStatus(204); //No Content
     })
@@ -175,7 +175,7 @@ app.delete("/deleteitemrange", (req, res) => {
 
 app.delete("/deleteskurange", (req, res) => {
   pool
-    .query('DELETE FROM "sku" WHERE timestamp<=$1', [daterange])
+    .query('DELETE FROM "sku" WHERE created_at<=$1', [daterange])
     .then((result) => {
       res.sendStatus(204); //No Content
     })
@@ -281,19 +281,20 @@ app.delete("/deleteskurange", (req, res) => {
                        prevYear = moment().year() - 1;
                      }
                       let normalHour = Number(hour);
-                      let AmPm = "am";
+                      let AmPm = "AM";
                       if (normalHour > 12) {
-                        AmPm = "pm";
+                        AmPm = "PM";
                         normalHour = normalHour - 12;
                       } else if (normalHour === 12) {
-                        AmPm = "pm";
+                        AmPm = "PM";
                       } else if (normalHour === 00) {
-                        AmPm = "am";
+                        AmPm = "AM";
                         normalHour = 12;
                       }
                console.log(response.data);
                console.log(response.data.date_created);
-               let created_at = `Date: ${nowMonth}/${nowDay}/${nowYear} Time: ${normalHour}:${min}:${sec}${AmPm}`;
+               let created_at = `${nowMonth}/${nowDay}/${nowYear}`;
+               created_at = Date(created_at)
                console.log(response.data.subtotal_ex_tax);
                let order_total = response.data.subtotal_ex_tax;
                axios
@@ -326,13 +327,15 @@ app.delete("/deleteskurange", (req, res) => {
                          element.sku
                        }</td></tr>`);
                        sku = element.sku;
+                       name = element.name;
                        let options = element.product_options;
                        const query2Text =
-                         'INSERT INTO "sku" (email, order_number, sku, created_at) VALUES ($1, $2, $3, $4) RETURNING id';
+                         'INSERT INTO "sku" (email, order_number, sku, description, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING id';
                        pool.query(query2Text, [
                          newerEmail,
                          newOrderNumber,
                          sku,
+                         name,
                          created_at,
                        ]);
                        for (let j = 0; j < options.length; j++) {
@@ -554,8 +557,6 @@ app.post("/checkemail", (req, res) => {
       let {
       email,
     } = skuinfo;
-    console.log("this is the payload before it reaches the get", email)
-      console.log("We are about to get the sku list", email);
       const queryText =
         "SELECT array_agg(DISTINCT sku) as sku, COUNT(*) FROM sku where email=$1 GROUP BY sku;";
       pool
@@ -591,6 +592,21 @@ app.get("/email", (req, res) => {
   console.log("We are about to get the item list");
 
   const queryText = `select array_agg(DISTINCT email) as email from item group by email`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+});
+
+app.get("/skus", (req, res) => {
+  console.log("We are about to get the item list");
+
+  const queryText = `select * from sku`;
   pool
     .query(queryText)
     .then((result) => {

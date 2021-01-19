@@ -7,7 +7,6 @@ function* orderDetails1(action) {
   try {
     //passes the incoming new student user info from the payload to the server
     const response = yield axios.get("/orderdetails1", action.payload);
-    console.log("this is response.data in sagas", response.data);
     yield put({
       type: "SET_DETAILS1",
       payload: response.data,
@@ -21,7 +20,6 @@ function* orderDetails2(action) {
   try {
     //passes the incoming new student user info from the payload to the server
     const response = yield axios.get("/orderdetails2", action.payload);
-    console.log("this is response.data in sagas", response.data);
     yield put({
       type: "SET_DETAILS2",
       payload: response.data,
@@ -35,7 +33,6 @@ function* orderDetails3(action) {
   try {
     //passes the incoming new student user info from the payload to the server
     const response = yield axios.get("/orderdetails3", action.payload);
-    console.log("this is response.data in sagas", response.data);
     yield put({
       type: "SET_DETAILS3",
       payload: response.data,
@@ -49,7 +46,6 @@ function* orderDetails4(action) {
   try {
     //passes the incoming new student user info from the payload to the server
     const response = yield axios.get("/orderdetails4", action.payload);
-    console.log("this is response.data in sagas", response.data);
     yield put({
       type: "SET_DETAILS4",
       payload: response.data,
@@ -63,7 +59,6 @@ function* orderDetails5(action) {
   try {
     //passes the incoming new student user info from the payload to the server
     const response = yield axios.get("/orderdetails5", action.payload);
-    console.log("this is response.data in sagas", response.data);
     yield put({
       type: "SET_DETAILS5",
       payload: response.data,
@@ -77,7 +72,6 @@ function* orderDetails6(action) {
   try {
     //passes the incoming new student user info from the payload to the server
     const response = yield axios.get("/orderdetails6", action.payload);
-    console.log("this is response.data in sagas", response.data);
     yield put({
       type: "SET_DETAILS6",
       payload: response.data,
@@ -91,7 +85,6 @@ function* orderDetails7(action) {
   try {
     //passes the incoming new student user info from the payload to the server
     const response = yield axios.get("/orderdetails7", action.payload);
-    console.log("this is response.data in sagas", response.data);
     yield put({
       type: "SET_DETAILS7",
       payload: response.data,
@@ -105,7 +98,6 @@ function* orderDetails8(action) {
   try {
     //passes the incoming new student user info from the payload to the server
     const response = yield axios.get("/orderdetails8", action.payload);
-    console.log("this is response.data in sagas", response.data);
     yield put({
       type: "SET_DETAILS8",
       payload: response.data,
@@ -119,7 +111,6 @@ function* orderDetails9(action) {
   try {
     //passes the incoming new student user info from the payload to the server
     const response = yield axios.get("/orderdetails9", action.payload);
-    console.log("this is response.data in sagas", response.data);
     yield put({
       type: "SET_DETAILS9",
       payload: response.data,
@@ -131,7 +122,6 @@ function* orderDetails9(action) {
 
 function* getitemlist(action) {
   try {
-    //console.log('we are about to get Students', action.type);
 
     const response = yield axios.get(`/itemlist`);
 
@@ -149,7 +139,6 @@ function* getitemlist(action) {
 
 function* getemaillist(action) {
   try {
-    //console.log('we are about to get Students', action.type);
 
     const response = yield axios.get(`/email`);
 
@@ -177,6 +166,19 @@ function* gettotallist(action) {
   }
 }
 
+function* getskus(action) {
+  try {
+    const response = yield axios.get(`/skus`);
+    console.log("this is the data", response.data)
+    yield put({
+      type: "SET_SKUS",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
+
 function* getviewed(action) {
   try {
     const response = yield axios.get(`/getviewed`);
@@ -192,10 +194,7 @@ function* getviewed(action) {
 
 function* checkEmail(action) {
   try {
-    //passes the incoming new student user info from the payload to the server
-    console.log("this is the payload", action.payload)
     const response = yield axios.post("/checkemail", action.payload);
-     console.log("this is response.data in sagas", response.data)
      yield put({
       type: "SET_SKUNUM",
       payload: response.data,
@@ -208,10 +207,7 @@ function* checkEmail(action) {
 
 function* orderDetails(action) {
   try {
-    //passes the incoming new student user info from the payload to the server
-    console.log("this is the payload", action.payload);
     const response = yield axios.post("/orderdetails", action.payload);
-    console.log("this is response.data in sagas", response.data)
     yield put({
       type: "SET_DETAILS",
       payload: response.data,
@@ -273,6 +269,7 @@ function* deleteSkuRange(action) {
 
 function* itemSaga() {
     yield takeLatest('GET_ITEM_LIST', getitemlist);
+    yield takeLatest('GET_SKUS', getskus);
         yield takeLatest('GET_EMAIL_LIST', getemaillist);
          yield takeLatest('CHECK_EMAIL', checkEmail);
          yield takeLatest('ORDER_DETAILS', orderDetails);

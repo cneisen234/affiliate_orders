@@ -35,6 +35,15 @@ const skunumlist = (state = [], action) => {
   }
 };
 
+const skulist = (state = [], action) => {
+  switch (action.type) {
+    case "SET_SKUS":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 const detailslist = (state = [], action) => {
   switch (action.type) {
     case "SET_DETAILS":
@@ -139,6 +148,7 @@ export default combineReducers({
   viewed,
   itemlist,
   skunumlist,
+  skulist,
   detailslist,
   emaillist,
   totallist,

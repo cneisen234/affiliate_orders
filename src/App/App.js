@@ -18,11 +18,16 @@ class App extends Component {
     sku: "",
     email: "",
     data: [],
+    startDate: null,
+    endDate: null,
   };
   componentDidMount() {
     this.props.dispatch({
       type: "GET_VIEWED",
     });
+        this.props.dispatch({
+          type: "GET_SKUS",
+        });
     this.props.dispatch({
       type: "ORDER_DETAILS1",
     });
@@ -68,7 +73,6 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    
     if (this.props.detailslist1 !== prevProps.detailslist1) {
       let data = this.state.data;
       let { detailslist1 } = this.props;
@@ -76,21 +80,18 @@ class App extends Component {
         detailslist1.data.map((item) => {
           let sku = String(item.sku);
           let name = String(item.name);
-          let skuCheck = sku.slice(0, 2);
-          console.log("checkSku", skuCheck);
-          console.log("name", name);
+            let skuCheck = sku.slice(0, 2);
           if (item.is_visible === true) {
-              if (skuCheck === "CS" && name.includes("PSV") === true) {
-                console.log("skipping this one");
-              } else {
-                data.push(item);
-              }
+            if (skuCheck === "CS" && name.includes("PSV") === true) {
+              console.log("skipping this one");
+            } else {
+              data.push(item);
+            }
           }
         });
       this.setState({
         data: data,
       });
-      console.log("data", data);
     }
     if (this.props.detailslist2 !== prevProps.detailslist2) {
       let data = this.state.data;
@@ -101,17 +102,16 @@ class App extends Component {
           let name = String(item.name);
           let skuCheck = sku.slice(0, 2);
           if (item.is_visible === true) {
-              if (skuCheck === "CS" && name.includes("PSV") === true) {
-                console.log("skipping this one");
-              } else {
-                data.push(item);
-              }
+            if (skuCheck === "CS" && name.includes("PSV") === true) {
+              console.log("skipping this one");
+            } else {
+              data.push(item);
+            }
           }
         });
       this.setState({
         data: data,
       });
-      console.log("data", data);
     }
     if (this.props.detailslist3 !== prevProps.detailslist3) {
       let data = this.state.data;
@@ -122,17 +122,16 @@ class App extends Component {
           let name = String(item.name);
           let skuCheck = sku.slice(0, 2);
           if (item.is_visible === true) {
-              if (skuCheck === "CS" && name.includes("PSV") === true) {
-                console.log("skipping this one");
-              } else {
-                data.push(item);
-              }
+            if (skuCheck === "CS" && name.includes("PSV") === true) {
+              console.log("skipping this one");
+            } else {
+              data.push(item);
+            }
           }
         });
       this.setState({
         data: data,
       });
-      console.log("data", data);
     }
     if (this.props.detailslist4 !== prevProps.detailslist4) {
       let data = this.state.data;
@@ -143,17 +142,16 @@ class App extends Component {
           let name = String(item.name);
           let skuCheck = sku.slice(0, 2);
           if (item.is_visible === true) {
-              if (skuCheck === "CS" && name.includes("PSV") === true) {
-                console.log("skipping this one");
-              } else {
-                data.push(item);
-              }
+            if (skuCheck === "CS" && name.includes("PSV") === true) {
+              console.log("skipping this one");
+            } else {
+              data.push(item);
+            }
           }
         });
       this.setState({
         data: data,
       });
-      console.log("data", data);
     }
     if (this.props.detailslist5 !== prevProps.detailslist5) {
       let data = this.state.data;
@@ -164,17 +162,16 @@ class App extends Component {
           let name = String(item.name);
           let skuCheck = sku.slice(0, 2);
           if (item.is_visible === true) {
-              if (skuCheck === "CS" && name.includes("PSV") === true) {
-                console.log("skipping this one");
-              } else {
-                data.push(item);
-              }
+            if (skuCheck === "CS" && name.includes("PSV") === true) {
+              console.log("skipping this one");
+            } else {
+              data.push(item);
+            }
           }
         });
       this.setState({
         data: data,
       });
-      console.log("data", data);
     }
     if (this.props.detailslist6 !== prevProps.detailslist6) {
       let data = this.state.data;
@@ -185,17 +182,16 @@ class App extends Component {
           let name = String(item.name);
           let skuCheck = sku.slice(0, 2);
           if (item.is_visible === true) {
-              if (skuCheck === "CS" && name.includes("PSV") === true) {
-                console.log("skipping this one");
-              } else {
-                data.push(item);
-              }
+            if (skuCheck === "CS" && name.includes("PSV") === true) {
+              console.log("skipping this one");
+            } else {
+              data.push(item);
+            }
           }
         });
       this.setState({
         data: data,
       });
-      console.log("data", data);
     }
     if (this.props.detailslist7 !== prevProps.detailslist7) {
       let data = this.state.data;
@@ -206,17 +202,16 @@ class App extends Component {
           let name = String(item.name);
           let skuCheck = sku.slice(0, 2);
           if (item.is_visible === true) {
-              if (skuCheck === "CS" && name.includes("PSV") === true) {
-                console.log("skipping this one");
-              } else {
-                data.push(item);
-              }
+            if (skuCheck === "CS" && name.includes("PSV") === true) {
+              console.log("skipping this one");
+            } else {
+              data.push(item);
+            }
           }
         });
       this.setState({
         data: data,
       });
-      console.log("data", data);
     }
     if (this.props.detailslist8 !== prevProps.detailslist8) {
       let data = this.state.data;
@@ -227,17 +222,16 @@ class App extends Component {
           let name = String(item.name);
           let skuCheck = sku.slice(0, 2);
           if (item.is_visible === true) {
-              if (skuCheck === "CS" && name.includes("PSV") === true) {
-                console.log("skipping this one");
-              } else {
-                data.push(item);
-              }
+            if (skuCheck === "CS" && name.includes("PSV") === true) {
+              console.log("skipping this one");
+            } else {
+              data.push(item);
+            }
           }
         });
       this.setState({
         data: data,
       });
-      console.log("data", data);
     }
 
     if (this.props.detailslist9 !== prevProps.detailslist9) {
@@ -249,17 +243,16 @@ class App extends Component {
           let name = String(item.name);
           let skuCheck = sku.slice(0, 2);
           if (item.is_visible === true) {
-              if (skuCheck === "CS" && name.includes("PSV") === true) {
-                console.log("skipping this one");
-              } else {
-                data.push(item);
-              }
+            if (skuCheck === "CS" && name.includes("PSV") === true) {
+              console.log("skipping this one");
+            } else {
+              data.push(item);
+            }
           }
         });
       this.setState({
         data: data,
       });
-      console.log("data", this.state.data);
     }
   }
   handleChange = (event, fieldName) => {
@@ -278,17 +271,15 @@ class App extends Component {
   };
 
   toggle3 = () => {
-    let toggle3 = this.state.toggle3
+    let toggle3 = this.state.toggle3;
     this.setState({
       toggle3: !this.state.toggle3,
     });
-    console.log(toggle3)
   };
   checkEmail = (event) => {
     //prevents default action
     event.preventDefault();
     const { email } = this.state;
-    console.log("this is state", email);
     this.props.dispatch({
       type: "CHECK_EMAIL",
       payload: {
@@ -319,10 +310,8 @@ class App extends Component {
       total.email,
       total.count,
     ]);
-    const skunumdata = this.props.skunumlist.map((skunum) => [
-      skunum.sku,
-      skunum.count,
-    ]);
+    const skunumdata = this.props.skunumlist
+.map((skunum) => [skunum.sku, skunum.name, skunum.count]);
     return this.state.toggle2 === false ? (
       <>
         <div>
@@ -382,26 +371,16 @@ class App extends Component {
                             const itemArray = this.props.itemlist;
                             const item = itemArray[dataIndex];
                             const order_number = item.order_number;
-                            console.log("this is item", item);
-                            console.log("this is order_number", order_number);
                             this.setState({
                               toggle: !this.state.toggle,
                               order_number: order_number,
                             });
-                            console.log(
-                              "this is state",
-                              this.state.order_number
-                            );
                             this.props.dispatch({
                               type: "ORDER_DETAILS",
                               payload: {
                                 order_number: order_number,
                               },
                             });
-                            console.log(
-                              "this is details",
-                              this.props.detailslist
-                            );
                           }}
                         >
                           View Details
@@ -433,42 +412,85 @@ class App extends Component {
           <br />
           <div style={{ padding: "1.5%" }}>
             <center>
-              <h1>Select an Affiliate</h1>
-              <Form.Control
-                as="select"
-                onChange={(event) =>
-                  this.setState({ email: event.target.value })
-                }
-              >
-                <option value="">Pick From Below </option>{" "}
-                {this.props.emaillist
-                  ? this.props.emaillist.map((item) => (
-                      <option key={item.id} value={item.id}>
-                        {" "}
-                        {String(item.email)}{" "}
-                      </option>
-                    ))
-                  : ""}
-              </Form.Control>
-              <Form>
-                <center>
-                  <Button
-                    onClick={(event) => this.checkEmail(event)}
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    style={{ width: "20%", margin: "2%" }}
+
+                <>
+                  <h1>Select a Date Range</h1>
+                  <Form.Control
+                    as="select"
+                    onChange={(event) =>
+                      this.setState({ startDate: event.target.value })
+                    }
                   >
-                    Confirm Affiliate
-                  </Button>
-                </center>
-              </Form>
+                    <option value="">Select a start date </option>{" "}
+                    {this.props.skulist
+                      ? this.props.skulist.map((item) => (
+                          <option key={item.created_at} value={item.created_at}>
+                            {" "}
+                            {String(item.created_at)}{" "}
+                          </option>
+                        ))
+                      : ""}
+                  </Form.Control>
+                  <Form.Control
+                    as="select"
+                    onChange={(event) =>
+                      this.setState({ endDate: event.target.value })
+                    }
+                  >
+                    <option value="">Select an end date </option>{" "}
+                    {this.props.skulist
+                      ? this.props.skulist.map((item) => (
+                          <option key={item.created_at} value={item.created_at}>
+                            {" "}
+                            {String(item.created_at)}{" "}
+                          </option>
+                        ))
+                      : ""}
+                  </Form.Control>
+                </>
+              {this.state.startDate === null || this.state.endDate === null ? (
+              <span></span>
+              ) : (
+                <>
+                  <h1>Select an Affiliate</h1>
+                  <Form.Control
+                    as="select"
+                    onChange={(event) =>
+                      this.setState({ email: event.target.value })
+                    }
+                  >
+                    <option value="">Pick From Below </option>{" "}
+                    {this.props.emaillist
+                      ? this.props.emaillist.map((item) => (
+                          <option key={item.id} value={item.id}>
+                            {" "}
+                            {String(item.email)}{" "}
+                          </option>
+                        ))
+                      : ""}
+                  </Form.Control>
+                  <Form>
+                    <center>
+                      <Button
+                        onClick={(event) => this.checkEmail(event)}
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        style={{ width: "20%", margin: "2%" }}
+                      >
+                        Confirm Affiliate
+                      </Button>
+                    </center>
+                  </Form>
+                </>
+              )}
             </center>
             <MUITable
               data={skunumdata} //brings in data as an array, in this case, list of items
               columns={[
                 //names the columns found on MUI table
                 { name: "SKU" },
+                { name: "description" },
                 { name: "Count" },
               ]}
               title={`Skus for ${this.state.email}`} //give the table a name
@@ -798,6 +820,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
   viewed: state.item.viewed,
+  skulist: state.item.skulist,
   itemlist: state.item.itemlist,
   skunumlist: state.item.skunumlist,
   emaillist: state.item.emaillist,
