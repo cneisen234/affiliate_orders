@@ -426,19 +426,12 @@ class App extends Component {
                   <option value="">Select a start date </option>{" "}
                   {this.props.skulist
                     ? this.props.skulist.map((item) => (
-                        <option
-                          key={moment(item.created_at)
-                            .add(6, "hours")
-                            .format("MMM Do YY")}
-                          value={moment(item.created_at)
-                            .add(6, "hours")
-                            .format("MMM Do YY")}
-                        >
+                        <option key={item.created_at} value={item.created_at}>
                           {" "}
                           {String(
                             moment(item.created_at)
                               .add(6, "hours")
-                              .format("MMM Do YY")
+                              .format("MMM Do YY, h:mm:ss a")
                           )}{" "}
                         </option>
                       ))
@@ -453,18 +446,11 @@ class App extends Component {
                   <option value="">Select an end date </option>{" "}
                   {this.props.skulist
                     ? this.props.skulist.map((item) => (
-                        <option
-                          key={moment(item.created_at)
-                            .add(6, "hours")
-                            .format("MMM Do YY")}
-                          value={moment(item.created_at)
-                            .add(6, "hours")
-                            .format("MMM Do YY")}
-                        >
+                        <option key={item.created_at} value={item.created_at}>
                           {String(
                             moment(item.created_at)
                               .add(6, "hours")
-                              .format("MMM Do YY")
+                              .format("MMM Do YY, h:mm:ss a")
                           )}{" "}
                         </option>
                       ))
