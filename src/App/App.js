@@ -313,7 +313,7 @@ class App extends Component {
       total.count,
     ]);
     const skunumdata = this.props.skunumlist
-.map((skunum) => [skunum.sku, skunum.name, skunum.count]);
+.map((skunum) => [skunum.sku, skunum.description, skunum.count]);
     return this.state.toggle2 === false ? (
       <>
         <div>
@@ -499,7 +499,7 @@ class App extends Component {
               columns={[
                 //names the columns found on MUI table
                 { name: "SKU" },
-                { name: "description" },
+                { name: "Description" },
                 { name: "Count" },
               ]}
               title={`Skus for ${this.state.email}`} //give the table a name
