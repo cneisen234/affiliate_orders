@@ -452,9 +452,18 @@ class App extends Component {
                   <option value="">Select an end date </option>{" "}
                   {this.props.skulist
                     ? this.props.skulist.map((item) => (
-                        <option key={item.created_at} value={item.created_at}>
+                        <option
+                          key={moment(item.created_at)
+                            .add(6, "hours")
+                            .format("MMM Do YY")}
+                          value={moment(item.created_at)
+                            .add(6, "hours")
+                            .format("MMM Do YY")}
+                        >
                           {" "}
-                          {String(item.created_at)}{" "}
+                          {String(moment(item.created_at))
+                            .add(6, "hours")
+                            .format("MMM Do YY")}{" "}
                         </option>
                       ))
                     : ""}
