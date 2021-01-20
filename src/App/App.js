@@ -461,10 +461,11 @@ class App extends Component {
                             .add(6, "hours")
                             .format("MMM Do YY")}
                         >
-                          {" "}
-                          {String(moment(item.created_at))
-                            .add(6, "hours")
-                            .format("MMM Do YY")}{" "}
+                          {String(
+                            moment(item.created_at)
+                              .add(6, "hours")
+                              .format("MMM Do YY")
+                          )}{" "}
                         </option>
                       ))
                     : ""}
