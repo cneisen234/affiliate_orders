@@ -279,11 +279,13 @@ class App extends Component {
   checkEmail = (event) => {
     //prevents default action
     event.preventDefault();
-    const { email } = this.state;
+    const { email, startDate, endDate } = this.state;
     this.props.dispatch({
       type: "CHECK_EMAIL",
       payload: {
         email: email,
+        startDate: startDate,
+        endDate: endDate,
       },
     });
     this.props.dispatch({
@@ -303,7 +305,7 @@ class App extends Component {
       item.order_number,
       Number(item.order_total).toFixed(2),
       item.qty,
-      moment(item.created_at).format("MMM Do YY, h:mm:ss a"),
+      moment(item.created_at).add(6, "hours").format("MMM Do YY, h:mm:ss a"),
     ]);
 
     const totaldata = this.props.totallist.map((total) => [

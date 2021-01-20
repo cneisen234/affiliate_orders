@@ -14,8 +14,8 @@ CREATE TABLE "sku"
     "email" VARCHAR(255),
     "order_number" VARCHAR(100),
     "sku" varchar(50),
-    "created_at" DATE,
-    "description" TIMESTAMP
+    "created_at" TIMESTAMP,
+    "description" TEXT
 ); 
 
 CREATE TABLE "viewed"
