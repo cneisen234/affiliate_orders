@@ -5,7 +5,7 @@ CREATE TABLE "item"
     "order_number" VARCHAR(100),
     "order_total" VARCHAR(100),
     "qty" INT,
-    "created_at" DATE
+    "created_at" TIMESTAMP
 ); 
 
 CREATE TABLE "sku"
@@ -15,7 +15,7 @@ CREATE TABLE "sku"
     "order_number" VARCHAR(100),
     "sku" varchar(50),
     "created_at" DATE,
-    "description" TEXT
+    "description" TIMESTAMP
 ); 
 
 CREATE TABLE "viewed"

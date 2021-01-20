@@ -303,7 +303,7 @@ class App extends Component {
       item.order_number,
       Number(item.order_total).toFixed(2),
       item.qty,
-      item.created_at,
+      moment(item.created_at).format("MMM Do YY, h:mm:ss a"),
     ]);
 
     const totaldata = this.props.totallist.map((total) => [
