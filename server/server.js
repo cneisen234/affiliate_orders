@@ -293,7 +293,7 @@ app.delete("/deleteskurange", (req, res) => {
                       }
                console.log(response.data);
                console.log(response.data.date_created);
-               let created_at = `${nowMonth}/${nowDay}/${nowYear}`;
+               let created_at = `${nowMonth}/${nowDay}/${nowYear} ${normalHour}:${min}:${sec}${AmPm}`;
                console.log(response.data.subtotal_ex_tax);
                let order_total = response.data.subtotal_ex_tax;
                axios
