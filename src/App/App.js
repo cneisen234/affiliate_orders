@@ -422,6 +422,7 @@ class App extends Component {
                     this.setState({ startDate: event.target.value })
                   }
                 >
+                  {/* used to filter by date */}
                   <option value="">Select a start date </option>{" "}
                   {this.props.skulist
                     ? this.props.skulist.map((item) => (
