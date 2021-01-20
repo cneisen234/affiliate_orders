@@ -305,7 +305,7 @@ class App extends Component {
       item.order_number,
       Number(item.order_total).toFixed(2),
       item.qty,
-      moment(item.created_at).add(6, "hours").format("MMM Do YY, h:mm:ss a"),
+      moment(item.created_at).add(6, "hours").format("MMM Do YY"),
     ]);
 
     const totaldata = this.props.totallist.map((total) => [
