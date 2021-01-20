@@ -414,44 +414,54 @@ class App extends Component {
           <br />
           <div style={{ padding: "1.5%" }}>
             <center>
-
-                <>
-                  <h1>Select a Date Range</h1>
-                  <Form.Control
-                    as="select"
-                    onChange={(event) =>
-                      this.setState({ startDate: event.target.value })
-                    }
-                  >
-                    <option value="">Select a start date </option>{" "}
-                    {this.props.skulist
-                      ? this.props.skulist.map((item) => (
-                          <option key={item.created_at} value={item.created_at}>
-                            {" "}
-                            {String(item.created_at)}{" "}
-                          </option>
-                        ))
-                      : ""}
-                  </Form.Control>
-                  <Form.Control
-                    as="select"
-                    onChange={(event) =>
-                      this.setState({ endDate: event.target.value })
-                    }
-                  >
-                    <option value="">Select an end date </option>{" "}
-                    {this.props.skulist
-                      ? this.props.skulist.map((item) => (
-                          <option key={item.created_at} value={item.created_at}>
-                            {" "}
-                            {String(item.created_at)}{" "}
-                          </option>
-                        ))
-                      : ""}
-                  </Form.Control>
-                </>
+              <>
+                <h1>Select a Date Range</h1>
+                <Form.Control
+                  as="select"
+                  onChange={(event) =>
+                    this.setState({ startDate: event.target.value })
+                  }
+                >
+                  <option value="">Select a start date </option>{" "}
+                  {this.props.skulist
+                    ? this.props.skulist.map((item) => (
+                        <option
+                          key={moment(item.created_at)
+                            .add(6, "hours")
+                            .format("MMM Do YY")}
+                          value={moment(item.created_at)
+                            .add(6, "hours")
+                            .format("MMM Do YY")}
+                        >
+                          {" "}
+                          {String(
+                            moment(item.created_at)
+                              .add(6, "hours")
+                              .format("MMM Do YY")
+                          )}{" "}
+                        </option>
+                      ))
+                    : ""}
+                </Form.Control>
+                <Form.Control
+                  as="select"
+                  onChange={(event) =>
+                    this.setState({ endDate: event.target.value })
+                  }
+                >
+                  <option value="">Select an end date </option>{" "}
+                  {this.props.skulist
+                    ? this.props.skulist.map((item) => (
+                        <option key={item.created_at} value={item.created_at}>
+                          {" "}
+                          {String(item.created_at)}{" "}
+                        </option>
+                      ))
+                    : ""}
+                </Form.Control>
+              </>
               {this.state.startDate === null || this.state.endDate === null ? (
-              <span></span>
+                <span></span>
               ) : (
                 <>
                   <h1>Select an Affiliate</h1>
