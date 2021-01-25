@@ -607,7 +607,7 @@ app.get("/email", (req, res) => {
 app.get("/skus", (req, res) => {
   console.log("We are about to get the item list");
 
-  const queryText = `select * from sku`;
+  const queryText = `select * from sku order by "created_at"`;
   pool
     .query(queryText)
     .then((result) => {

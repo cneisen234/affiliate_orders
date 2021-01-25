@@ -459,6 +459,8 @@ class App extends Component {
               </>
               {this.state.startDate === null || this.state.endDate === null ? (
                 <span></span>
+              ) : this.state.startDate > this.state.endDate ? (
+                <h1>Start Date can't be after the End Date</h1>
               ) : (
                 <>
                   <h1>Select an Affiliate</h1>
