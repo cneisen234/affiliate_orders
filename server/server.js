@@ -2678,7 +2678,7 @@ if (dayMonth == 1 && month == 11) {
       res.sendStatus(500);
     });
 }
-      }, 86400000);
+      }, 1000 * 60 * 60 * 24);
      
 
  const PORT = process.env.PORT || 5000;
