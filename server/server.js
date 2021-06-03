@@ -306,11 +306,11 @@ app.delete("/deleteskurange", (req, res) => {
                    if (response.data !== []) {
                      
                      let titleString = `  <div><img
-        src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
-       width="150"
-      /></div>
+                   src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
+                   width="150"
+                   /></div>
                      <div style="color:black; padding-left: 30px; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>The following are the order details for your recent sale</div>
-<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Order number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${newOrderNumber} </td></tr>`;
+                      <table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Order number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${newOrderNumber} </td></tr>`;
                      let array = response.data;
                      let newArray = [];
                      let optionsArray = [];
@@ -319,10 +319,10 @@ app.delete("/deleteskurange", (req, res) => {
                        newArray.push(`<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${
                          index + 1
                        }</td></tr>
-<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${
                          element.name
                        }</td></tr>
-<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">SKU Number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">SKU Number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${
                          element.sku
                        }</td></tr>`);
                        sku = element.sku;
@@ -618,6 +618,2068 @@ app.get("/skus", (req, res) => {
       res.sendStatus(500);
     });
 });
+setInterval(() => {
+  console.log("checking date for sales report")
+let dayMonth = Number(moment().subtract(6, "hours").date());
+let month = Number(moment().subtract(6, "hours").month());
+if (dayMonth == 1 && month == 0) {
+  console.log("running sales report")
+let finalArray = "";
+let globalJoinedArray = "";
+const queryText = `select "email" from sku where "created_at" >= '2020-12-01' AND "created_at" <= '2020-12-31' group by "email"`;
+pool
+  .query(queryText)
+  .then((result) => {
+    let emailArray = result.rows;
+    for (let index = 0; index < emailArray.length; index++) {
+      let amountTotal = 0;
+      let qtyTotal = 1;
+      const element = emailArray[index];
+      let email = element.email;
+      let titleString = `  <div><img
+                   src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
+                   width="150"
+                   /></div>
+                     <div style="color:black; padding-left: 30px; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>The following is your monthly report for the month of December</div>`;
+      const queryText2 = `select "order_number" from sku where "email" = '${email}' AND "created_at" >= '2020-12-01' AND "created_at" <= '2020-12-31' group by "order_number"`;
+      pool
+        .query(queryText2)
+        .then((result2) => {
+          let orderArray = result2.rows;
+          let newArray = [];
+          let optionsArray = [];
+          for (let index = 0; index < orderArray.length; index++) {
+            qtyTotal += 1;
+            console.log("qtyTotal", qtyTotal);
+            const element2 = orderArray[index];
+            let order_number = element2.order_number;
+            axios
+              .get(
+                `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}`,
+                config
+              )
+              .then(function (response) {
+                // handle success
+                if (response.data !== []) {
+                  let nowMonth =
+                    Number(moment().subtract(6, "hours").month()) + 1;
+                  let nowYear = Number(moment().subtract(6, "hours").year());
+                  let prevYear = Number(moment().subtract(6, "hours").year());
+                  let nowDay = Number(moment().subtract(6, "hours").date());
+                  let hour = Number(moment().subtract(6, "hours").hour());
+                  let min = Number(moment().subtract(6, "hours").minute());
+                  let sec = Number(moment().subtract(6, "hours").second());
+                  if (hour < 10) {
+                    hour = "0" + String(hour);
+                  }
+                  if (min < 10) {
+                    min = "0" + String(min);
+                  }
+                  if (sec < 10) {
+                    sec = "0" + String(sec);
+                  }
+                  if (nowMonth === 1) {
+                    prevYear = moment().year() - 1;
+                  }
+                  let normalHour = Number(hour);
+                  let AmPm = "AM";
+                  if (normalHour > 12) {
+                    AmPm = "PM";
+                    normalHour = normalHour - 12;
+                  } else if (normalHour === 12) {
+                    AmPm = "PM";
+                  } else if (normalHour === 00) {
+                    AmPm = "AM";
+                    normalHour = 12;
+                  }
+                  let created_at = `${nowMonth}/${nowDay}/${nowYear} ${normalHour}:${min}:${sec}${AmPm}`;
+                  axios
+                    .get(
+                      `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}/products`,
+                      config
+                    )
+                    .then(function (response) {
+                      // handle success
+                      if (response.data !== []) {
+                        let array = response.data;
+                        for (let index = 0; index < array.length; index++) {
+                          const element = array[index];
+                          newArray.push(`<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;">
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.name}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">SKU Number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.sku}</td></tr>`);
+                          sku = element.sku;
+                          name = element.name;
+                          base_price = element.base_price;
+                          base_price = Number(base_price);
+                          amountTotal += base_price;
+                          let options = element.product_options;
+                          for (let j = 0; j < options.length; j++) {
+                            const opt = options[j];
+                            optionsArray.push(
+                              `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${opt.display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
+                            );
+                          }
+                          let optionsJoined = optionsArray.join("");
+                          newArray.push(optionsJoined);
+                          newArray.push("</table><br><br><br>");
+                          qty = array.length;
+                        }
+                        let joinedArray = newArray.join("");
+                        console.log("joinedArray", joinedArray);
+                        globalJoinedArray = joinedArray;
+                        console.log("globalJoinedArray", globalJoinedArray);
+                      }
+                    })
+                    .then((result3) => {
+                      if (
+                        element2 === orderArray[orderArray.length - 1]
+                      ) {
+                        let totalString = `<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales for this month</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${qtyTotal}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales in dollars</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${amountTotal}</td></tr></table><br><br>`;
+                        finalArray =
+                          titleString + totalString + globalJoinedArray;
+                        console.log("email", email);
+                        console.log("qtyTotalAtEmail", qtyTotal);
+                        console.log("finalArray", finalArray);
+                        optionsArray = [];
+                        const msg = {
+                          personalizations: [
+                            {
+                              to: [
+                                {
+                                  email: email,
+                                },
+                              ],
+                              bcc: [
+                                {
+                                  email:
+                                    "chris.neisen@heattransferwarehouse.com",
+                                },
+                              ],
+                            },
+                          ],
+                          from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
+                          subject: `Monthly sales report for December`,
+                          html: finalArray,
+                        };
+                        (async () => {
+                          try {
+                            await sgMail.send(msg);
+                          } catch (error) {
+                            console.error(error);
+
+                            if (error.response) {
+                              console.error(error.response.body);
+                            }
+                          }
+                        })();
+                      }
+                    });
+                }
+              })
+              .then((result4) => {})
+              .catch(function (error) {
+                // handle error
+                console.log(error);
+              });
+          }
+        })
+        .catch((error) => {
+          console.log(`Error on item query ${error}`);
+          res.sendStatus(500);
+        });
+    }
+  })
+  .catch((error) => {
+    console.log(`Error on item query ${error}`);
+    res.sendStatus(500);
+  });
+}
+if (dayMonth == 1 && month == 1) {
+  console.log("running sales report")
+let finalArray = "";
+let globalJoinedArray = "";
+const queryText = `select "email" from sku where "created_at" >= '2021-01-01' AND "created_at" <= '2021-01-31' group by "email"`;
+pool
+  .query(queryText)
+  .then((result) => {
+    let emailArray = result.rows;
+    for (let index = 0; index < emailArray.length; index++) {
+      let amountTotal = 0;
+      let qtyTotal = 1;
+      const element = emailArray[index];
+      let email = element.email;
+      let titleString = `  <div><img
+                   src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
+                   width="150"
+                   /></div>
+                     <div style="color:black; padding-left: 30px; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>The following is your monthly report for the month of January</div>`;
+      const queryText2 = `select "order_number" from sku where "email" = '${email}' AND "created_at" >= '2021-01-01' AND "created_at" <= '2021-01-31' group by "order_number"`;
+      pool
+        .query(queryText2)
+        .then((result2) => {
+          let orderArray = result2.rows;
+          let newArray = [];
+          let optionsArray = [];
+          for (let index = 0; index < orderArray.length; index++) {
+            qtyTotal += 1;
+            console.log("qtyTotal", qtyTotal);
+            const element2 = orderArray[index];
+            let order_number = element2.order_number;
+            axios
+              .get(
+                `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}`,
+                config
+              )
+              .then(function (response) {
+                // handle success
+                if (response.data !== []) {
+                  let nowMonth =
+                    Number(moment().subtract(6, "hours").month()) + 1;
+                  let nowYear = Number(moment().subtract(6, "hours").year());
+                  let prevYear = Number(moment().subtract(6, "hours").year());
+                  let nowDay = Number(moment().subtract(6, "hours").date());
+                  let hour = Number(moment().subtract(6, "hours").hour());
+                  let min = Number(moment().subtract(6, "hours").minute());
+                  let sec = Number(moment().subtract(6, "hours").second());
+                  if (hour < 10) {
+                    hour = "0" + String(hour);
+                  }
+                  if (min < 10) {
+                    min = "0" + String(min);
+                  }
+                  if (sec < 10) {
+                    sec = "0" + String(sec);
+                  }
+                  if (nowMonth === 1) {
+                    prevYear = moment().year() - 1;
+                  }
+                  let normalHour = Number(hour);
+                  let AmPm = "AM";
+                  if (normalHour > 12) {
+                    AmPm = "PM";
+                    normalHour = normalHour - 12;
+                  } else if (normalHour === 12) {
+                    AmPm = "PM";
+                  } else if (normalHour === 00) {
+                    AmPm = "AM";
+                    normalHour = 12;
+                  }
+                  let created_at = `${nowMonth}/${nowDay}/${nowYear} ${normalHour}:${min}:${sec}${AmPm}`;
+                  axios
+                    .get(
+                      `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}/products`,
+                      config
+                    )
+                    .then(function (response) {
+                      // handle success
+                      if (response.data !== []) {
+                        let array = response.data;
+                        for (let index = 0; index < array.length; index++) {
+                          const element = array[index];
+                          newArray.push(`<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;">
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.name}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">SKU Number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.sku}</td></tr>`);
+                          sku = element.sku;
+                          name = element.name;
+                          base_price = element.base_price;
+                          base_price = Number(base_price);
+                          amountTotal += base_price;
+                          let options = element.product_options;
+                          for (let j = 0; j < options.length; j++) {
+                            const opt = options[j];
+                            optionsArray.push(
+                              `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${opt.display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
+                            );
+                          }
+                          let optionsJoined = optionsArray.join("");
+                          newArray.push(optionsJoined);
+                          newArray.push("</table><br><br><br>");
+                          qty = array.length;
+                        }
+                        let joinedArray = newArray.join("");
+                        console.log("joinedArray", joinedArray);
+                        globalJoinedArray = joinedArray;
+                        console.log("globalJoinedArray", globalJoinedArray);
+                      }
+                    })
+                    .then((result3) => {
+                      if (
+                        element2 === orderArray[orderArray.length - 1]
+                      ) {
+                        let totalString = `<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales for this month</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${qtyTotal}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales in dollars</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${amountTotal}</td></tr></table><br><br>`;
+                        finalArray =
+                          titleString + totalString + globalJoinedArray;
+                        console.log("email", email);
+                        console.log("qtyTotalAtEmail", qtyTotal);
+                        console.log("finalArray", finalArray);
+                        optionsArray = [];
+                        const msg = {
+                          personalizations: [
+                            {
+                              to: [
+                                {
+                                  email: email,
+                                },
+                              ],
+                              bcc: [
+                                {
+                                  email:
+                                    "chris.neisen@heattransferwarehouse.com",
+                                },
+                              ],
+                            },
+                          ],
+                          from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
+                          subject: `Monthly sales report for January`,
+                          html: finalArray,
+                        };
+                        (async () => {
+                          try {
+                            await sgMail.send(msg);
+                          } catch (error) {
+                            console.error(error);
+
+                            if (error.response) {
+                              console.error(error.response.body);
+                            }
+                          }
+                        })();
+                      }
+                    });
+                }
+              })
+              .then((result4) => {})
+              .catch(function (error) {
+                // handle error
+                console.log(error);
+              });
+          }
+        })
+        .catch((error) => {
+          console.log(`Error on item query ${error}`);
+          res.sendStatus(500);
+        });
+    }
+  })
+  .catch((error) => {
+    console.log(`Error on item query ${error}`);
+    res.sendStatus(500);
+  });
+}
+if (dayMonth == 1 && month == 2) {
+  console.log("running sales report");
+  let finalArray = "";
+  let globalJoinedArray = "";
+  const queryText = `select "email" from sku where "created_at" >= '2021-02-01' AND "created_at" <= '2021-02-28' group by "email"`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      let emailArray = result.rows;
+      for (let index = 0; index < emailArray.length; index++) {
+        let amountTotal = 0;
+        let qtyTotal = 1;
+        const element = emailArray[index];
+        let email = element.email;
+        let titleString = `  <div><img
+                   src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
+                   width="150"
+                   /></div>
+                     <div style="color:black; padding-left: 30px; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>The following is your monthly report for the month of February</div>`;
+        const queryText2 = `select "order_number" from sku where "email" = '${email}' AND "created_at" >= '2021-02-01' AND "created_at" <= '2021-02-28' group by "order_number"`;
+        pool
+          .query(queryText2)
+          .then((result2) => {
+            let orderArray = result2.rows;
+            let newArray = [];
+            let optionsArray = [];
+            for (let index = 0; index < orderArray.length; index++) {
+              qtyTotal += 1;
+              console.log("qtyTotal", qtyTotal);
+              const element2 = orderArray[index];
+              let order_number = element2.order_number;
+              axios
+                .get(
+                  `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}`,
+                  config
+                )
+                .then(function (response) {
+                  // handle success
+                  if (response.data !== []) {
+                    let nowMonth =
+                      Number(moment().subtract(6, "hours").month()) + 1;
+                    let nowYear = Number(moment().subtract(6, "hours").year());
+                    let prevYear = Number(moment().subtract(6, "hours").year());
+                    let nowDay = Number(moment().subtract(6, "hours").date());
+                    let hour = Number(moment().subtract(6, "hours").hour());
+                    let min = Number(moment().subtract(6, "hours").minute());
+                    let sec = Number(moment().subtract(6, "hours").second());
+                    if (hour < 10) {
+                      hour = "0" + String(hour);
+                    }
+                    if (min < 10) {
+                      min = "0" + String(min);
+                    }
+                    if (sec < 10) {
+                      sec = "0" + String(sec);
+                    }
+                    if (nowMonth === 1) {
+                      prevYear = moment().year() - 1;
+                    }
+                    let normalHour = Number(hour);
+                    let AmPm = "AM";
+                    if (normalHour > 12) {
+                      AmPm = "PM";
+                      normalHour = normalHour - 12;
+                    } else if (normalHour === 12) {
+                      AmPm = "PM";
+                    } else if (normalHour === 00) {
+                      AmPm = "AM";
+                      normalHour = 12;
+                    }
+                    let created_at = `${nowMonth}/${nowDay}/${nowYear} ${normalHour}:${min}:${sec}${AmPm}`;
+                    axios
+                      .get(
+                        `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}/products`,
+                        config
+                      )
+                      .then(function (response) {
+                        // handle success
+                        if (response.data !== []) {
+                          let array = response.data;
+                          for (let index = 0; index < array.length; index++) {
+                            const element = array[index];
+                            newArray.push(`<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;">
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.name}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">SKU Number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.sku}</td></tr>`);
+                            sku = element.sku;
+                            name = element.name;
+                            base_price = element.base_price;
+                            base_price = Number(base_price);
+                            amountTotal += base_price;
+                            let options = element.product_options;
+                            for (let j = 0; j < options.length; j++) {
+                              const opt = options[j];
+                              optionsArray.push(
+                                `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${opt.display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
+                              );
+                            }
+                            let optionsJoined = optionsArray.join("");
+                            newArray.push(optionsJoined);
+                            newArray.push("</table><br><br><br>");
+                            qty = array.length;
+                          }
+                          let joinedArray = newArray.join("");
+                          console.log("joinedArray", joinedArray);
+                          globalJoinedArray = joinedArray;
+                          console.log("globalJoinedArray", globalJoinedArray);
+                        }
+                      })
+                      .then((result3) => {
+                        if (element2 === orderArray[orderArray.length - 1]) {
+                          let totalString = `<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales for this month</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${qtyTotal}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales in dollars</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${amountTotal}</td></tr></table><br><br>`;
+                          finalArray =
+                            titleString + totalString + globalJoinedArray;
+                          console.log("email", email);
+                          console.log("qtyTotalAtEmail", qtyTotal);
+                          console.log("finalArray", finalArray);
+                          optionsArray = [];
+                          const msg = {
+                            personalizations: [
+                              {
+                                to: [
+                                  {
+                                    email: email,
+                                  },
+                                ],
+                                bcc: [
+                                  {
+                                    email:
+                                      "chris.neisen@heattransferwarehouse.com",
+                                  },
+                                ],
+                              },
+                            ],
+                            from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
+                            subject: `Monthly sales report for February`,
+                            html: finalArray,
+                          };
+                          (async () => {
+                            try {
+                              await sgMail.send(msg);
+                            } catch (error) {
+                              console.error(error);
+
+                              if (error.response) {
+                                console.error(error.response.body);
+                              }
+                            }
+                          })();
+                        }
+                      });
+                  }
+                })
+                .then((result4) => {})
+                .catch(function (error) {
+                  // handle error
+                  console.log(error);
+                });
+            }
+          })
+          .catch((error) => {
+            console.log(`Error on item query ${error}`);
+            res.sendStatus(500);
+          });
+      }
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+}
+if (dayMonth == 1 && month == 3) {
+  console.log("running sales report");
+  let finalArray = "";
+  let globalJoinedArray = "";
+  const queryText = `select "email" from sku where "created_at" >= '2021-03-01' AND "created_at" <= '2021-03-31' group by "email"`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      let emailArray = result.rows;
+      for (let index = 0; index < emailArray.length; index++) {
+        let amountTotal = 0;
+        let qtyTotal = 1;
+        const element = emailArray[index];
+        let email = element.email;
+        let titleString = `  <div><img
+                   src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
+                   width="150"
+                   /></div>
+                     <div style="color:black; padding-left: 30px; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>The following is your monthly report for the month of March</div>`;
+        const queryText2 = `select "order_number" from sku where "email" = '${email}' AND "created_at" >= '2021-03-01' AND "created_at" <= '2021-03-31' group by "order_number"`;
+        pool
+          .query(queryText2)
+          .then((result2) => {
+            let orderArray = result2.rows;
+            let newArray = [];
+            let optionsArray = [];
+            for (let index = 0; index < orderArray.length; index++) {
+              qtyTotal += 1;
+              console.log("qtyTotal", qtyTotal);
+              const element2 = orderArray[index];
+              let order_number = element2.order_number;
+              axios
+                .get(
+                  `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}`,
+                  config
+                )
+                .then(function (response) {
+                  // handle success
+                  if (response.data !== []) {
+                    let nowMonth =
+                      Number(moment().subtract(6, "hours").month()) + 1;
+                    let nowYear = Number(moment().subtract(6, "hours").year());
+                    let prevYear = Number(moment().subtract(6, "hours").year());
+                    let nowDay = Number(moment().subtract(6, "hours").date());
+                    let hour = Number(moment().subtract(6, "hours").hour());
+                    let min = Number(moment().subtract(6, "hours").minute());
+                    let sec = Number(moment().subtract(6, "hours").second());
+                    if (hour < 10) {
+                      hour = "0" + String(hour);
+                    }
+                    if (min < 10) {
+                      min = "0" + String(min);
+                    }
+                    if (sec < 10) {
+                      sec = "0" + String(sec);
+                    }
+                    if (nowMonth === 1) {
+                      prevYear = moment().year() - 1;
+                    }
+                    let normalHour = Number(hour);
+                    let AmPm = "AM";
+                    if (normalHour > 12) {
+                      AmPm = "PM";
+                      normalHour = normalHour - 12;
+                    } else if (normalHour === 12) {
+                      AmPm = "PM";
+                    } else if (normalHour === 00) {
+                      AmPm = "AM";
+                      normalHour = 12;
+                    }
+                    let created_at = `${nowMonth}/${nowDay}/${nowYear} ${normalHour}:${min}:${sec}${AmPm}`;
+                    axios
+                      .get(
+                        `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}/products`,
+                        config
+                      )
+                      .then(function (response) {
+                        // handle success
+                        if (response.data !== []) {
+                          let array = response.data;
+                          for (let index = 0; index < array.length; index++) {
+                            const element = array[index];
+                            newArray.push(`<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;">
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.name}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">SKU Number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.sku}</td></tr>`);
+                            sku = element.sku;
+                            name = element.name;
+                            base_price = element.base_price;
+                            base_price = Number(base_price);
+                            amountTotal += base_price;
+                            let options = element.product_options;
+                            for (let j = 0; j < options.length; j++) {
+                              const opt = options[j];
+                              optionsArray.push(
+                                `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${opt.display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
+                              );
+                            }
+                            let optionsJoined = optionsArray.join("");
+                            newArray.push(optionsJoined);
+                            newArray.push("</table><br><br><br>");
+                            qty = array.length;
+                          }
+                          let joinedArray = newArray.join("");
+                          console.log("joinedArray", joinedArray);
+                          globalJoinedArray = joinedArray;
+                          console.log("globalJoinedArray", globalJoinedArray);
+                        }
+                      })
+                      .then((result3) => {
+                        if (element2 === orderArray[orderArray.length - 1]) {
+                          let totalString = `<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales for this month</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${qtyTotal}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales in dollars</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${amountTotal}</td></tr></table><br><br>`;
+                          finalArray =
+                            titleString + totalString + globalJoinedArray;
+                          console.log("email", email);
+                          console.log("qtyTotalAtEmail", qtyTotal);
+                          console.log("finalArray", finalArray);
+                          optionsArray = [];
+                          const msg = {
+                            personalizations: [
+                              {
+                                to: [
+                                  {
+                                    email: email,
+                                  },
+                                ],
+                                bcc: [
+                                  {
+                                    email:
+                                      "chris.neisen@heattransferwarehouse.com",
+                                  },
+                                ],
+                              },
+                            ],
+                            from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
+                            subject: `Monthly sales report for March`,
+                            html: finalArray,
+                          };
+                          (async () => {
+                            try {
+                              await sgMail.send(msg);
+                            } catch (error) {
+                              console.error(error);
+
+                              if (error.response) {
+                                console.error(error.response.body);
+                              }
+                            }
+                          })();
+                        }
+                      });
+                  }
+                })
+                .then((result4) => {})
+                .catch(function (error) {
+                  // handle error
+                  console.log(error);
+                });
+            }
+          })
+          .catch((error) => {
+            console.log(`Error on item query ${error}`);
+            res.sendStatus(500);
+          });
+      }
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+}
+if (dayMonth == 1 && month == 4) {
+  console.log("running sales report");
+  let finalArray = "";
+  let globalJoinedArray = "";
+  const queryText = `select "email" from sku where "created_at" >= '2021-04-01' AND "created_at" <= '2021-04-30' group by "email"`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      let emailArray = result.rows;
+      for (let index = 0; index < emailArray.length; index++) {
+        let amountTotal = 0;
+        let qtyTotal = 1;
+        const element = emailArray[index];
+        let email = element.email;
+        let titleString = `  <div><img
+                   src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
+                   width="150"
+                   /></div>
+                     <div style="color:black; padding-left: 30px; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>The following is your monthly report for the month of April</div>`;
+        const queryText2 = `select "order_number" from sku where "email" = '${email}' AND "created_at" >= '2021-04-01' AND "created_at" <= '2021-04-30' group by "order_number"`;
+        pool
+          .query(queryText2)
+          .then((result2) => {
+            let orderArray = result2.rows;
+            let newArray = [];
+            let optionsArray = [];
+            for (let index = 0; index < orderArray.length; index++) {
+              qtyTotal += 1;
+              console.log("qtyTotal", qtyTotal);
+              const element2 = orderArray[index];
+              let order_number = element2.order_number;
+              axios
+                .get(
+                  `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}`,
+                  config
+                )
+                .then(function (response) {
+                  // handle success
+                  if (response.data !== []) {
+                    let nowMonth =
+                      Number(moment().subtract(6, "hours").month()) + 1;
+                    let nowYear = Number(moment().subtract(6, "hours").year());
+                    let prevYear = Number(moment().subtract(6, "hours").year());
+                    let nowDay = Number(moment().subtract(6, "hours").date());
+                    let hour = Number(moment().subtract(6, "hours").hour());
+                    let min = Number(moment().subtract(6, "hours").minute());
+                    let sec = Number(moment().subtract(6, "hours").second());
+                    if (hour < 10) {
+                      hour = "0" + String(hour);
+                    }
+                    if (min < 10) {
+                      min = "0" + String(min);
+                    }
+                    if (sec < 10) {
+                      sec = "0" + String(sec);
+                    }
+                    if (nowMonth === 1) {
+                      prevYear = moment().year() - 1;
+                    }
+                    let normalHour = Number(hour);
+                    let AmPm = "AM";
+                    if (normalHour > 12) {
+                      AmPm = "PM";
+                      normalHour = normalHour - 12;
+                    } else if (normalHour === 12) {
+                      AmPm = "PM";
+                    } else if (normalHour === 00) {
+                      AmPm = "AM";
+                      normalHour = 12;
+                    }
+                    let created_at = `${nowMonth}/${nowDay}/${nowYear} ${normalHour}:${min}:${sec}${AmPm}`;
+                    axios
+                      .get(
+                        `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}/products`,
+                        config
+                      )
+                      .then(function (response) {
+                        // handle success
+                        if (response.data !== []) {
+                          let array = response.data;
+                          for (let index = 0; index < array.length; index++) {
+                            const element = array[index];
+                            newArray.push(`<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;">
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.name}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">SKU Number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.sku}</td></tr>`);
+                            sku = element.sku;
+                            name = element.name;
+                            base_price = element.base_price;
+                            base_price = Number(base_price);
+                            amountTotal += base_price;
+                            let options = element.product_options;
+                            for (let j = 0; j < options.length; j++) {
+                              const opt = options[j];
+                              optionsArray.push(
+                                `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${opt.display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
+                              );
+                            }
+                            let optionsJoined = optionsArray.join("");
+                            newArray.push(optionsJoined);
+                            newArray.push("</table><br><br><br>");
+                            qty = array.length;
+                          }
+                          let joinedArray = newArray.join("");
+                          console.log("joinedArray", joinedArray);
+                          globalJoinedArray = joinedArray;
+                          console.log("globalJoinedArray", globalJoinedArray);
+                        }
+                      })
+                      .then((result3) => {
+                        if (element2 === orderArray[orderArray.length - 1]) {
+                          let totalString = `<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales for this month</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${qtyTotal}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales in dollars</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${amountTotal}</td></tr></table><br><br>`;
+                          finalArray =
+                            titleString + totalString + globalJoinedArray;
+                          console.log("email", email);
+                          console.log("qtyTotalAtEmail", qtyTotal);
+                          console.log("finalArray", finalArray);
+                          optionsArray = [];
+                          const msg = {
+                            personalizations: [
+                              {
+                                to: [
+                                  {
+                                    email: email,
+                                  },
+                                ],
+                                bcc: [
+                                  {
+                                    email:
+                                      "chris.neisen@heattransferwarehouse.com",
+                                  },
+                                ],
+                              },
+                            ],
+                            from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
+                            subject: `Monthly sales report for April`,
+                            html: finalArray,
+                          };
+                          (async () => {
+                            try {
+                              await sgMail.send(msg);
+                            } catch (error) {
+                              console.error(error);
+
+                              if (error.response) {
+                                console.error(error.response.body);
+                              }
+                            }
+                          })();
+                        }
+                      });
+                  }
+                })
+                .then((result4) => {})
+                .catch(function (error) {
+                  // handle error
+                  console.log(error);
+                });
+            }
+          })
+          .catch((error) => {
+            console.log(`Error on item query ${error}`);
+            res.sendStatus(500);
+          });
+      }
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+}
+if (dayMonth == 1 && month == 5) {
+  console.log("running sales report");
+  let finalArray = "";
+  let globalJoinedArray = "";
+  const queryText = `select "email" from sku where "created_at" >= '2021-05-01' AND "created_at" <= '2021-05-31' group by "email"`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      let emailArray = result.rows;
+      for (let index = 0; index < emailArray.length; index++) {
+        let amountTotal = 0;
+        let qtyTotal = 1;
+        const element = emailArray[index];
+        let email = element.email;
+        let titleString = `  <div><img
+                   src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
+                   width="150"
+                   /></div>
+                     <div style="color:black; padding-left: 30px; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>The following is your monthly report for the month of May</div>`;
+        const queryText2 = `select "order_number" from sku where "email" = '${email}' AND "created_at" >= '2021-05-01' AND "created_at" <= '2021-05-31' group by "order_number"`;
+        pool
+          .query(queryText2)
+          .then((result2) => {
+            let orderArray = result2.rows;
+            let newArray = [];
+            let optionsArray = [];
+            for (let index = 0; index < orderArray.length; index++) {
+              qtyTotal += 1;
+              console.log("qtyTotal", qtyTotal);
+              const element2 = orderArray[index];
+              let order_number = element2.order_number;
+              axios
+                .get(
+                  `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}`,
+                  config
+                )
+                .then(function (response) {
+                  // handle success
+                  if (response.data !== []) {
+                    let nowMonth =
+                      Number(moment().subtract(6, "hours").month()) + 1;
+                    let nowYear = Number(moment().subtract(6, "hours").year());
+                    let prevYear = Number(moment().subtract(6, "hours").year());
+                    let nowDay = Number(moment().subtract(6, "hours").date());
+                    let hour = Number(moment().subtract(6, "hours").hour());
+                    let min = Number(moment().subtract(6, "hours").minute());
+                    let sec = Number(moment().subtract(6, "hours").second());
+                    if (hour < 10) {
+                      hour = "0" + String(hour);
+                    }
+                    if (min < 10) {
+                      min = "0" + String(min);
+                    }
+                    if (sec < 10) {
+                      sec = "0" + String(sec);
+                    }
+                    if (nowMonth === 1) {
+                      prevYear = moment().year() - 1;
+                    }
+                    let normalHour = Number(hour);
+                    let AmPm = "AM";
+                    if (normalHour > 12) {
+                      AmPm = "PM";
+                      normalHour = normalHour - 12;
+                    } else if (normalHour === 12) {
+                      AmPm = "PM";
+                    } else if (normalHour === 00) {
+                      AmPm = "AM";
+                      normalHour = 12;
+                    }
+                    let created_at = `${nowMonth}/${nowDay}/${nowYear} ${normalHour}:${min}:${sec}${AmPm}`;
+                    axios
+                      .get(
+                        `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}/products`,
+                        config
+                      )
+                      .then(function (response) {
+                        // handle success
+                        if (response.data !== []) {
+                          let array = response.data;
+                          for (let index = 0; index < array.length; index++) {
+                            const element = array[index];
+                            newArray.push(`<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;">
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.name}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">SKU Number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.sku}</td></tr>`);
+                            sku = element.sku;
+                            name = element.name;
+                            base_price = element.base_price;
+                            base_price = Number(base_price);
+                            amountTotal += base_price;
+                            let options = element.product_options;
+                            for (let j = 0; j < options.length; j++) {
+                              const opt = options[j];
+                              optionsArray.push(
+                                `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${opt.display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
+                              );
+                            }
+                            let optionsJoined = optionsArray.join("");
+                            newArray.push(optionsJoined);
+                            newArray.push("</table><br><br><br>");
+                            qty = array.length;
+                          }
+                          let joinedArray = newArray.join("");
+                          console.log("joinedArray", joinedArray);
+                          globalJoinedArray = joinedArray;
+                          console.log("globalJoinedArray", globalJoinedArray);
+                        }
+                      })
+                      .then((result3) => {
+                        if (element2 === orderArray[orderArray.length - 1]) {
+                          let totalString = `<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales for this month</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${qtyTotal}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales in dollars</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${amountTotal}</td></tr></table><br><br>`;
+                          finalArray =
+                            titleString + totalString + globalJoinedArray;
+                          console.log("email", email);
+                          console.log("qtyTotalAtEmail", qtyTotal);
+                          console.log("finalArray", finalArray);
+                          optionsArray = [];
+                          const msg = {
+                            personalizations: [
+                              {
+                                to: [
+                                  {
+                                    email: email,
+                                  },
+                                ],
+                                bcc: [
+                                  {
+                                    email:
+                                      "chris.neisen@heattransferwarehouse.com",
+                                  },
+                                ],
+                              },
+                            ],
+                            from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
+                            subject: `Monthly sales report for May`,
+                            html: finalArray,
+                          };
+                          (async () => {
+                            try {
+                              await sgMail.send(msg);
+                            } catch (error) {
+                              console.error(error);
+
+                              if (error.response) {
+                                console.error(error.response.body);
+                              }
+                            }
+                          })();
+                        }
+                      });
+                  }
+                })
+                .then((result4) => {})
+                .catch(function (error) {
+                  // handle error
+                  console.log(error);
+                });
+            }
+          })
+          .catch((error) => {
+            console.log(`Error on item query ${error}`);
+            res.sendStatus(500);
+          });
+      }
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+}
+if (dayMonth == 1 && month == 6) {
+  console.log("running sales report");
+  let finalArray = "";
+  let globalJoinedArray = "";
+  const queryText = `select "email" from sku where "created_at" >= '2021-06-01' AND "created_at" <= '2021-06-30' group by "email"`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      let emailArray = result.rows;
+      for (let index = 0; index < emailArray.length; index++) {
+        let amountTotal = 0;
+        let qtyTotal = 1;
+        const element = emailArray[index];
+        let email = element.email;
+        let titleString = `  <div><img
+                   src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
+                   width="150"
+                   /></div>
+                     <div style="color:black; padding-left: 30px; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>The following is your monthly report for the month of June</div>`;
+        const queryText2 = `select "order_number" from sku where "email" = '${email}' AND "created_at" >= '2021-06-01' AND "created_at" <= '2021-06-30' group by "order_number"`;
+        pool
+          .query(queryText2)
+          .then((result2) => {
+            let orderArray = result2.rows;
+            let newArray = [];
+            let optionsArray = [];
+            for (let index = 0; index < orderArray.length; index++) {
+              qtyTotal += 1;
+              console.log("qtyTotal", qtyTotal);
+              const element2 = orderArray[index];
+              let order_number = element2.order_number;
+              axios
+                .get(
+                  `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}`,
+                  config
+                )
+                .then(function (response) {
+                  // handle success
+                  if (response.data !== []) {
+                    let nowMonth =
+                      Number(moment().subtract(6, "hours").month()) + 1;
+                    let nowYear = Number(moment().subtract(6, "hours").year());
+                    let prevYear = Number(moment().subtract(6, "hours").year());
+                    let nowDay = Number(moment().subtract(6, "hours").date());
+                    let hour = Number(moment().subtract(6, "hours").hour());
+                    let min = Number(moment().subtract(6, "hours").minute());
+                    let sec = Number(moment().subtract(6, "hours").second());
+                    if (hour < 10) {
+                      hour = "0" + String(hour);
+                    }
+                    if (min < 10) {
+                      min = "0" + String(min);
+                    }
+                    if (sec < 10) {
+                      sec = "0" + String(sec);
+                    }
+                    if (nowMonth === 1) {
+                      prevYear = moment().year() - 1;
+                    }
+                    let normalHour = Number(hour);
+                    let AmPm = "AM";
+                    if (normalHour > 12) {
+                      AmPm = "PM";
+                      normalHour = normalHour - 12;
+                    } else if (normalHour === 12) {
+                      AmPm = "PM";
+                    } else if (normalHour === 00) {
+                      AmPm = "AM";
+                      normalHour = 12;
+                    }
+                    let created_at = `${nowMonth}/${nowDay}/${nowYear} ${normalHour}:${min}:${sec}${AmPm}`;
+                    axios
+                      .get(
+                        `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}/products`,
+                        config
+                      )
+                      .then(function (response) {
+                        // handle success
+                        if (response.data !== []) {
+                          let array = response.data;
+                          for (let index = 0; index < array.length; index++) {
+                            const element = array[index];
+                            newArray.push(`<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;">
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.name}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">SKU Number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.sku}</td></tr>`);
+                            sku = element.sku;
+                            name = element.name;
+                            base_price = element.base_price;
+                            base_price = Number(base_price);
+                            amountTotal += base_price;
+                            let options = element.product_options;
+                            for (let j = 0; j < options.length; j++) {
+                              const opt = options[j];
+                              optionsArray.push(
+                                `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${opt.display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
+                              );
+                            }
+                            let optionsJoined = optionsArray.join("");
+                            newArray.push(optionsJoined);
+                            newArray.push("</table><br><br><br>");
+                            qty = array.length;
+                          }
+                          let joinedArray = newArray.join("");
+                          console.log("joinedArray", joinedArray);
+                          globalJoinedArray = joinedArray;
+                          console.log("globalJoinedArray", globalJoinedArray);
+                        }
+                      })
+                      .then((result3) => {
+                        if (element2 === orderArray[orderArray.length - 1]) {
+                          let totalString = `<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales for this month</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${qtyTotal}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales in dollars</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${amountTotal}</td></tr></table><br><br>`;
+                          finalArray =
+                            titleString + totalString + globalJoinedArray;
+                          console.log("email", email);
+                          console.log("qtyTotalAtEmail", qtyTotal);
+                          console.log("finalArray", finalArray);
+                          optionsArray = [];
+                          const msg = {
+                            personalizations: [
+                              {
+                                to: [
+                                  {
+                                    email: email,
+                                  },
+                                ],
+                                bcc: [
+                                  {
+                                    email:
+                                      "chris.neisen@heattransferwarehouse.com",
+                                  },
+                                ],
+                              },
+                            ],
+                            from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
+                            subject: `Monthly sales report for June`,
+                            html: finalArray,
+                          };
+                          (async () => {
+                            try {
+                              await sgMail.send(msg);
+                            } catch (error) {
+                              console.error(error);
+
+                              if (error.response) {
+                                console.error(error.response.body);
+                              }
+                            }
+                          })();
+                        }
+                      });
+                  }
+                })
+                .then((result4) => {})
+                .catch(function (error) {
+                  // handle error
+                  console.log(error);
+                });
+            }
+          })
+          .catch((error) => {
+            console.log(`Error on item query ${error}`);
+            res.sendStatus(500);
+          });
+      }
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+}
+if (dayMonth == 1 && month == 7) {
+  console.log("running sales report");
+  let finalArray = "";
+  let globalJoinedArray = "";
+  const queryText = `select "email" from sku where "created_at" >= '2021-07-01' AND "created_at" <= '2021-07-31' group by "email"`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      let emailArray = result.rows;
+      for (let index = 0; index < emailArray.length; index++) {
+        let amountTotal = 0;
+        let qtyTotal = 1;
+        const element = emailArray[index];
+        let email = element.email;
+        let titleString = `  <div><img
+                   src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
+                   width="150"
+                   /></div>
+                     <div style="color:black; padding-left: 30px; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>The following is your monthly report for the month of July</div>`;
+        const queryText2 = `select "order_number" from sku where "email" = '${email}' AND "created_at" >= '2021-07-01' AND "created_at" <= '2021-07-31' group by "order_number"`;
+        pool
+          .query(queryText2)
+          .then((result2) => {
+            let orderArray = result2.rows;
+            let newArray = [];
+            let optionsArray = [];
+            for (let index = 0; index < orderArray.length; index++) {
+              qtyTotal += 1;
+              console.log("qtyTotal", qtyTotal);
+              const element2 = orderArray[index];
+              let order_number = element2.order_number;
+              axios
+                .get(
+                  `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}`,
+                  config
+                )
+                .then(function (response) {
+                  // handle success
+                  if (response.data !== []) {
+                    let nowMonth =
+                      Number(moment().subtract(6, "hours").month()) + 1;
+                    let nowYear = Number(moment().subtract(6, "hours").year());
+                    let prevYear = Number(moment().subtract(6, "hours").year());
+                    let nowDay = Number(moment().subtract(6, "hours").date());
+                    let hour = Number(moment().subtract(6, "hours").hour());
+                    let min = Number(moment().subtract(6, "hours").minute());
+                    let sec = Number(moment().subtract(6, "hours").second());
+                    if (hour < 10) {
+                      hour = "0" + String(hour);
+                    }
+                    if (min < 10) {
+                      min = "0" + String(min);
+                    }
+                    if (sec < 10) {
+                      sec = "0" + String(sec);
+                    }
+                    if (nowMonth === 1) {
+                      prevYear = moment().year() - 1;
+                    }
+                    let normalHour = Number(hour);
+                    let AmPm = "AM";
+                    if (normalHour > 12) {
+                      AmPm = "PM";
+                      normalHour = normalHour - 12;
+                    } else if (normalHour === 12) {
+                      AmPm = "PM";
+                    } else if (normalHour === 00) {
+                      AmPm = "AM";
+                      normalHour = 12;
+                    }
+                    let created_at = `${nowMonth}/${nowDay}/${nowYear} ${normalHour}:${min}:${sec}${AmPm}`;
+                    axios
+                      .get(
+                        `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}/products`,
+                        config
+                      )
+                      .then(function (response) {
+                        // handle success
+                        if (response.data !== []) {
+                          let array = response.data;
+                          for (let index = 0; index < array.length; index++) {
+                            const element = array[index];
+                            newArray.push(`<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;">
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.name}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">SKU Number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.sku}</td></tr>`);
+                            sku = element.sku;
+                            name = element.name;
+                            base_price = element.base_price;
+                            base_price = Number(base_price);
+                            amountTotal += base_price;
+                            let options = element.product_options;
+                            for (let j = 0; j < options.length; j++) {
+                              const opt = options[j];
+                              optionsArray.push(
+                                `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${opt.display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
+                              );
+                            }
+                            let optionsJoined = optionsArray.join("");
+                            newArray.push(optionsJoined);
+                            newArray.push("</table><br><br><br>");
+                            qty = array.length;
+                          }
+                          let joinedArray = newArray.join("");
+                          console.log("joinedArray", joinedArray);
+                          globalJoinedArray = joinedArray;
+                          console.log("globalJoinedArray", globalJoinedArray);
+                        }
+                      })
+                      .then((result3) => {
+                        if (element2 === orderArray[orderArray.length - 1]) {
+                          let totalString = `<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales for this month</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${qtyTotal}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales in dollars</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${amountTotal}</td></tr></table><br><br>`;
+                          finalArray =
+                            titleString + totalString + globalJoinedArray;
+                          console.log("email", email);
+                          console.log("qtyTotalAtEmail", qtyTotal);
+                          console.log("finalArray", finalArray);
+                          optionsArray = [];
+                          const msg = {
+                            personalizations: [
+                              {
+                                to: [
+                                  {
+                                    email: email,
+                                  },
+                                ],
+                                bcc: [
+                                  {
+                                    email:
+                                      "chris.neisen@heattransferwarehouse.com",
+                                  },
+                                ],
+                              },
+                            ],
+                            from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
+                            subject: `Monthly sales report for July`,
+                            html: finalArray,
+                          };
+                          (async () => {
+                            try {
+                              await sgMail.send(msg);
+                            } catch (error) {
+                              console.error(error);
+
+                              if (error.response) {
+                                console.error(error.response.body);
+                              }
+                            }
+                          })();
+                        }
+                      });
+                  }
+                })
+                .then((result4) => {})
+                .catch(function (error) {
+                  // handle error
+                  console.log(error);
+                });
+            }
+          })
+          .catch((error) => {
+            console.log(`Error on item query ${error}`);
+            res.sendStatus(500);
+          });
+      }
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+}
+if (dayMonth == 1 && month == 8) {
+  console.log("running sales report");
+  let finalArray = "";
+  let globalJoinedArray = "";
+  const queryText = `select "email" from sku where "created_at" >= '2021-08-01' AND "created_at" <= '2021-08-31' group by "email"`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      let emailArray = result.rows;
+      for (let index = 0; index < emailArray.length; index++) {
+        let amountTotal = 0;
+        let qtyTotal = 1;
+        const element = emailArray[index];
+        let email = element.email;
+        let titleString = `  <div><img
+                   src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
+                   width="150"
+                   /></div>
+                     <div style="color:black; padding-left: 30px; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>The following is your monthly report for the month of August</div>`;
+        const queryText2 = `select "order_number" from sku where "email" = '${email}' AND "created_at" >= '2021-08-01' AND "created_at" <= '2021-08-31' group by "order_number"`;
+        pool
+          .query(queryText2)
+          .then((result2) => {
+            let orderArray = result2.rows;
+            let newArray = [];
+            let optionsArray = [];
+            for (let index = 0; index < orderArray.length; index++) {
+              qtyTotal += 1;
+              console.log("qtyTotal", qtyTotal);
+              const element2 = orderArray[index];
+              let order_number = element2.order_number;
+              axios
+                .get(
+                  `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}`,
+                  config
+                )
+                .then(function (response) {
+                  // handle success
+                  if (response.data !== []) {
+                    let nowMonth =
+                      Number(moment().subtract(6, "hours").month()) + 1;
+                    let nowYear = Number(moment().subtract(6, "hours").year());
+                    let prevYear = Number(moment().subtract(6, "hours").year());
+                    let nowDay = Number(moment().subtract(6, "hours").date());
+                    let hour = Number(moment().subtract(6, "hours").hour());
+                    let min = Number(moment().subtract(6, "hours").minute());
+                    let sec = Number(moment().subtract(6, "hours").second());
+                    if (hour < 10) {
+                      hour = "0" + String(hour);
+                    }
+                    if (min < 10) {
+                      min = "0" + String(min);
+                    }
+                    if (sec < 10) {
+                      sec = "0" + String(sec);
+                    }
+                    if (nowMonth === 1) {
+                      prevYear = moment().year() - 1;
+                    }
+                    let normalHour = Number(hour);
+                    let AmPm = "AM";
+                    if (normalHour > 12) {
+                      AmPm = "PM";
+                      normalHour = normalHour - 12;
+                    } else if (normalHour === 12) {
+                      AmPm = "PM";
+                    } else if (normalHour === 00) {
+                      AmPm = "AM";
+                      normalHour = 12;
+                    }
+                    let created_at = `${nowMonth}/${nowDay}/${nowYear} ${normalHour}:${min}:${sec}${AmPm}`;
+                    axios
+                      .get(
+                        `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}/products`,
+                        config
+                      )
+                      .then(function (response) {
+                        // handle success
+                        if (response.data !== []) {
+                          let array = response.data;
+                          for (let index = 0; index < array.length; index++) {
+                            const element = array[index];
+                            newArray.push(`<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;">
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.name}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">SKU Number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.sku}</td></tr>`);
+                            sku = element.sku;
+                            name = element.name;
+                            base_price = element.base_price;
+                            base_price = Number(base_price);
+                            amountTotal += base_price;
+                            let options = element.product_options;
+                            for (let j = 0; j < options.length; j++) {
+                              const opt = options[j];
+                              optionsArray.push(
+                                `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${opt.display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
+                              );
+                            }
+                            let optionsJoined = optionsArray.join("");
+                            newArray.push(optionsJoined);
+                            newArray.push("</table><br><br><br>");
+                            qty = array.length;
+                          }
+                          let joinedArray = newArray.join("");
+                          console.log("joinedArray", joinedArray);
+                          globalJoinedArray = joinedArray;
+                          console.log("globalJoinedArray", globalJoinedArray);
+                        }
+                      })
+                      .then((result3) => {
+                        if (element2 === orderArray[orderArray.length - 1]) {
+                          let totalString = `<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales for this month</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${qtyTotal}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales in dollars</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${amountTotal}</td></tr></table><br><br>`;
+                          finalArray =
+                            titleString + totalString + globalJoinedArray;
+                          console.log("email", email);
+                          console.log("qtyTotalAtEmail", qtyTotal);
+                          console.log("finalArray", finalArray);
+                          optionsArray = [];
+                          const msg = {
+                            personalizations: [
+                              {
+                                to: [
+                                  {
+                                    email: email,
+                                  },
+                                ],
+                                bcc: [
+                                  {
+                                    email:
+                                      "chris.neisen@heattransferwarehouse.com",
+                                  },
+                                ],
+                              },
+                            ],
+                            from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
+                            subject: `Monthly sales report for August`,
+                            html: finalArray,
+                          };
+                          (async () => {
+                            try {
+                              await sgMail.send(msg);
+                            } catch (error) {
+                              console.error(error);
+
+                              if (error.response) {
+                                console.error(error.response.body);
+                              }
+                            }
+                          })();
+                        }
+                      });
+                  }
+                })
+                .then((result4) => {})
+                .catch(function (error) {
+                  // handle error
+                  console.log(error);
+                });
+            }
+          })
+          .catch((error) => {
+            console.log(`Error on item query ${error}`);
+            res.sendStatus(500);
+          });
+      }
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+}
+if (dayMonth == 1 && month == 9) {
+  console.log("running sales report");
+  let finalArray = "";
+  let globalJoinedArray = "";
+  const queryText = `select "email" from sku where "created_at" >= '2021-09-01' AND "created_at" <= '2021-09-30' group by "email"`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      let emailArray = result.rows;
+      for (let index = 0; index < emailArray.length; index++) {
+        let amountTotal = 0;
+        let qtyTotal = 1;
+        const element = emailArray[index];
+        let email = element.email;
+        let titleString = `  <div><img
+                   src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
+                   width="150"
+                   /></div>
+                     <div style="color:black; padding-left: 30px; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>The following is your monthly report for the month of September</div>`;
+        const queryText2 = `select "order_number" from sku where "email" = '${email}' AND "created_at" >= '2021-09-01' AND "created_at" <= '2021-09-30' group by "order_number"`;
+        pool
+          .query(queryText2)
+          .then((result2) => {
+            let orderArray = result2.rows;
+            let newArray = [];
+            let optionsArray = [];
+            for (let index = 0; index < orderArray.length; index++) {
+              qtyTotal += 1;
+              console.log("qtyTotal", qtyTotal);
+              const element2 = orderArray[index];
+              let order_number = element2.order_number;
+              axios
+                .get(
+                  `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}`,
+                  config
+                )
+                .then(function (response) {
+                  // handle success
+                  if (response.data !== []) {
+                    let nowMonth =
+                      Number(moment().subtract(6, "hours").month()) + 1;
+                    let nowYear = Number(moment().subtract(6, "hours").year());
+                    let prevYear = Number(moment().subtract(6, "hours").year());
+                    let nowDay = Number(moment().subtract(6, "hours").date());
+                    let hour = Number(moment().subtract(6, "hours").hour());
+                    let min = Number(moment().subtract(6, "hours").minute());
+                    let sec = Number(moment().subtract(6, "hours").second());
+                    if (hour < 10) {
+                      hour = "0" + String(hour);
+                    }
+                    if (min < 10) {
+                      min = "0" + String(min);
+                    }
+                    if (sec < 10) {
+                      sec = "0" + String(sec);
+                    }
+                    if (nowMonth === 1) {
+                      prevYear = moment().year() - 1;
+                    }
+                    let normalHour = Number(hour);
+                    let AmPm = "AM";
+                    if (normalHour > 12) {
+                      AmPm = "PM";
+                      normalHour = normalHour - 12;
+                    } else if (normalHour === 12) {
+                      AmPm = "PM";
+                    } else if (normalHour === 00) {
+                      AmPm = "AM";
+                      normalHour = 12;
+                    }
+                    let created_at = `${nowMonth}/${nowDay}/${nowYear} ${normalHour}:${min}:${sec}${AmPm}`;
+                    axios
+                      .get(
+                        `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}/products`,
+                        config
+                      )
+                      .then(function (response) {
+                        // handle success
+                        if (response.data !== []) {
+                          let array = response.data;
+                          for (let index = 0; index < array.length; index++) {
+                            const element = array[index];
+                            newArray.push(`<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;">
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.name}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">SKU Number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.sku}</td></tr>`);
+                            sku = element.sku;
+                            name = element.name;
+                            base_price = element.base_price;
+                            base_price = Number(base_price);
+                            amountTotal += base_price;
+                            let options = element.product_options;
+                            for (let j = 0; j < options.length; j++) {
+                              const opt = options[j];
+                              optionsArray.push(
+                                `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${opt.display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
+                              );
+                            }
+                            let optionsJoined = optionsArray.join("");
+                            newArray.push(optionsJoined);
+                            newArray.push("</table><br><br><br>");
+                            qty = array.length;
+                          }
+                          let joinedArray = newArray.join("");
+                          console.log("joinedArray", joinedArray);
+                          globalJoinedArray = joinedArray;
+                          console.log("globalJoinedArray", globalJoinedArray);
+                        }
+                      })
+                      .then((result3) => {
+                        if (element2 === orderArray[orderArray.length - 1]) {
+                          let totalString = `<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales for this month</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${qtyTotal}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales in dollars</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${amountTotal}</td></tr></table><br><br>`;
+                          finalArray =
+                            titleString + totalString + globalJoinedArray;
+                          console.log("email", email);
+                          console.log("qtyTotalAtEmail", qtyTotal);
+                          console.log("finalArray", finalArray);
+                          optionsArray = [];
+                          const msg = {
+                            personalizations: [
+                              {
+                                to: [
+                                  {
+                                    email: email,
+                                  },
+                                ],
+                                bcc: [
+                                  {
+                                    email:
+                                      "chris.neisen@heattransferwarehouse.com",
+                                  },
+                                ],
+                              },
+                            ],
+                            from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
+                            subject: `Monthly sales report for September`,
+                            html: finalArray,
+                          };
+                          (async () => {
+                            try {
+                              await sgMail.send(msg);
+                            } catch (error) {
+                              console.error(error);
+
+                              if (error.response) {
+                                console.error(error.response.body);
+                              }
+                            }
+                          })();
+                        }
+                      });
+                  }
+                })
+                .then((result4) => {})
+                .catch(function (error) {
+                  // handle error
+                  console.log(error);
+                });
+            }
+          })
+          .catch((error) => {
+            console.log(`Error on item query ${error}`);
+            res.sendStatus(500);
+          });
+      }
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+}
+if (dayMonth == 1 && month == 10) {
+  console.log("running sales report");
+  let finalArray = "";
+  let globalJoinedArray = "";
+  const queryText = `select "email" from sku where "created_at" >= '2021-10-01' AND "created_at" <= '2021-10-31' group by "email"`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      let emailArray = result.rows;
+      for (let index = 0; index < emailArray.length; index++) {
+        let amountTotal = 0;
+        let qtyTotal = 1;
+        const element = emailArray[index];
+        let email = element.email;
+        let titleString = `  <div><img
+                   src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
+                   width="150"
+                   /></div>
+                     <div style="color:black; padding-left: 30px; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>The following is your monthly report for the month of October</div>`;
+        const queryText2 = `select "order_number" from sku where "email" = '${email}' AND "created_at" >= '2021-10-01' AND "created_at" <= '2021-10-31' group by "order_number"`;
+        pool
+          .query(queryText2)
+          .then((result2) => {
+            let orderArray = result2.rows;
+            let newArray = [];
+            let optionsArray = [];
+            for (let index = 0; index < orderArray.length; index++) {
+              qtyTotal += 1;
+              console.log("qtyTotal", qtyTotal);
+              const element2 = orderArray[index];
+              let order_number = element2.order_number;
+              axios
+                .get(
+                  `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}`,
+                  config
+                )
+                .then(function (response) {
+                  // handle success
+                  if (response.data !== []) {
+                    let nowMonth =
+                      Number(moment().subtract(6, "hours").month()) + 1;
+                    let nowYear = Number(moment().subtract(6, "hours").year());
+                    let prevYear = Number(moment().subtract(6, "hours").year());
+                    let nowDay = Number(moment().subtract(6, "hours").date());
+                    let hour = Number(moment().subtract(6, "hours").hour());
+                    let min = Number(moment().subtract(6, "hours").minute());
+                    let sec = Number(moment().subtract(6, "hours").second());
+                    if (hour < 10) {
+                      hour = "0" + String(hour);
+                    }
+                    if (min < 10) {
+                      min = "0" + String(min);
+                    }
+                    if (sec < 10) {
+                      sec = "0" + String(sec);
+                    }
+                    if (nowMonth === 1) {
+                      prevYear = moment().year() - 1;
+                    }
+                    let normalHour = Number(hour);
+                    let AmPm = "AM";
+                    if (normalHour > 12) {
+                      AmPm = "PM";
+                      normalHour = normalHour - 12;
+                    } else if (normalHour === 12) {
+                      AmPm = "PM";
+                    } else if (normalHour === 00) {
+                      AmPm = "AM";
+                      normalHour = 12;
+                    }
+                    let created_at = `${nowMonth}/${nowDay}/${nowYear} ${normalHour}:${min}:${sec}${AmPm}`;
+                    axios
+                      .get(
+                        `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}/products`,
+                        config
+                      )
+                      .then(function (response) {
+                        // handle success
+                        if (response.data !== []) {
+                          let array = response.data;
+                          for (let index = 0; index < array.length; index++) {
+                            const element = array[index];
+                            newArray.push(`<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;">
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.name}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">SKU Number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.sku}</td></tr>`);
+                            sku = element.sku;
+                            name = element.name;
+                            base_price = element.base_price;
+                            base_price = Number(base_price);
+                            amountTotal += base_price;
+                            let options = element.product_options;
+                            for (let j = 0; j < options.length; j++) {
+                              const opt = options[j];
+                              optionsArray.push(
+                                `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${opt.display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
+                              );
+                            }
+                            let optionsJoined = optionsArray.join("");
+                            newArray.push(optionsJoined);
+                            newArray.push("</table><br><br><br>");
+                            qty = array.length;
+                          }
+                          let joinedArray = newArray.join("");
+                          console.log("joinedArray", joinedArray);
+                          globalJoinedArray = joinedArray;
+                          console.log("globalJoinedArray", globalJoinedArray);
+                        }
+                      })
+                      .then((result3) => {
+                        if (element2 === orderArray[orderArray.length - 1]) {
+                          let totalString = `<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales for this month</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${qtyTotal}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales in dollars</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${amountTotal}</td></tr></table><br><br>`;
+                          finalArray =
+                            titleString + totalString + globalJoinedArray;
+                          console.log("email", email);
+                          console.log("qtyTotalAtEmail", qtyTotal);
+                          console.log("finalArray", finalArray);
+                          optionsArray = [];
+                          const msg = {
+                            personalizations: [
+                              {
+                                to: [
+                                  {
+                                    email: email,
+                                  },
+                                ],
+                                bcc: [
+                                  {
+                                    email:
+                                      "chris.neisen@heattransferwarehouse.com",
+                                  },
+                                ],
+                              },
+                            ],
+                            from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
+                            subject: `Monthly sales report for October`,
+                            html: finalArray,
+                          };
+                          (async () => {
+                            try {
+                              await sgMail.send(msg);
+                            } catch (error) {
+                              console.error(error);
+
+                              if (error.response) {
+                                console.error(error.response.body);
+                              }
+                            }
+                          })();
+                        }
+                      });
+                  }
+                })
+                .then((result4) => {})
+                .catch(function (error) {
+                  // handle error
+                  console.log(error);
+                });
+            }
+          })
+          .catch((error) => {
+            console.log(`Error on item query ${error}`);
+            res.sendStatus(500);
+          });
+      }
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+}
+if (dayMonth == 1 && month == 11) {
+  console.log("running sales report");
+  let finalArray = "";
+  let globalJoinedArray = "";
+  const queryText = `select "email" from sku where "created_at" >= '2021-11-01' AND "created_at" <= '2021-11-30' group by "email"`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      let emailArray = result.rows;
+      for (let index = 0; index < emailArray.length; index++) {
+        let amountTotal = 0;
+        let qtyTotal = 1;
+        const element = emailArray[index];
+        let email = element.email;
+        let titleString = `  <div><img
+                   src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
+                   width="150"
+                   /></div>
+                     <div style="color:black; padding-left: 30px; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>The following is your monthly report for the month of November</div>`;
+        const queryText2 = `select "order_number" from sku where "email" = '${email}' AND "created_at" >= '2021-11-01' AND "created_at" <= '2021-11-30' group by "order_number"`;
+        pool
+          .query(queryText2)
+          .then((result2) => {
+            let orderArray = result2.rows;
+            let newArray = [];
+            let optionsArray = [];
+            for (let index = 0; index < orderArray.length; index++) {
+              qtyTotal += 1;
+              console.log("qtyTotal", qtyTotal);
+              const element2 = orderArray[index];
+              let order_number = element2.order_number;
+              axios
+                .get(
+                  `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}`,
+                  config
+                )
+                .then(function (response) {
+                  // handle success
+                  if (response.data !== []) {
+                    let nowMonth =
+                      Number(moment().subtract(6, "hours").month()) + 1;
+                    let nowYear = Number(moment().subtract(6, "hours").year());
+                    let prevYear = Number(moment().subtract(6, "hours").year());
+                    let nowDay = Number(moment().subtract(6, "hours").date());
+                    let hour = Number(moment().subtract(6, "hours").hour());
+                    let min = Number(moment().subtract(6, "hours").minute());
+                    let sec = Number(moment().subtract(6, "hours").second());
+                    if (hour < 10) {
+                      hour = "0" + String(hour);
+                    }
+                    if (min < 10) {
+                      min = "0" + String(min);
+                    }
+                    if (sec < 10) {
+                      sec = "0" + String(sec);
+                    }
+                    if (nowMonth === 1) {
+                      prevYear = moment().year() - 1;
+                    }
+                    let normalHour = Number(hour);
+                    let AmPm = "AM";
+                    if (normalHour > 12) {
+                      AmPm = "PM";
+                      normalHour = normalHour - 12;
+                    } else if (normalHour === 12) {
+                      AmPm = "PM";
+                    } else if (normalHour === 00) {
+                      AmPm = "AM";
+                      normalHour = 12;
+                    }
+                    let created_at = `${nowMonth}/${nowDay}/${nowYear} ${normalHour}:${min}:${sec}${AmPm}`;
+                    axios
+                      .get(
+                        `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}/products`,
+                        config
+                      )
+                      .then(function (response) {
+                        // handle success
+                        if (response.data !== []) {
+                          let array = response.data;
+                          for (let index = 0; index < array.length; index++) {
+                            const element = array[index];
+                            newArray.push(`<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;">
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.name}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">SKU Number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.sku}</td></tr>`);
+                            sku = element.sku;
+                            name = element.name;
+                            base_price = element.base_price;
+                            base_price = Number(base_price);
+                            amountTotal += base_price;
+                            let options = element.product_options;
+                            for (let j = 0; j < options.length; j++) {
+                              const opt = options[j];
+                              optionsArray.push(
+                                `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${opt.display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
+                              );
+                            }
+                            let optionsJoined = optionsArray.join("");
+                            newArray.push(optionsJoined);
+                            newArray.push("</table><br><br><br>");
+                            qty = array.length;
+                          }
+                          let joinedArray = newArray.join("");
+                          console.log("joinedArray", joinedArray);
+                          globalJoinedArray = joinedArray;
+                          console.log("globalJoinedArray", globalJoinedArray);
+                        }
+                      })
+                      .then((result3) => {
+                        if (element2 === orderArray[orderArray.length - 1]) {
+                          let totalString = `<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales for this month</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${qtyTotal}</td></tr>
+                        <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Total sales in dollars</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${amountTotal}</td></tr></table><br><br>`;
+                          finalArray =
+                            titleString + totalString + globalJoinedArray;
+                          console.log("email", email);
+                          console.log("qtyTotalAtEmail", qtyTotal);
+                          console.log("finalArray", finalArray);
+                          optionsArray = [];
+                          const msg = {
+                            personalizations: [
+                              {
+                                to: [
+                                  {
+                                    email: email,
+                                  },
+                                ],
+                                bcc: [
+                                  {
+                                    email:
+                                      "chris.neisen@heattransferwarehouse.com",
+                                  },
+                                ],
+                              },
+                            ],
+                            from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
+                            subject: `Monthly sales report for November`,
+                            html: finalArray,
+                          };
+                          (async () => {
+                            try {
+                              await sgMail.send(msg);
+                            } catch (error) {
+                              console.error(error);
+
+                              if (error.response) {
+                                console.error(error.response.body);
+                              }
+                            }
+                          })();
+                        }
+                      });
+                  }
+                })
+                .then((result4) => {})
+                .catch(function (error) {
+                  // handle error
+                  console.log(error);
+                });
+            }
+          })
+          .catch((error) => {
+            console.log(`Error on item query ${error}`);
+            res.sendStatus(500);
+          });
+      }
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+}
+      }, 86400000);
+     
 
  const PORT = process.env.PORT || 5000;
  app.listen(PORT, () => {

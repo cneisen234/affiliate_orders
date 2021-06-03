@@ -257,6 +257,7 @@ function* deleteSkuRange(action) {
 
     function* markUnviewed(action) {
       try {
+        console.log("this is action.payload", action.payload)
         yield axios.delete(`/unviewed/${action.payload}`)
         yield put({ type: "GET_VIEWED" });
       } catch (error) {
