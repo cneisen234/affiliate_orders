@@ -359,7 +359,7 @@ class App extends Component {
               Top 5 Affilates within the last 30 days
             </h1>
             <MUITable2
-              data={data} //brings in data as an array, in this case, list of items
+              data={topdata} //brings in data as an array, in this case, list of items
               columns={[
                 //names the columns found on MUI table
                 { name: "Affiliate Email" },

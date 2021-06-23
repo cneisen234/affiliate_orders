@@ -155,6 +155,7 @@ const detailslist9 = (state = [], action) => {
 
 export default combineReducers({
   viewed,
+  topfive,
   itemlist,
   skunumlist,
   skulist,
