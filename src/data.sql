@@ -35,3 +35,12 @@ SELECT array_agg(DISTINCT sku) as sku, COUNT(*)
 FROM sku
 where email={userinput}
 GROUP BY sku;
+
+/*to select top 5 in last 30 days*/
+
+SELECT array_agg(DISTINCT email) as email, count(*)
+FROM sku
+where "created_at" >= '2021-04-01' AND "created_at" <= '2021-04-30'
+GROUP BY email
+ORDER BY count DESC
+LIMIT 5

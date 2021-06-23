@@ -16,6 +16,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("build"));
 
+let dateNow = moment();
+let dateThen = moment().subtract(30, "days");
+
 let config = {
   headers: {
     "X-Auth-Client": process.env.BG_AUTH_CLIENT,
@@ -479,6 +482,22 @@ app.get("/itemlist", (req, res) => {
   console.log("We are about to get the item list");
 
   const queryText = `select * from "item" ORDER BY id DESC`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+});
+
+app.get("/topfive", (req, res) => {
+  console.log("We are about to get the item list");
+
+  const queryText = `SELECT array_agg(DISTINCT email) as email, count(*)
+FROM sku where "created_at" >= ${dateNow} AND "created_at" <= ${dateThen} GROUP BY email ORDER BY count DESC LIMIT 5`;
   pool
     .query(queryText)
     .then((result) => {

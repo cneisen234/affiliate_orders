@@ -135,6 +135,18 @@ function* getitemlist(action) {
   }
 }
 
+function* gettopfive(action) {
+  try {
+    const response = yield axios.get(`/topfive`);
+
+    yield put({
+      type: "SET_TOP_FIVE",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
 
 
 function* getemaillist(action) {
@@ -270,6 +282,7 @@ function* deleteSkuRange(action) {
 
 function* itemSaga() {
     yield takeLatest('GET_ITEM_LIST', getitemlist);
+    yield takeLatest('GET_TOP_FIVE', gettopfive);
     yield takeLatest('GET_SKUS', getskus);
         yield takeLatest('GET_EMAIL_LIST', getemaillist);
          yield takeLatest('CHECK_EMAIL', checkEmail);

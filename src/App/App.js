@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import MUITable from "../MUITable.js";
+import MUITable2 from "../MUITable2.js";
 import { connect } from "react-redux";
 import Form from "react-bootstrap/Form";
 import moment from "moment";
@@ -28,6 +29,9 @@ class App extends Component {
         this.props.dispatch({
           type: "GET_SKUS",
         });
+           this.props.dispatch({
+             type: "GET_TOP_FIVE",
+           });
     this.props.dispatch({
       type: "ORDER_DETAILS1",
     });
@@ -307,6 +311,10 @@ class App extends Component {
       item.qty,
       moment(item.created_at).add(6, "hours").format("MMM Do YY"),
     ]);
+        const topdata = this.props.topfive.map((item) => [
+          item.email,
+          item.count
+        ]);
 
     const totaldata = this.props.totallist.map((total) => [
       total.email,
@@ -346,6 +354,20 @@ class App extends Component {
           <br />
           <br />
           <center></center>
+          <div style={{ padding: "1.5%" }}>
+            <h1 style={{ textAlign: "center" }}>
+              Top 5 Affilates within the last 30 days
+            </h1>
+            <MUITable2
+              data={data} //brings in data as an array, in this case, list of items
+              columns={[
+                //names the columns found on MUI table
+                { name: "Affiliate Email" },
+                { name: "Total items sold" },
+              ]}
+              title={"Top 5 Affilates within the last 30 days"} //give the table a name
+            />
+          </div>
           <div style={{ padding: "1.5%" }}>
             <h1 style={{ textAlign: "center" }}>Affiliate Order History</h1>
             <MUITable
@@ -833,6 +855,7 @@ const mapStateToProps = (state) => ({
   viewed: state.item.viewed,
   skulist: state.item.skulist,
   itemlist: state.item.itemlist,
+  topfive: state.item.topfive,
   skunumlist: state.item.skunumlist,
   emaillist: state.item.emaillist,
   detailslist: state.item.detailslist,

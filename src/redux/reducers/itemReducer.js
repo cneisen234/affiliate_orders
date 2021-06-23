@@ -9,6 +9,15 @@ const itemlist = (state = [], action) => {
   }
 };
 
+const topfive = (state = [], action) => {
+  switch (action.type) {
+    case "SET_TOP_FIVE":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 const totallist = (state = [], action) => {
   switch (action.type) {
     case "SET_TOTAL":
