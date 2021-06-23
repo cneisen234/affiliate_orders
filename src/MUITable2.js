@@ -22,7 +22,7 @@ class MUITable2 extends Component {
       filter: true,
       filterType: "dropdown",
       responsive: "vertical",
-      tableBodyHeight: "60px",
+      tableBodyHeight: "600px",
       tableBodyMaxHeight: " ",
       rowsPerPage: 5,
       selectableRows: false, //false means checkboxes are hidden
