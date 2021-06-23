@@ -16,8 +16,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("build"));
 
-let dateNow = moment().format("YYYY-MM-DD");
-let dateThen = moment().subtract(30, "days").format("YYYY-MM-DD");
+let dateNow = moment()
+let dateThen = moment().subtract(30, "days")
 
 let config = {
   headers: {
