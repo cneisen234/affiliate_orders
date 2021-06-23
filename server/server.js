@@ -497,7 +497,7 @@ app.get("/topfive", (req, res) => {
   console.log("We are about to get the item list");
 
   const queryText = `SELECT array_agg(DISTINCT email) as email, count(*)
-FROM sku where "created_at" >= '${dateNow}' AND "created_at" <= '${dateThen}' GROUP BY email ORDER BY count DESC LIMIT 5`;
+FROM sku where "created_at" <= '${dateNow}' AND "created_at" >= '${dateThen}' GROUP BY email ORDER BY count DESC LIMIT 5`;
   pool
     .query(queryText)
     .then((result) => {
