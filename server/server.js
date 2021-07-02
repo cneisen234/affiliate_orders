@@ -646,8 +646,8 @@ app.get("/skus", (req, res) => {
 });
 setInterval(() => {
   console.log("checking date for sales report")
-let dayMonth = Number(moment().subtract(6, "hours").date());
-let month = Number(moment().subtract(6, "hours").month());
+let dayMonth = moment().subtract(6, "hours").date();
+let month = moment().subtract(6, "hours").month();
 if (dayMonth == 1 && month == 0) {
   console.log("running sales report")
 let finalArray = "";
