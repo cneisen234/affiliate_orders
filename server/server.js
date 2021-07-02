@@ -17,8 +17,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("build"));
 
 
-let dateNow = moment().format('YYYY-MM-DD')
-let dateThen = moment().subtract(30, "days").format("YYYY-MM-DD");
+let dateNow = moment().subtract(1, "days").format('YYYY-MM-DD')
+let dateThen = moment().subtract(31, "days").format("YYYY-MM-DD");
 
 setInterval(() => {
   dateNow = moment().format("YYYY-MM-DD");
