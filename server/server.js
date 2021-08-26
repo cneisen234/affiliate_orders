@@ -388,7 +388,7 @@ app.delete("/deleteskurange", (req, res) => {
                            ],
                            bcc: [
                              {
-                               email: "tre@heattransferwarehouse.com",
+                               email: "developer@heattransferwarehouse.com",
                              },
                            ],
                          },
@@ -952,7 +952,7 @@ pool
                               bcc: [
                                 {
                                   email:
-                                    "tre@heattransferwarehouse.com",
+                                    "developer@heattransferwarehouse.com",
                                 },
                               ],
                             },
