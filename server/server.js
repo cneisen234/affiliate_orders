@@ -16,6 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("build"));
 
+//change this to push update
 
 let dateNow = moment().subtract(1, "days").format('YYYY-MM-DD')
 let dateThen = moment().subtract(31, "days").format("YYYY-MM-DD");
