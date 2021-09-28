@@ -387,11 +387,11 @@ app.delete("/deleteskurange", (req, res) => {
                                email: newerEmail,
                              },
                            ],
-                           bcc: [
-                             {
-                               email: "developer@heattransferwarehouse.com",
-                             },
-                           ],
+                          //  bcc: [
+                          //    {
+                          //      email: "developer@heattransferwarehouse.com",
+                          //    },
+                          //  ],
                          },
                        ],
                        from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
@@ -777,12 +777,12 @@ pool
                                   email: email,
                                 },
                               ],
-                              bcc: [
-                                {
-                                  email:
-                                    "developer@heattransferwarehouse.com",
-                                },
-                              ],
+                              // bcc: [
+                              //   {
+                              //     email:
+                              //       "developer@heattransferwarehouse.com",
+                              //   },
+                              // ],
                             },
                           ],
                           from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
@@ -950,12 +950,12 @@ pool
                                   email: email,
                                 },
                               ],
-                              bcc: [
-                                {
-                                  email:
-                                    "developer@heattransferwarehouse.com",
-                                },
-                              ],
+                              // bcc: [
+                              //   {
+                              //     email:
+                              //       "developer@heattransferwarehouse.com",
+                              //   },
+                              // ],
                             },
                           ],
                           from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
@@ -1121,12 +1121,12 @@ if (dayMonth == 1 && month == 2) {
                                     email: email,
                                   },
                                 ],
-                                bcc: [
-                                  {
-                                    email:
-                                      "developer@heattransferwarehouse.com",
-                                  },
-                                ],
+                                // bcc: [
+                                //   {
+                                //     email:
+                                //       "developer@heattransferwarehouse.com",
+                                //   },
+                                // ],
                               },
                             ],
                             from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
@@ -1292,12 +1292,12 @@ if (dayMonth == 1 && month == 3) {
                                     email: email,
                                   },
                                 ],
-                                bcc: [
-                                  {
-                                    email:
-                                      "developer@heattransferwarehouse.com",
-                                  },
-                                ],
+                                // bcc: [
+                                //   {
+                                //     email:
+                                //       "developer@heattransferwarehouse.com",
+                                //   },
+                                // ],
                               },
                             ],
                             from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
@@ -1463,12 +1463,12 @@ if (dayMonth == 1 && month == 4) {
                                     email: email,
                                   },
                                 ],
-                                bcc: [
-                                  {
-                                    email:
-                                      "developer@heattransferwarehouse.com",
-                                  },
-                                ],
+                                // bcc: [
+                                //   {
+                                //     email:
+                                //       "developer@heattransferwarehouse.com",
+                                //   },
+                                // ],
                               },
                             ],
                             from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
@@ -1634,12 +1634,12 @@ if (dayMonth == 1 && month == 5) {
                                     email: email,
                                   },
                                 ],
-                                bcc: [
-                                  {
-                                    email:
-                                      "developer@heattransferwarehouse.com",
-                                  },
-                                ],
+                                // bcc: [
+                                //   {
+                                //     email:
+                                //       "developer@heattransferwarehouse.com",
+                                //   },
+                                // ],
                               },
                             ],
                             from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
@@ -1805,12 +1805,12 @@ if (dayMonth == 1 && month == 6) {
                                     email: email,
                                   },
                                 ],
-                                bcc: [
-                                  {
-                                    email:
-                                      "developer@heattransferwarehouse.com",
-                                  },
-                                ],
+                                // bcc: [
+                                //   {
+                                //     email:
+                                //       "developer@heattransferwarehouse.com",
+                                //   },
+                                // ],
                               },
                             ],
                             from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
@@ -1976,12 +1976,12 @@ if (dayMonth == 1 && month == 7) {
                                     email: email,
                                   },
                                 ],
-                                bcc: [
-                                  {
-                                    email:
-                                      "developer@heattransferwarehouse.com",
-                                  },
-                                ],
+                                // bcc: [
+                                //   {
+                                //     email:
+                                //       "developer@heattransferwarehouse.com",
+                                //   },
+                                // ],
                               },
                             ],
                             from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
@@ -2147,12 +2147,12 @@ if (dayMonth == 1 && month == 8) {
                                     email: email,
                                   },
                                 ],
-                                bcc: [
-                                  {
-                                    email:
-                                      "developer@heattransferwarehouse.com",
-                                  },
-                                ],
+                                // bcc: [
+                                //   {
+                                //     email:
+                                //       "developer@heattransferwarehouse.com",
+                                //   },
+                                // ],
                               },
                             ],
                             from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
@@ -2318,12 +2318,12 @@ if (dayMonth == 1 && month == 9) {
                                     email: email,
                                   },
                                 ],
-                                bcc: [
-                                  {
-                                    email:
-                                      "developer@heattransferwarehouse.com",
-                                  },
-                                ],
+                                // bcc: [
+                                //   {
+                                //     email:
+                                //       "developer@heattransferwarehouse.com",
+                                //   },
+                                // ],
                               },
                             ],
                             from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
@@ -2489,12 +2489,12 @@ if (dayMonth == 1 && month == 10) {
                                     email: email,
                                   },
                                 ],
-                                bcc: [
-                                  {
-                                    email:
-                                      "developer@heattransferwarehouse.com",
-                                  },
-                                ],
+                                // bcc: [
+                                //   {
+                                //     email:
+                                //       "developer@heattransferwarehouse.com",
+                                //   },
+                                // ],
                               },
                             ],
                             from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
@@ -2660,12 +2660,12 @@ if (dayMonth == 1 && month == 11) {
                                     email: email,
                                   },
                                 ],
-                                bcc: [
-                                  {
-                                    email:
-                                      "developer@heattransferwarehouse.com",
-                                  },
-                                ],
+                                // bcc: [
+                                //   {
+                                //     email:
+                                //       "developer@heattransferwarehouse.com",
+                                //   },
+                                // ],
                               },
                             ],
                             from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
