@@ -5,10 +5,8 @@ import MUITable2 from "../MUITable2.js";
 import { connect } from "react-redux";
 import Form from "react-bootstrap/Form";
 import moment from "moment";
-import RadioButtonCheckedIcon from "@material-ui/icons/RadioButtonChecked";
-import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
 import Footer from "../Footer/Footer";
-import { Paper, TextField, Button, FormControl } from "@material-ui/core";
+import { Paper, Button } from "@material-ui/core";
 
 class App extends Component {
   state = {
@@ -322,7 +320,7 @@ class App extends Component {
     ]);
     const skunumdata = this.props.skunumlist
 .map((skunum) => [skunum.sku, skunum.description, skunum.count]);
-    return this.state.toggle2 === false ? (
+    return (
       <>
         <div>
           <div
@@ -338,17 +336,6 @@ class App extends Component {
           >
             <div></div>
             <div style={{ height: 50, color: "white" }}>
-              <span
-                style={{
-                  cursor: "pointer",
-                  float: "right",
-                  marginRight: "20px",
-                  fontSize: "30px",
-                }}
-                onClick={this.toggle2}
-              >
-                Switch views
-              </span>
             </div>
           </div>
           <br />
@@ -698,156 +685,7 @@ class App extends Component {
           <Footer />
         </div>
       </>
-    ) : (
-      <>
-        <div>
-          <div
-            style={{ backgroundColor: "white", width: "20%", float: "left" }}
-          >
-            <img
-              src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
-              alt="HTW logo"
-            ></img>
-          </div>
-          <div
-            style={{ backgroundColor: "#8B008B", width: "80%", float: "right" }}
-          >
-            <div style={{ height: 50, color: "white" }}>
-              <span
-                style={{
-                  cursor: "pointer",
-                  float: "right",
-                  marginRight: "20px",
-                  fontSize: "30px",
-                }}
-                onClick={this.toggle2}
-              >
-                Switch views
-              </span>
-            </div>
-          </div>
-          <br />
-          <br />
-          <div style={{ padding: "1.5%" }}>
-            <h1 style={{ textAlign: "center" }}>Items at Zero Stock</h1>
-            <MUITable
-              data={stockdata} //brings in data as an array, in this case, list of items
-              columns={[
-                //names the columns found on MUI table
-                {
-                  name: "Mark as Viewed",
-                  options: {
-                    filter: false,
-                    sort: false,
-                    empty: true,
-                    customBodyRenderLite: (dataIndex, rowIndex) => {
-                      const itemArray = this.state.data;
-                      const item = itemArray[dataIndex];
-                      const viewedArray = this.props.viewed;
-                      for (let index = 0; index < viewedArray.length; index++) {
-                        const element = viewedArray[index];
-                        if (element.sku === item.sku) {
-                          return (
-                            <>
-                              <Button
-                                variant="contained"
-                                color="primary"
-                                id={dataIndex}
-                                style={{ cursor: "pointer" }}
-                                name=""
-                                value=""
-                                onClick={(event) => {
-                                  const itemArray = this.state.data;
-                                  const item = itemArray[dataIndex];
-                                  this.props.dispatch({
-                                    type: "MARK_UNVIEWED",
-                                    payload: item.sku,
-                                  });
-                                  this.props.dispatch({
-                                    type: "GET_VIEWED",
-                                  });
-                                }}
-                              >
-                                <RadioButtonCheckedIcon></RadioButtonCheckedIcon>
-                              </Button>
-                            </>
-                          );
-                        }
-                      }
-                      return (
-                        <>
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            id={dataIndex}
-                            style={{ cursor: "pointer" }}
-                            name=""
-                            value=""
-                            onClick={(event) => {
-                              const itemArray = this.state.data;
-                              const item = itemArray[dataIndex];
-                              this.props.dispatch({
-                                type: "MARK_VIEWED",
-                                payload: {
-                                  sku: item.sku,
-                                },
-                              });
-                              this.props.dispatch({
-                                type: "GET_VIEWED",
-                              });
-                            }}
-                          >
-                            <RadioButtonUncheckedIcon></RadioButtonUncheckedIcon>
-                          </Button>
-                        </>
-                      );
-                    },
-                  },
-                },
-                { name: "Item Name" },
-                { name: "SKU" },
-                { name: "Inventory Level" },
-                { name: "Number of customer views" },
-                {
-                  name: "Date last viewed",
-                  options: {
-                    filter: false,
-                    sort: false,
-                    empty: true,
-                    customBodyRenderLite: (dataIndex, rowIndex) => {
-                      const itemArray = this.state.data;
-                      const item = itemArray[dataIndex];
-                      const viewedArray = this.props.viewed;
-                      for (let index = 0; index < viewedArray.length; index++) {
-                        const element = viewedArray[index];
-                        if (element.sku === item.sku) {
-                          return (
-                            //grabs timestamp from database
-                            <>
-                              {moment(element.timestamp)
-                                .add(6, "hours")
-                                .format("MMM Do YY")}
-                            </>
-                          );
-                        }
-                      }
-                    },
-                  },
-                },
-              ]}
-              title={`${stockdata.length} Currently at 0 stock`} //give the table a name
-            />
-          </div>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <Footer />
-        </div>
-      </>
-    );
+    )
   }
 }
 
