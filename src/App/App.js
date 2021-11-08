@@ -3,6 +3,10 @@ import "./App.css";
 import MUITable from "../MUITable.js";
 import MUITable2 from "../MUITable2.js";
 import { connect } from "react-redux";
+import Grid from '@material-ui/core/Grid';
+import TextField from "@material-ui/core/TextField";
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
 import Form from "react-bootstrap/Form";
 import moment from "moment";
 import Footer from "../Footer/Footer";
@@ -425,46 +429,33 @@ class App extends Component {
             <center>
               <>
                 <h1>Select a Date Range</h1>
-                <Form.Control
-                  as="select"
+                <MuiPickersUtilsProvider utils={MomentUtils}>
+                  <Grid container justify="space-around">
+                  {/* used to filter by date */}
+                  <KeyboardDatePicker
+                  label="Start Date"
+                  inputFormat="MM/dd/yyyy"
+                  value={this.state.startDate}
                   onChange={(event) =>
                     this.setState({ startDate: event.target.value })
                   }
-                >
-                  {/* used to filter by date */}
-                  <option value="">Select a start date </option>{" "}
-                  {this.props.skulist
-                    ? this.props.skulist.map((item) => (
-                        <option key={item.created_at} value={item.created_at}>
-                          {" "}
-                          {String(
-                            moment(item.created_at)
-                              .add(6, "hours")
-                              .format("MMM Do YY, h:mm:ss a")
-                          )}{" "}
-                        </option>
-                      ))
-                    : ""}
-                </Form.Control>
-                <Form.Control
-                  as="select"
+                  renderInput={(params) => <TextField {...params} />}
+                  />
+                  </Grid>
+                </MuiPickersUtilsProvider>
+                <MuiPickersUtilsProvider utils={MomentUtils}>
+                  <Grid container justify="space-around">
+                  <KeyboardDatePicker
+                  label="Start Date"
+                  inputFormat="MM/dd/yyyy"
+                  value={this.state.endDate}
                   onChange={(event) =>
                     this.setState({ endDate: event.target.value })
                   }
-                >
-                  <option value="">Select an end date </option>{" "}
-                  {this.props.skulist
-                    ? this.props.skulist.map((item) => (
-                        <option key={item.created_at} value={item.created_at}>
-                          {String(
-                            moment(item.created_at)
-                              .add(6, "hours")
-                              .format("MMM Do YY, h:mm:ss a")
-                          )}{" "}
-                        </option>
-                      ))
-                    : ""}
-                </Form.Control>
+                  renderInput={(params) => <TextField {...params} />}
+                  />
+                  </Grid>
+                </MuiPickersUtilsProvider>
               </>
               {this.state.startDate === null || this.state.endDate === null ? (
                 <span></span>
