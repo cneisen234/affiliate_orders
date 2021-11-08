@@ -209,6 +209,7 @@ app.delete("/deleteskurange", (req, res) => {
         if (type !== "message") {
           return;
         }
+        if (text !== undefined) {
           if (channel === "C0139RJPUEM" && text.includes("Referral ")) {
          splitText = text.split(" ");
          console.log("this is splitText", splitText);
@@ -451,6 +452,7 @@ app.delete("/deleteskurange", (req, res) => {
     } else {
       return;
     }
+   }
   }
   });
   
