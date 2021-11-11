@@ -5,8 +5,8 @@ import MUITable2 from "../MUITable2.js";
 import { connect } from "react-redux";
 import Grid from '@material-ui/core/Grid';
 import TextField from "@material-ui/core/TextField";
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import MomentUtils from '@date-io/moment';
+import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
+import LuxonUtils from '@date-io/luxon';
 import Form from "react-bootstrap/Form";
 import moment from "moment";
 import Footer from "../Footer/Footer";
@@ -429,28 +429,28 @@ class App extends Component {
             <center>
               <>
                 <h1>Select a Date Range</h1>
-                <MuiPickersUtilsProvider utils={MomentUtils}>
+                <MuiPickersUtilsProvider utils={LuxonUtils}>
                   <Grid container justify="space-around">
                   {/* used to filter by date */}
-                  <KeyboardDatePicker
+                  <DatePicker
                   label="Start Date"
                   inputFormat="MM/dd/yyyy"
                   value={this.state.startDate}
                   onChange={(event) =>
-                    this.setState({ startDate: event.target.value })
+                        this.setState({startDate: event.c})
                   }
                   renderInput={(params) => <TextField {...params} />}
                   />
                   </Grid>
                 </MuiPickersUtilsProvider>
-                <MuiPickersUtilsProvider utils={MomentUtils}>
+                <MuiPickersUtilsProvider utils={LuxonUtils}>
                   <Grid container justify="space-around">
-                  <KeyboardDatePicker
-                  label="Start Date"
+                  <DatePicker
+                  label="End Date"
                   inputFormat="MM/dd/yyyy"
                   value={this.state.endDate}
                   onChange={(event) =>
-                    this.setState({ endDate: event.target.value })
+                    this.setState({endDate: event.c})
                   }
                   renderInput={(params) => <TextField {...params} />}
                   />

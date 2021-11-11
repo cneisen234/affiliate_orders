@@ -587,10 +587,13 @@ app.post("/checkemail", (req, res) => {
       startDate,
       endDate,
     } = skuinfo;
+
+    let newStartDate = `${startDate.year}-${startDate.month}-${startDate.day}`
+    let newEndDate = `${endDate.year}-${endDate.month}-${endDate.day}`
       const queryText =
         "SELECT array_agg(DISTINCT sku) as sku, array_agg(DISTINCT description) as description, COUNT(*) FROM sku where email=$1 AND created_at>=$2 AND created_at<=$3 GROUP BY sku;";
       pool
-        .query(queryText, [email, startDate, endDate])
+        .query(queryText, [email, newStartDate, newEndDate])
         .then((result) => {
           res.send(result.rows);
         })
