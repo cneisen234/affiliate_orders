@@ -21,8 +21,8 @@ class App extends Component {
     sku: "",
     email: "",
     data: [],
-    startDate: null,
-    endDate: null,
+    startDate: {year: 2021, month: 1, day: 1},
+    endDate: {year: 2021, month: 1, day: 1},
   };
   componentDidMount() {
     this.props.dispatch({
@@ -435,9 +435,9 @@ class App extends Component {
                   <DatePicker
                   label="Start Date"
                   inputFormat="MM/dd/yyyy"
-                  value={this.state.startDate}
+                  value={`${this.state.startDate.year}-${this.state.startDate.month}-${this.state.startDate.day}`}
                   onChange={(event) =>
-                        this.setState({startDate: event.c})
+                        this.setState({startDate: {year: event.c.year, month: event.c.month, day: event.c.day}})
                   }
                   renderInput={(params) => <TextField {...params} />}
                   />
@@ -448,9 +448,9 @@ class App extends Component {
                   <DatePicker
                   label="End Date"
                   inputFormat="MM/dd/yyyy"
-                  value={this.state.endDate}
+                  value={`${this.state.endDate.year}-${this.state.endDate.month}-${this.state.endDate.day}`}
                   onChange={(event) =>
-                    this.setState({endDate: event.c})
+                    this.setState({endDate: {year: event.c.year, month: event.c.month, day: event.c.day}})
                   }
                   renderInput={(params) => <TextField {...params} />}
                   />
