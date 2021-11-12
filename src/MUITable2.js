@@ -19,7 +19,7 @@ class MUITable2 extends Component {
     setTableBodyHeight: "400px",
     setTableBodyMaxHeight: " ",
     options: {
-      filter: true,
+      filter: false,
       filterType: "dropdown",
       responsive: "vertical",
       tableBodyHeight: "600px",

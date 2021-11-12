@@ -410,8 +410,10 @@ class App extends Component {
           </div>
           <br />
           <br />
-          <br />
           <div style={{ padding: "1.5%" }}>
+            <h1 style={{ textAlign: "center" }}>
+              Total Items Sold
+            </h1>
             <MUITable
               data={totaldata} //brings in data as an array, in this case, list of items
               columns={[
